@@ -1,0 +1,10 @@
+syntax = "v1"
+
+import "sys/user.api"
+
+info (
+	desc:   "ordering platform admin"
+	author: "闲不下来的程序猿"
+	email:  "zhaojuncodeing@163.com"
+)
+

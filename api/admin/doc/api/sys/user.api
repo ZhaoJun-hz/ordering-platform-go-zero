@@ -1,0 +1,87 @@
+syntax = "v1"
+
+info(
+    desc: "用户信息"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+type (
+    // 用户登录
+    LoginReq {
+        Username string `json:"username"` //用户名
+        Password string `json:"password"`
+    }
+    LoginResp {
+        AccessToken string `json:"accessToken"`
+    }
+
+    // 用户个人信息
+    UserInfoResp {
+        Avater string `json:"avater"`
+        RealName string `json:"realName"`
+        Roles []string `json:"roles"`
+        UserId string `json:"userId"`
+        Username string `json:"username"`
+        Desc string `json:"desc"`
+        HomePath string `json:"avater"`
+    }
+
+    // 获取权限码
+//    UserCodesResp {
+//        codes []string `json:"codes"`
+//    }
+
+    // 用户拥有的菜单权限
+    Menu {
+        MenuId int64 `json:"menuId"`
+        ParentMenuId int64 `json:"parentMenuId"`
+        Name string `json:"name"` // 路由名称
+        Path string `json:"path"` // 路由地址
+        Component string `json:"component"` // 组件地址
+        MenuMate MenuMate `json:"meta"`
+        Children []Menu `json:"children,omitempty"`
+    }
+
+    MenuMate {
+        Title string `json:"title"`  // 菜单名称
+        Order int64 `json:"order"`   // 排序
+        Icon string `json:"icon"`      // 图标
+        HideInMenu bool `json:"hideInMenu"` // 是否隐藏
+        KeepAlive bool `json:"keepAlive"`   // 是否缓存
+        MenuVisibleWithForbidden bool `json:"menuVisibleWithForbidden"`  // 是否启用
+        Link string `json:"link"` // 用于配置外链跳转路径，会在新窗口打开。
+    }
+
+//    UserMenuResp {
+//        menus []Menu `json:"menus"`
+//    }
+)
+
+@server (
+    jwt:        Auth
+    middleware: AuthCheckRole,PermissionAction
+    group:      sys/user
+    prefix:     /api/sys/user
+)
+service admin-api {
+    //获取用户信息
+    @handler UserInfo
+    get /info returns (UserInfoResp)
+
+    // 获取用户权限码
+    @handler UserCodes
+    get /codes returns ([]string )
+
+    // 获取用户菜单
+    @handler UserMenus
+    get /menus returns ([]Menu)
+}
+
+@server (
+    group: sys/user
+)
+service admin-api {
+    @handler UserLogin
+    post /api/sys/user/login (LoginReq) returns (LoginResp)
+}
