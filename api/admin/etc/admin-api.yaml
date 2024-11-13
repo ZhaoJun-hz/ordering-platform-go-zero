@@ -1,0 +1,14 @@
+Name: admin-api
+Host: 0.0.0.0
+Port: 7740
+
+SysRpc:
+  Etcd:
+    Hosts:
+      - 10.166.66.14:2379
+    Key: sys.rpc
+  NonBlock: true
+
+Auth:
+  AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d
+  AccessExpire: 86400
