@@ -34,10 +34,9 @@ type MenuMate struct {
 
 type UserInfoResp struct {
 	Avater   string   `json:"avater"`
-	RealName string   `json:"realName"`
 	Roles    []string `json:"roles"`
 	UserId   string   `json:"userId"`
 	Username string   `json:"username"`
 	Desc     string   `json:"desc"`
-	HomePath string   `json:"avater"`
+	HomePath string   `json:"homePath"`
 }

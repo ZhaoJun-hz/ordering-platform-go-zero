@@ -15,7 +15,23 @@ message loginResp {
   string AccessToken = 2;
 }
 
+message InfoReq {
+  int64 UserId = 1;
+}
+
+message InfoResp {
+  string avatar = 1;
+  string username = 2;
+  repeated string roles = 3;
+  string userId = 4;
+  string desc = 5;
+  string homePath = 6;
+}
+
 service UserService {
   // 用户登录
   rpc Login(LoginReq) returns(loginResp);
+
+  // 获取用户个人信息
+  rpc UserInfo(InfoReq) returns(InfoResp);
 }

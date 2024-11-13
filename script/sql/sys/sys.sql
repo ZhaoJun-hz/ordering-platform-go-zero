@@ -1,16 +1,16 @@
 CREATE TABLE `sys_menu`
 (
     `menu_id`           bigint                           NOT NULL AUTO_INCREMENT  COMMENT '主键编码',
-    `parent_id`         bigint unsigned DEFAULT '100000' COMMENT 'Parent menu ID | 父菜单ID',
+    `parent_id`         bigint unsigned DEFAULT '100000' COMMENT '父菜单ID',
     `sort`              int unsigned NOT NULL DEFAULT '1' COMMENT '排序编号',
     `menu_type`         varchar(1)                       DEFAULT NULL COMMENT '菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮',
     `paths`             varchar(128)                     DEFAULT NULL COMMENT '菜单完整路径 /分割',
     `path`              varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '菜单路由路径',
-    `component`         varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT 'The path of vue file | 组件路径',
-    `permission`        varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Permission symbol | 权限标识',
-    `name`              varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'Index name | 菜单名称',
-    `title`             varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'Menu name | 菜单显示标题',
-    `icon`              varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'Menu icon | 菜单图标',
+    `component`         varchar(255) COLLATE utf8mb4_bin DEFAULT '' COMMENT '组件路径',
+    `permission`        varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '权限标识',
+    `name`              varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '菜单名称',
+    `title`             varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '菜单显示标题',
+    `icon`              varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '菜单图标',
     `hide_in_menu`      tinyint(1) DEFAULT '0' COMMENT '是否隐藏菜单 0 不隐藏 1 隐藏',
     `ignore_keep_alive` tinyint(1) DEFAULT '0' COMMENT '取消页面缓存 0 不取消 1 取消',
     `link_flag`         tinyint(1) DEFAULT '0' COMMENT '是否外链 0 不是 1 是',
@@ -47,9 +47,11 @@ CREATE TABLE `sys_api`
 
 CREATE TABLE `sys_menu_api_rule`
 (
+    `id`               bigint NOT NULL AUTO_INCREMENT,
     `sys_menu_menu_id` bigint NOT NULL,
     `sys_api_id`       bigint NOT NULL COMMENT '主键编码',
-    PRIMARY KEY (`sys_menu_menu_id`, `sys_api_id`),
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uniq_sys_menu_api` (`sys_menu_menu_id`, `sys_api_id`),
     KEY                `fk_sys_menu_api_rule_sys_api` (`sys_api_id`),
     CONSTRAINT `fk_sys_menu_api_rule_sys_api` FOREIGN KEY (`sys_api_id`) REFERENCES `sys_api` (`id`),
     CONSTRAINT `fk_sys_menu_api_rule_sys_menu` FOREIGN KEY (`sys_menu_menu_id`) REFERENCES `sys_menu` (`menu_id`)
@@ -79,9 +81,11 @@ CREATE TABLE `sys_role`
 
 CREATE TABLE `sys_role_menu`
 (
+    `id`      bigint NOT NULL AUTO_INCREMENT,
     `role_id` bigint NOT NULL,
     `menu_id` bigint NOT NULL,
-    PRIMARY KEY (`role_id`, `menu_id`),
+    UNIQUE KEY `uniq_sys_role_menu` (`role_id`,`menu_id`),
+    PRIMARY KEY (`id`),
     KEY       `fk_sys_role_menu_sys_menu` (`menu_id`),
     CONSTRAINT `fk_sys_role_menu_sys_menu` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menu_id`),
     CONSTRAINT `fk_sys_role_menu_sys_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`)
@@ -90,7 +94,7 @@ CREATE TABLE `sys_role_menu`
 CREATE TABLE `sys_user`
 (
     `user_id`     bigint                           NOT NULL AUTO_INCREMENT COMMENT '编码',
-    `status`      tinyint unsigned DEFAULT '1' COMMENT '1: normal 2: ban | 状态 1 正常 2 禁用',
+    `status`      tinyint unsigned DEFAULT '1' COMMENT '状态 1 正常 2 禁用',
     `username`    varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '登录名',
     `password`    varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '密码',
     `nickname`    varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '昵称',
@@ -125,7 +129,7 @@ CREATE TABLE `sys_casbin_rule`
     `v7`    varchar(25) COLLATE utf8mb4_bin  DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_sys_casbin_rule` (`ptype`,`v0`,`v1`,`v2`,`v3`,`v4`,`v5`,`v6`,`v7`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE `sys_dept`
 (
@@ -147,4 +151,4 @@ CREATE TABLE `sys_dept`
     KEY          `idx_sys_dept_create_by` (`create_by`),
     KEY          `idx_sys_dept_update_by` (`update_by`),
     KEY          `idx_sys_dept_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

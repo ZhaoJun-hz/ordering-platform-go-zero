@@ -14,12 +14,16 @@ import (
 )
 
 type (
+	InfoReq   = sysclient.InfoReq
+	InfoResp  = sysclient.InfoResp
 	LoginReq  = sysclient.LoginReq
 	LoginResp = sysclient.LoginResp
 
 	UserService interface {
 		// 用户登录
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+		// 获取用户个人信息
+		UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	}
 
 	defaultUserService struct {
@@ -37,4 +41,10 @@ func NewUserService(cli zrpc.Client) UserService {
 func (m *defaultUserService) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	client := sysclient.NewUserServiceClient(m.cli.Conn())
 	return client.Login(ctx, in, opts...)
+}
+
+// 获取用户个人信息
+func (m *defaultUserService) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserInfo(ctx, in, opts...)
 }

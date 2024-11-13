@@ -32,27 +32,6 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 	}
 }
 
-//if err != nil {
-//if err != models.ErrNotFound {
-//return nil, errors.WithStack(ErrPhoneNotRegister)
-//}
-//return nil, errors.Wrapf(xerr.NewDBErr(), "find user by phone error %v, req %v", err, in.Phone)
-//}
-//if !encrypt.ValidatePasswordHash(in.Password, userEntity.Password.String) {
-//return nil, errors.WithStack(ErrUserPwdError)
-//}
-//
-//now := time.Now().Unix()
-//token, err := ctxdata.GetJwtToken(l.svcCtx.Config.Jwt.AccessSecret, now, l.svcCtx.Config.Jwt.AccessExpire, userEntity.Id)
-//if err != nil {
-//return nil, errors.Wrapf(xerr.NewInternalErr(), "ctxdata get jwt token err %v", err)
-//}
-//
-//return &user.LoginResp{
-//Token:  token,
-//Expire: now + l.svcCtx.Config.Jwt.AccessExpire,
-//}, nil
-
 // 用户登录
 func (l *LoginLogic) Login(in *sysclient.LoginReq) (*sysclient.LoginResp, error) {
 	// todo: add your logic here and delete this line

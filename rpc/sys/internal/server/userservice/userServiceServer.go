@@ -28,3 +28,9 @@ func (s *UserServiceServer) Login(ctx context.Context, in *sysclient.LoginReq) (
 	l := userservicelogic.NewLoginLogic(ctx, s.svcCtx)
 	return l.Login(in)
 }
+
+// 获取用户个人信息
+func (s *UserServiceServer) UserInfo(ctx context.Context, in *sysclient.InfoReq) (*sysclient.InfoResp, error) {
+	l := userservicelogic.NewUserInfoLogic(ctx, s.svcCtx)
+	return l.UserInfo(in)
+}
