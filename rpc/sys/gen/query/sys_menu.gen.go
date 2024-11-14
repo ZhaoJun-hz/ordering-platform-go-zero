@@ -59,16 +59,16 @@ type sysMenu struct {
 
 	ALL             field.Asterisk
 	MenuID          field.Int64  // 主键编码
-	ParentID        field.Int64  // Parent menu ID | 父菜单ID
+	ParentID        field.Int64  // 父菜单ID
 	Sort            field.Int32  // 排序编号
 	MenuType        field.String // 菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮
 	Paths           field.String // 菜单完整路径 /分割
 	Path            field.String // 菜单路由路径
-	Component       field.String // The path of vue file | 组件路径
-	Permission      field.String // Permission symbol | 权限标识
-	Name            field.String // Index name | 菜单名称
-	Title           field.String // Menu name | 菜单显示标题
-	Icon            field.String // Menu icon | 菜单图标
+	Component       field.String // 组件路径
+	Permission      field.String // 权限标识
+	Name            field.String // 菜单名称
+	Title           field.String // 菜单显示标题
+	Icon            field.String // 菜单图标
 	HideInMenu      field.Bool   // 是否隐藏菜单 0 不隐藏 1 隐藏
 	IgnoreKeepAlive field.Bool   // 取消页面缓存 0 不取消 1 取消
 	LinkFlag        field.Bool   // 是否外链 0 不是 1 是

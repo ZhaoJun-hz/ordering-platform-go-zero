@@ -14,17 +14,17 @@ const TableNameSysAPI = "sys_api"
 
 // SysAPI mapped from table <sys_api>
 type SysAPI struct {
-	ID        int64          `gorm:"column:id;primaryKey;autoIncrement:true;comment:主键编码" json:"id"` // 主键编码
-	Handle    *string        `gorm:"column:handle;comment:handle" json:"handle"`                     // handle
-	Title     *string        `gorm:"column:title;comment:标题" json:"title"`                           // 标题
-	Path      *string        `gorm:"column:path;comment:地址" json:"path"`                             // 地址
-	Type      *string        `gorm:"column:type;comment:接口类型" json:"type"`                           // 接口类型
-	Action    *string        `gorm:"column:action;comment:请求类型" json:"action"`                       // 请求类型
-	CreatedAt *time.Time     `gorm:"column:created_at;comment:创建时间" json:"created_at"`               // 创建时间
-	UpdatedAt *time.Time     `gorm:"column:updated_at;comment:最后更新时间" json:"updated_at"`             // 最后更新时间
-	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间" json:"deleted_at"`               // 删除时间
-	CreateBy  *int64         `gorm:"column:create_by;comment:创建者" json:"create_by"`                  // 创建者
-	UpdateBy  *int64         `gorm:"column:update_by;comment:更新者" json:"update_by"`                  // 更新者
+	ID        int64          `gorm:"column:id;primaryKey;autoIncrement:true;comment:主键编码" json:"id"`                      // 主键编码
+	Handle    string         `gorm:"column:handle;not null;comment:handle" json:"handle"`                                 // handle
+	Title     string         `gorm:"column:title;not null;comment:标题" json:"title"`                                       // 标题
+	Path      string         `gorm:"column:path;not null;comment:地址" json:"path"`                                         // 地址
+	Type      string         `gorm:"column:type;not null;comment:接口类型" json:"type"`                                       // 接口类型
+	Action    string         `gorm:"column:action;not null;comment:请求类型" json:"action"`                                   // 请求类型
+	CreatedAt time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"` // 创建时间
+	UpdatedAt *time.Time     `gorm:"column:updated_at;comment:最后更新时间" json:"updated_at"`                                  // 最后更新时间
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间" json:"deleted_at"`                                    // 删除时间
+	CreateBy  int64          `gorm:"column:create_by;not null;default:1;comment:创建者" json:"create_by"`                    // 创建者
+	UpdateBy  int64          `gorm:"column:update_by;not null;default:1;comment:更新者" json:"update_by"`                    // 更新者
 }
 
 // TableName SysAPI's table name

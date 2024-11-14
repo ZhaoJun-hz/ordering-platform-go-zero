@@ -36,11 +36,11 @@ func newSysDept(db *gorm.DB, opts ...gen.DOOption) sysDept {
 	_sysDept.Phone = field.NewString(tableName, "phone")
 	_sysDept.Email = field.NewString(tableName, "email")
 	_sysDept.Status = field.NewInt32(tableName, "status")
-	_sysDept.CreateBy = field.NewInt64(tableName, "create_by")
-	_sysDept.UpdateBy = field.NewInt64(tableName, "update_by")
 	_sysDept.CreatedAt = field.NewTime(tableName, "created_at")
 	_sysDept.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_sysDept.DeletedAt = field.NewField(tableName, "deleted_at")
+	_sysDept.CreateBy = field.NewInt64(tableName, "create_by")
+	_sysDept.UpdateBy = field.NewInt64(tableName, "update_by")
 
 	_sysDept.fillFieldMap()
 
@@ -60,11 +60,11 @@ type sysDept struct {
 	Phone     field.String // 负责人手机号
 	Email     field.String // 负责人邮箱
 	Status    field.Int32  // 状态 1 停用 2 启用
-	CreateBy  field.Int64  // 创建者
-	UpdateBy  field.Int64  // 更新者
 	CreatedAt field.Time   // 创建时间
 	UpdatedAt field.Time   // 最后更新时间
 	DeletedAt field.Field  // 删除时间
+	CreateBy  field.Int64  // 创建者
+	UpdateBy  field.Int64  // 更新者
 
 	fieldMap map[string]field.Expr
 }
@@ -90,11 +90,11 @@ func (s *sysDept) updateTableName(table string) *sysDept {
 	s.Phone = field.NewString(table, "phone")
 	s.Email = field.NewString(table, "email")
 	s.Status = field.NewInt32(table, "status")
-	s.CreateBy = field.NewInt64(table, "create_by")
-	s.UpdateBy = field.NewInt64(table, "update_by")
 	s.CreatedAt = field.NewTime(table, "created_at")
 	s.UpdatedAt = field.NewTime(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")
+	s.CreateBy = field.NewInt64(table, "create_by")
+	s.UpdateBy = field.NewInt64(table, "update_by")
 
 	s.fillFieldMap()
 
@@ -129,11 +129,11 @@ func (s *sysDept) fillFieldMap() {
 	s.fieldMap["phone"] = s.Phone
 	s.fieldMap["email"] = s.Email
 	s.fieldMap["status"] = s.Status
-	s.fieldMap["create_by"] = s.CreateBy
-	s.fieldMap["update_by"] = s.UpdateBy
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
 	s.fieldMap["deleted_at"] = s.DeletedAt
+	s.fieldMap["create_by"] = s.CreateBy
+	s.fieldMap["update_by"] = s.UpdateBy
 }
 
 func (s sysDept) clone(db *gorm.DB) sysDept {

@@ -36,11 +36,11 @@ func newSysRole(db *gorm.DB, opts ...gen.DOOption) sysRole {
 	_sysRole.Admin = field.NewBool(tableName, "admin")
 	_sysRole.DataScope = field.NewString(tableName, "data_scope")
 	_sysRole.DefaultRouter = field.NewString(tableName, "default_router")
-	_sysRole.CreateBy = field.NewInt64(tableName, "create_by")
-	_sysRole.UpdateBy = field.NewInt64(tableName, "update_by")
 	_sysRole.CreatedAt = field.NewTime(tableName, "created_at")
 	_sysRole.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_sysRole.DeletedAt = field.NewField(tableName, "deleted_at")
+	_sysRole.CreateBy = field.NewInt64(tableName, "create_by")
+	_sysRole.UpdateBy = field.NewInt64(tableName, "update_by")
 
 	_sysRole.fillFieldMap()
 
@@ -60,11 +60,11 @@ type sysRole struct {
 	Admin         field.Bool   // 是否是管理员 0 不是 1 是
 	DataScope     field.String // 数据范围
 	DefaultRouter field.String // 默认登录页面
-	CreateBy      field.Int64  // 创建者
-	UpdateBy      field.Int64  // 更新者
 	CreatedAt     field.Time   // 创建时间
 	UpdatedAt     field.Time   // 最后更新时间
 	DeletedAt     field.Field  // 删除时间
+	CreateBy      field.Int64  // 创建者
+	UpdateBy      field.Int64  // 更新者
 
 	fieldMap map[string]field.Expr
 }
@@ -90,11 +90,11 @@ func (s *sysRole) updateTableName(table string) *sysRole {
 	s.Admin = field.NewBool(table, "admin")
 	s.DataScope = field.NewString(table, "data_scope")
 	s.DefaultRouter = field.NewString(table, "default_router")
-	s.CreateBy = field.NewInt64(table, "create_by")
-	s.UpdateBy = field.NewInt64(table, "update_by")
 	s.CreatedAt = field.NewTime(table, "created_at")
 	s.UpdatedAt = field.NewTime(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")
+	s.CreateBy = field.NewInt64(table, "create_by")
+	s.UpdateBy = field.NewInt64(table, "update_by")
 
 	s.fillFieldMap()
 
@@ -129,11 +129,11 @@ func (s *sysRole) fillFieldMap() {
 	s.fieldMap["admin"] = s.Admin
 	s.fieldMap["data_scope"] = s.DataScope
 	s.fieldMap["default_router"] = s.DefaultRouter
-	s.fieldMap["create_by"] = s.CreateBy
-	s.fieldMap["update_by"] = s.UpdateBy
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
 	s.fieldMap["deleted_at"] = s.DeletedAt
+	s.fieldMap["create_by"] = s.CreateBy
+	s.fieldMap["update_by"] = s.UpdateBy
 }
 
 func (s sysRole) clone(db *gorm.DB) sysRole {

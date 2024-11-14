@@ -35,3 +35,4 @@ service UserService {
   // 获取用户个人信息
   rpc UserInfo(InfoReq) returns(InfoResp);
 }
+

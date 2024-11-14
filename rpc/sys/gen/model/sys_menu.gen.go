@@ -14,27 +14,27 @@ const TableNameSysMenu = "sys_menu"
 
 // SysMenu mapped from table <sys_menu>
 type SysMenu struct {
-	MenuID          int64          `gorm:"column:menu_id;primaryKey;autoIncrement:true;comment:主键编码" json:"menu_id"`            // 主键编码
-	ParentID        *int64         `gorm:"column:parent_id;default:100000;comment:Parent menu ID | 父菜单ID" json:"parent_id"`     // Parent menu ID | 父菜单ID
-	Sort            int32          `gorm:"column:sort;not null;default:1;comment:排序编号" json:"sort"`                             // 排序编号
-	MenuType        *string        `gorm:"column:menu_type;comment:菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮" json:"menu_type"`             // 菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮
-	Paths           *string        `gorm:"column:paths;comment:菜单完整路径 /分割" json:"paths"`                                        // 菜单完整路径 /分割
-	Path            *string        `gorm:"column:path;comment:菜单路由路径" json:"path"`                                              // 菜单路由路径
-	Component       *string        `gorm:"column:component;comment:The path of vue file | 组件路径" json:"component"`               // The path of vue file | 组件路径
-	Permission      *string        `gorm:"column:permission;comment:Permission symbol | 权限标识" json:"permission"`                // Permission symbol | 权限标识
-	Name            string         `gorm:"column:name;not null;comment:Index name | 菜单名称" json:"name"`                          // Index name | 菜单名称
-	Title           string         `gorm:"column:title;not null;comment:Menu name | 菜单显示标题" json:"title"`                       // Menu name | 菜单显示标题
-	Icon            string         `gorm:"column:icon;not null;comment:Menu icon | 菜单图标" json:"icon"`                           // Menu icon | 菜单图标
-	HideInMenu      *bool          `gorm:"column:hide_in_menu;comment:是否隐藏菜单 0 不隐藏 1 隐藏" json:"hide_in_menu"`                   // 是否隐藏菜单 0 不隐藏 1 隐藏
-	IgnoreKeepAlive *bool          `gorm:"column:ignore_keep_alive;comment:取消页面缓存 0 不取消 1 取消" json:"ignore_keep_alive"`         // 取消页面缓存 0 不取消 1 取消
-	LinkFlag        *bool          `gorm:"column:link_flag;comment:是否外链 0 不是 1 是" json:"link_flag"`                             // 是否外链 0 不是 1 是
-	Link            *string        `gorm:"column:link;comment:跳转路径 （外链）" json:"link"`                                           // 跳转路径 （外链）
-	Disabled        *bool          `gorm:"column:disabled;comment:是否停用 0 不停用 1 启用，对应 menuVisibleWithForbidden" json:"disabled"` // 是否停用 0 不停用 1 启用，对应 menuVisibleWithForbidden
-	CreatedAt       *time.Time     `gorm:"column:created_at;comment:创建时间" json:"created_at"`                                    // 创建时间
-	UpdatedAt       *time.Time     `gorm:"column:updated_at;comment:最后更新时间" json:"updated_at"`                                  // 最后更新时间
-	DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间" json:"deleted_at"`                                    // 删除时间
-	CreateBy        *int64         `gorm:"column:create_by;comment:创建者" json:"create_by"`                                       // 创建者
-	UpdateBy        *int64         `gorm:"column:update_by;comment:更新者" json:"update_by"`                                       // 更新者
+	MenuID          int64          `gorm:"column:menu_id;primaryKey;autoIncrement:true;comment:主键编码" json:"menu_id"`                     // 主键编码
+	ParentID        int64          `gorm:"column:parent_id;not null;comment:父菜单ID" json:"parent_id"`                                     // 父菜单ID
+	Sort            int32          `gorm:"column:sort;not null;default:1;comment:排序编号" json:"sort"`                                      // 排序编号
+	MenuType        string         `gorm:"column:menu_type;not null;comment:菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮" json:"menu_type"`             // 菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮
+	Paths           string         `gorm:"column:paths;not null;comment:菜单完整路径 /分割" json:"paths"`                                        // 菜单完整路径 /分割
+	Path            string         `gorm:"column:path;not null;comment:菜单路由路径" json:"path"`                                              // 菜单路由路径
+	Component       string         `gorm:"column:component;not null;comment:组件路径" json:"component"`                                      // 组件路径
+	Permission      string         `gorm:"column:permission;not null;comment:权限标识" json:"permission"`                                    // 权限标识
+	Name            string         `gorm:"column:name;not null;comment:菜单名称" json:"name"`                                                // 菜单名称
+	Title           string         `gorm:"column:title;not null;comment:菜单显示标题" json:"title"`                                            // 菜单显示标题
+	Icon            string         `gorm:"column:icon;not null;comment:菜单图标" json:"icon"`                                                // 菜单图标
+	HideInMenu      bool           `gorm:"column:hide_in_menu;not null;comment:是否隐藏菜单 0 不隐藏 1 隐藏" json:"hide_in_menu"`                   // 是否隐藏菜单 0 不隐藏 1 隐藏
+	IgnoreKeepAlive bool           `gorm:"column:ignore_keep_alive;not null;comment:取消页面缓存 0 不取消 1 取消" json:"ignore_keep_alive"`         // 取消页面缓存 0 不取消 1 取消
+	LinkFlag        bool           `gorm:"column:link_flag;not null;comment:是否外链 0 不是 1 是" json:"link_flag"`                             // 是否外链 0 不是 1 是
+	Link            string         `gorm:"column:link;not null;comment:跳转路径 （外链）" json:"link"`                                           // 跳转路径 （外链）
+	Disabled        bool           `gorm:"column:disabled;not null;comment:是否停用 0 不停用 1 启用，对应 menuVisibleWithForbidden" json:"disabled"` // 是否停用 0 不停用 1 启用，对应 menuVisibleWithForbidden
+	CreatedAt       time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`          // 创建时间
+	UpdatedAt       *time.Time     `gorm:"column:updated_at;comment:最后更新时间" json:"updated_at"`                                           // 最后更新时间
+	DeletedAt       gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间" json:"deleted_at"`                                             // 删除时间
+	CreateBy        int64          `gorm:"column:create_by;not null;default:1;comment:创建者" json:"create_by"`                             // 创建者
+	UpdateBy        int64          `gorm:"column:update_by;not null;default:1;comment:更新者" json:"update_by"`                             // 更新者
 }
 
 // TableName SysMenu's table name

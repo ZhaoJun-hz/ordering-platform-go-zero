@@ -6,6 +6,7 @@ package handler
 import (
 	"net/http"
 
+	sysbase "ordering-platform/api/admin/internal/handler/sys/base"
 	sysuser "ordering-platform/api/admin/internal/handler/sys/user"
 	"ordering-platform/api/admin/internal/svc"
 
@@ -14,20 +15,34 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
+		[]rest.Route{
+			{
+				// 初始化api
+				Method:  http.MethodGet,
+				Path:    "/api/sys/base/initapi",
+				Handler: sysbase.InitApiHandler(serverCtx),
+			},
+		},
+	)
+
+	server.AddRoutes(
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
 			[]rest.Route{
 				{
+					// 获取用户权限码
 					Method:  http.MethodGet,
 					Path:    "/codes",
 					Handler: sysuser.UserCodesHandler(serverCtx),
 				},
 				{
+					// 获取用户信息
 					Method:  http.MethodGet,
 					Path:    "/info",
 					Handler: sysuser.UserInfoHandler(serverCtx),
 				},
 				{
+					// 获取用户菜单
 					Method:  http.MethodGet,
 					Path:    "/menus",
 					Handler: sysuser.UserMenusHandler(serverCtx),
@@ -41,6 +56,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 用户登录
 				Method:  http.MethodPost,
 				Path:    "/api/sys/user/login",
 				Handler: sysuser.UserLoginHandler(serverCtx),

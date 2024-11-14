@@ -38,11 +38,11 @@ func newSysUser(db *gorm.DB, opts ...gen.DOOption) sysUser {
 	_sysUser.Avatar = field.NewString(tableName, "avatar")
 	_sysUser.DeptID = field.NewInt64(tableName, "dept_id")
 	_sysUser.RoleID = field.NewInt64(tableName, "role_id")
-	_sysUser.CreateBy = field.NewInt64(tableName, "create_by")
-	_sysUser.UpdateBy = field.NewInt64(tableName, "update_by")
 	_sysUser.CreatedAt = field.NewTime(tableName, "created_at")
 	_sysUser.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_sysUser.DeletedAt = field.NewField(tableName, "deleted_at")
+	_sysUser.CreateBy = field.NewInt64(tableName, "create_by")
+	_sysUser.UpdateBy = field.NewInt64(tableName, "update_by")
 
 	_sysUser.fillFieldMap()
 
@@ -54,7 +54,7 @@ type sysUser struct {
 
 	ALL         field.Asterisk
 	UserID      field.Int64  // 编码
-	Status      field.Int32  // 1: normal 2: ban | 状态 1 正常 2 禁用
+	Status      field.Int32  // 状态 1 正常 2 禁用
 	Username    field.String // 登录名
 	Password    field.String // 密码
 	Nickname    field.String // 昵称
@@ -64,11 +64,11 @@ type sysUser struct {
 	Avatar      field.String // 头像路径
 	DeptID      field.Int64  // 部门ID
 	RoleID      field.Int64  // 角色ID
-	CreateBy    field.Int64  // 创建者
-	UpdateBy    field.Int64  // 更新者
 	CreatedAt   field.Time   // 创建时间
 	UpdatedAt   field.Time   // 最后更新时间
 	DeletedAt   field.Field  // 删除时间
+	CreateBy    field.Int64  // 创建者
+	UpdateBy    field.Int64  // 更新者
 
 	fieldMap map[string]field.Expr
 }
@@ -96,11 +96,11 @@ func (s *sysUser) updateTableName(table string) *sysUser {
 	s.Avatar = field.NewString(table, "avatar")
 	s.DeptID = field.NewInt64(table, "dept_id")
 	s.RoleID = field.NewInt64(table, "role_id")
-	s.CreateBy = field.NewInt64(table, "create_by")
-	s.UpdateBy = field.NewInt64(table, "update_by")
 	s.CreatedAt = field.NewTime(table, "created_at")
 	s.UpdatedAt = field.NewTime(table, "updated_at")
 	s.DeletedAt = field.NewField(table, "deleted_at")
+	s.CreateBy = field.NewInt64(table, "create_by")
+	s.UpdateBy = field.NewInt64(table, "update_by")
 
 	s.fillFieldMap()
 
@@ -137,11 +137,11 @@ func (s *sysUser) fillFieldMap() {
 	s.fieldMap["avatar"] = s.Avatar
 	s.fieldMap["dept_id"] = s.DeptID
 	s.fieldMap["role_id"] = s.RoleID
-	s.fieldMap["create_by"] = s.CreateBy
-	s.fieldMap["update_by"] = s.UpdateBy
 	s.fieldMap["created_at"] = s.CreatedAt
 	s.fieldMap["updated_at"] = s.UpdatedAt
 	s.fieldMap["deleted_at"] = s.DeletedAt
+	s.fieldMap["create_by"] = s.CreateBy
+	s.fieldMap["update_by"] = s.UpdateBy
 }
 
 func (s sysUser) clone(db *gorm.DB) sysUser {

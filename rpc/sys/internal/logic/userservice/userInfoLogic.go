@@ -51,23 +51,23 @@ func (l *UserInfoLogic) UserInfo(in *sysclient.InfoReq) (*sysclient.InfoResp, er
 
 	// 3.查询role
 	roleQuery := query.SysRole
-	sysRole, err := roleQuery.WithContext(l.ctx).Where(roleQuery.RoleID.Eq(*info.RoleID)).First()
+	sysRole, err := roleQuery.WithContext(l.ctx).Where(roleQuery.RoleID.Eq(info.RoleID)).First()
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		logc.Errorf(l.ctx, "角色不存在,参数：%d,异常:%s", *info.RoleID, err.Error())
+		logc.Errorf(l.ctx, "角色不存在,参数：%d,异常:%s", info.RoleID, err.Error())
 		return nil, errors.WithStack(errcode.RoleNotExistError)
 	}
 
 	if err != nil {
-		logc.Errorf(l.ctx, "查询用户信息,参数：%d,异常:%s", *info.RoleID, err.Error())
+		logc.Errorf(l.ctx, "查询用户信息,参数：%d,异常:%s", info.RoleID, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询用户信息 %v, req %v", err, in)
 	}
 
 	return &sysclient.InfoResp{
-		Avatar:   *info.Avatar,
+		Avatar:   info.Avatar,
 		Username: info.Username,
-		Roles:    []string{*sysRole.RoleName},
+		Roles:    []string{sysRole.RoleName},
 		UserId:   strconv.FormatInt(info.UserID, 10),
-		Desc:     *info.Description,
+		Desc:     info.Description,
 		HomePath: sysRole.DefaultRouter,
 	}, nil
 }

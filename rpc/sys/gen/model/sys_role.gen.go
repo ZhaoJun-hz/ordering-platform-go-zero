@@ -15,19 +15,19 @@ const TableNameSysRole = "sys_role"
 // SysRole mapped from table <sys_role>
 type SysRole struct {
 	RoleID        int64          `gorm:"column:role_id;primaryKey;autoIncrement:true" json:"role_id"`
-	RoleName      *string        `gorm:"column:role_name" json:"role_name"`
-	Status        *string        `gorm:"column:status" json:"status"`
-	RoleKey       *string        `gorm:"column:role_key;comment:角色码" json:"role_key"` // 角色码
-	RoleSort      *int64         `gorm:"column:role_sort" json:"role_sort"`
-	Remark        *string        `gorm:"column:remark" json:"remark"`
-	Admin         *bool          `gorm:"column:admin;comment:是否是管理员 0 不是 1 是" json:"admin"`                                     // 是否是管理员 0 不是 1 是
-	DataScope     *string        `gorm:"column:data_scope;comment:数据范围" json:"data_scope"`                                      // 数据范围
+	RoleName      string         `gorm:"column:role_name;not null" json:"role_name"`
+	Status        string         `gorm:"column:status;not null" json:"status"`
+	RoleKey       string         `gorm:"column:role_key;not null;comment:角色码" json:"role_key"` // 角色码
+	RoleSort      int64          `gorm:"column:role_sort;not null;default:1" json:"role_sort"`
+	Remark        string         `gorm:"column:remark;not null" json:"remark"`
+	Admin         bool           `gorm:"column:admin;not null;comment:是否是管理员 0 不是 1 是" json:"admin"`                            // 是否是管理员 0 不是 1 是
+	DataScope     string         `gorm:"column:data_scope;not null;default:0;comment:数据范围" json:"data_scope"`                   // 数据范围
 	DefaultRouter string         `gorm:"column:default_router;not null;default:dashboard;comment:默认登录页面" json:"default_router"` // 默认登录页面
-	CreateBy      *int64         `gorm:"column:create_by;comment:创建者" json:"create_by"`                                         // 创建者
-	UpdateBy      *int64         `gorm:"column:update_by;comment:更新者" json:"update_by"`                                         // 更新者
-	CreatedAt     *time.Time     `gorm:"column:created_at;comment:创建时间" json:"created_at"`                                      // 创建时间
+	CreatedAt     time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP;comment:创建时间" json:"created_at"`   // 创建时间
 	UpdatedAt     *time.Time     `gorm:"column:updated_at;comment:最后更新时间" json:"updated_at"`                                    // 最后更新时间
 	DeletedAt     gorm.DeletedAt `gorm:"column:deleted_at;comment:删除时间" json:"deleted_at"`                                      // 删除时间
+	CreateBy      int64          `gorm:"column:create_by;not null;default:1;comment:创建者" json:"create_by"`                      // 创建者
+	UpdateBy      int64          `gorm:"column:update_by;not null;default:1;comment:更新者" json:"update_by"`                      // 更新者
 }
 
 // TableName SysRole's table name

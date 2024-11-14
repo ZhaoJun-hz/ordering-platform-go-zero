@@ -23,6 +23,5 @@ func NewUserCodesLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserCod
 
 func (l *UserCodesLogic) UserCodes() (resp []string, err error) {
 	// todo: add your logic here and delete this line
-
 	return
 }

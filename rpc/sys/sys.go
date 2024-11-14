@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"ordering-platform/pkg/interceptor/rpcserver"
+	baseserviceServer "ordering-platform/rpc/sys/internal/server/baseservice"
 
 	"ordering-platform/rpc/sys/internal/config"
 	userserviceServer "ordering-platform/rpc/sys/internal/server/userservice"
@@ -28,6 +29,7 @@ func main() {
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		sysclient.RegisterUserServiceServer(grpcServer, userserviceServer.NewUserServiceServer(ctx))
+		sysclient.RegisterBaseServiceServer(grpcServer, baseserviceServer.NewBaseServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

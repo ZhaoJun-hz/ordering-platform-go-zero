@@ -1,0 +1,309 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "",
+    "description": "ordering platform admin",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/sys/base/initapi": {
+      "get": {
+        "summary": "初始化api",
+        "operationId": "InitApi",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/InitApiResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/base"
+        ]
+      }
+    },
+    "/api/sys/user/codes": {
+      "get": {
+        "summary": "获取用户权限码",
+        "operationId": "UserCodes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/string"
+              }
+            }
+          }
+        },
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/user/info": {
+      "get": {
+        "summary": "获取用户信息",
+        "operationId": "UserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "UserLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 用户登录",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/user"
+        ]
+      }
+    },
+    "/api/sys/user/menus": {
+      "get": {
+        "summary": "获取用户菜单",
+        "operationId": "UserMenus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Menu"
+              }
+            }
+          }
+        },
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "InitApiReq": {
+      "type": "object",
+      "title": "InitApiReq"
+    },
+    "InitApiResp": {
+      "type": "object",
+      "title": "InitApiResp"
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "accessToken"
+      ]
+    },
+    "Menu": {
+      "type": "object",
+      "properties": {
+        "menuId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件地址"
+        },
+        "meta": {
+          "$ref": "#/definitions/MenuMate"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Menu"
+          }
+        }
+      },
+      "title": "Menu",
+      "required": [
+        "menuId",
+        "parentMenuId",
+        "name",
+        "path",
+        "component",
+        "meta"
+      ]
+    },
+    "MenuMate": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": " 菜单名称"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 排序"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否隐藏"
+        },
+        "keepAlive": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否缓存"
+        },
+        "menuVisibleWithForbidden": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否启用"
+        },
+        "link": {
+          "type": "string",
+          "description": " 用于配置外链跳转路径，会在新窗口打开。"
+        }
+      },
+      "title": "MenuMate",
+      "required": [
+        "title",
+        "order",
+        "icon",
+        "hideInMenu",
+        "keepAlive",
+        "menuVisibleWithForbidden",
+        "link"
+      ]
+    },
+    "UserInfoResp": {
+      "type": "object",
+      "properties": {
+        "avater": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "userId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "homePath": {
+          "type": "string"
+        }
+      },
+      "title": "UserInfoResp",
+      "required": [
+        "avater",
+        "roles",
+        "userId",
+        "username",
+        "desc",
+        "homePath"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

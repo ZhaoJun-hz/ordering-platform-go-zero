@@ -1,6 +1,7 @@
 syntax = "v1"
 
 import "sys/user.api"
+import "base/base.api"
 
 info (
 	desc:   "ordering platform admin"

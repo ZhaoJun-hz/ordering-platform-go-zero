@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"ordering-platform/pkg/global"
 	"ordering-platform/pkg/resultx"
 
 	"ordering-platform/api/admin/internal/config"
@@ -27,6 +28,7 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
+	global.Routes = server.Routes()
 
 	httpx.SetErrorHandlerCtx(resultx.ErrHandler(c.Name))
 	httpx.SetOkHandler(resultx.OkHandler)

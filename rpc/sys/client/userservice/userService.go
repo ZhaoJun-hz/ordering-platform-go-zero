@@ -14,10 +14,13 @@ import (
 )
 
 type (
-	InfoReq   = sysclient.InfoReq
-	InfoResp  = sysclient.InfoResp
-	LoginReq  = sysclient.LoginReq
-	LoginResp = sysclient.LoginResp
+	InfoReq          = sysclient.InfoReq
+	InfoResp         = sysclient.InfoResp
+	InitApiReq       = sysclient.InitApiReq
+	InitApiResp      = sysclient.InitApiResp
+	InitApiRouteData = sysclient.InitApiRouteData
+	LoginReq         = sysclient.LoginReq
+	LoginResp        = sysclient.LoginResp
 
 	UserService interface {
 		// 用户登录

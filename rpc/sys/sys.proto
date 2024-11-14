@@ -5,6 +5,27 @@ package sysclient;
 option go_package = "./sysclient";
 
 
+message InitApiRouteData {
+  string handle = 1; // 方法名
+  string title = 2; // 方法描述
+  string path = 3; // 请求路径
+  string type = 4; // 类型 1 系统 2 业务
+  string action = 5; // 请求方式
+}
+
+message InitApiReq {
+  repeated  InitApiRouteData list = 1;
+}
+
+message InitApiResp {
+
+}
+
+service BaseService {
+  // 初始化Api
+  rpc InitApi(InitApiReq) returns(InitApiResp);
+}
+
 message LoginReq {
   string username = 1;
   string password = 2;
@@ -35,3 +56,4 @@ service UserService {
   // 获取用户个人信息
   rpc UserInfo(InfoReq) returns(InfoResp);
 }
+

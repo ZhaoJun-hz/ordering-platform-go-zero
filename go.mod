@@ -3,6 +3,7 @@ module ordering-platform
 go 1.22
 
 require (
+	github.com/bitly/go-simplejson v0.5.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/zeromicro/go-zero v1.7.3
