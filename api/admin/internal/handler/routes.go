@@ -6,7 +6,7 @@ package handler
 import (
 	"net/http"
 
-	sysbase "ordering-platform/api/admin/internal/handler/sys/base"
+	sysapi "ordering-platform/api/admin/internal/handler/sys/api"
 	sysuser "ordering-platform/api/admin/internal/handler/sys/user"
 	"ordering-platform/api/admin/internal/svc"
 
@@ -19,10 +19,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				// 初始化api
 				Method:  http.MethodGet,
-				Path:    "/api/sys/base/initapi",
-				Handler: sysbase.InitApiHandler(serverCtx),
+				Path:    "/initapi",
+				Handler: sysapi.InitApiHandler(serverCtx),
+			},
+			{
+				// 查询 api 列表
+				Method:  http.MethodGet,
+				Path:    "/list",
+				Handler: sysapi.ApiListHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/api/sys/api"),
 	)
 
 	server.AddRoutes(

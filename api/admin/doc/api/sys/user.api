@@ -16,7 +16,7 @@ type (
         AccessToken string `json:"accessToken"`
     }
 
-        // 用户个人信息
+    // 用户个人信息
     UserInfoResp {
         Avater string `json:"avater"`
         Roles []string `json:"roles"`
@@ -26,20 +26,16 @@ type (
         HomePath string `json:"homePath"`
     }
 
-        // 获取权限码
-        //    UserCodesResp {
-        //        codes []string `json:"codes"`
-        //    }
 
-        // 用户拥有的菜单权限
+    // 用户拥有的菜单权限
     Menu {
         MenuId int64 `json:"menuId"`
         ParentMenuId int64 `json:"parentMenuId"`
         Name string `json:"name"`           // 路由名称
         Path string `json:"path"`           // 路由地址
         Component string `json:"component"` // 组件地址
-        MenuMate MenuMate `json:"meta"`
-        Children []Menu `json:"children,omitempty"`
+        MenuMate *MenuMate `json:"meta"`
+        Children []*Menu `json:"children,omitempty"`
     }
 
     MenuMate {
@@ -51,10 +47,6 @@ type (
         MenuVisibleWithForbidden bool `json:"menuVisibleWithForbidden"`  // 是否启用
         Link string `json:"link"`                                        // 用于配置外链跳转路径，会在新窗口打开。
     }
-
-    //    UserMenuResp {
-    //        menus []Menu `json:"menus"`
-    //    }
 )
 
 @server(

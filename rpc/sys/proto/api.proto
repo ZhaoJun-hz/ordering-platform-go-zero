@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./proto";
+
+
+message InitApiRouteData {
+  string handle = 1; // 方法名
+  string title = 2; // 方法描述
+  string path = 3; // 请求路径
+  string type = 4; // 类型 1 系统 2 业务
+  string action = 5; // 请求方式
+}
+
+message InitApiReq {
+  repeated InitApiRouteData list = 1;
+}
+
+message InitApiResp {
+
+}
+
+message ApiInfo {
+  int64 id = 1;
+  string handle = 2; // 方法名
+  string title = 3; // 方法描述
+  string path = 4; // 请求路径
+  string type = 5; // 类型 1 系统 2 业务
+  string action = 6; // 请求方式
+  string createTime = 7; // 创建时间
+}
+
+message ApiListReq {
+  string type = 1;    // 系统 业务
+  string action = 2;  // 请求方法 GET POST DELETE PUT
+  int64 page_num = 3; //  第几页
+  int64 page_size = 4; // 每页的数量
+}
+
+message ApiListResp {
+  int64 total = 1;
+  repeated ApiInfo data = 2;
+}
+
+service ApiService {
+  // 初始化Api
+  rpc InitApi(InitApiReq) returns(InitApiResp);
+
+  rpc ListApi(ApiListReq) returns(ApiListResp);
+}
+

@@ -19,103 +19,243 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BaseService_InitApi_FullMethodName = "/sysclient.BaseService/InitApi"
+	ApiService_InitApi_FullMethodName = "/sysclient.ApiService/InitApi"
+	ApiService_ListApi_FullMethodName = "/sysclient.ApiService/ListApi"
 )
 
-// BaseServiceClient is the client API for BaseService service.
+// ApiServiceClient is the client API for ApiService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BaseServiceClient interface {
+type ApiServiceClient interface {
 	// 初始化Api
 	InitApi(ctx context.Context, in *InitApiReq, opts ...grpc.CallOption) (*InitApiResp, error)
+	ListApi(ctx context.Context, in *ApiListReq, opts ...grpc.CallOption) (*ApiListResp, error)
 }
 
-type baseServiceClient struct {
+type apiServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBaseServiceClient(cc grpc.ClientConnInterface) BaseServiceClient {
-	return &baseServiceClient{cc}
+func NewApiServiceClient(cc grpc.ClientConnInterface) ApiServiceClient {
+	return &apiServiceClient{cc}
 }
 
-func (c *baseServiceClient) InitApi(ctx context.Context, in *InitApiReq, opts ...grpc.CallOption) (*InitApiResp, error) {
+func (c *apiServiceClient) InitApi(ctx context.Context, in *InitApiReq, opts ...grpc.CallOption) (*InitApiResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InitApiResp)
-	err := c.cc.Invoke(ctx, BaseService_InitApi_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ApiService_InitApi_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BaseServiceServer is the server API for BaseService service.
-// All implementations must embed UnimplementedBaseServiceServer
-// for forward compatibility.
-type BaseServiceServer interface {
-	// 初始化Api
-	InitApi(context.Context, *InitApiReq) (*InitApiResp, error)
-	mustEmbedUnimplementedBaseServiceServer()
+func (c *apiServiceClient) ListApi(ctx context.Context, in *ApiListReq, opts ...grpc.CallOption) (*ApiListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApiListResp)
+	err := c.cc.Invoke(ctx, ApiService_ListApi_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedBaseServiceServer must be embedded to have
+// ApiServiceServer is the server API for ApiService service.
+// All implementations must embed UnimplementedApiServiceServer
+// for forward compatibility.
+type ApiServiceServer interface {
+	// 初始化Api
+	InitApi(context.Context, *InitApiReq) (*InitApiResp, error)
+	ListApi(context.Context, *ApiListReq) (*ApiListResp, error)
+	mustEmbedUnimplementedApiServiceServer()
+}
+
+// UnimplementedApiServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedBaseServiceServer struct{}
+type UnimplementedApiServiceServer struct{}
 
-func (UnimplementedBaseServiceServer) InitApi(context.Context, *InitApiReq) (*InitApiResp, error) {
+func (UnimplementedApiServiceServer) InitApi(context.Context, *InitApiReq) (*InitApiResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitApi not implemented")
 }
-func (UnimplementedBaseServiceServer) mustEmbedUnimplementedBaseServiceServer() {}
-func (UnimplementedBaseServiceServer) testEmbeddedByValue()                     {}
+func (UnimplementedApiServiceServer) ListApi(context.Context, *ApiListReq) (*ApiListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListApi not implemented")
+}
+func (UnimplementedApiServiceServer) mustEmbedUnimplementedApiServiceServer() {}
+func (UnimplementedApiServiceServer) testEmbeddedByValue()                    {}
 
-// UnsafeBaseServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BaseServiceServer will
+// UnsafeApiServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ApiServiceServer will
 // result in compilation errors.
-type UnsafeBaseServiceServer interface {
-	mustEmbedUnimplementedBaseServiceServer()
+type UnsafeApiServiceServer interface {
+	mustEmbedUnimplementedApiServiceServer()
 }
 
-func RegisterBaseServiceServer(s grpc.ServiceRegistrar, srv BaseServiceServer) {
-	// If the following call pancis, it indicates UnimplementedBaseServiceServer was
+func RegisterApiServiceServer(s grpc.ServiceRegistrar, srv ApiServiceServer) {
+	// If the following call pancis, it indicates UnimplementedApiServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&BaseService_ServiceDesc, srv)
+	s.RegisterService(&ApiService_ServiceDesc, srv)
 }
 
-func _BaseService_InitApi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ApiService_InitApi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InitApiReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BaseServiceServer).InitApi(ctx, in)
+		return srv.(ApiServiceServer).InitApi(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BaseService_InitApi_FullMethodName,
+		FullMethod: ApiService_InitApi_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BaseServiceServer).InitApi(ctx, req.(*InitApiReq))
+		return srv.(ApiServiceServer).InitApi(ctx, req.(*InitApiReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// BaseService_ServiceDesc is the grpc.ServiceDesc for BaseService service.
+func _ApiService_ListApi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ApiServiceServer).ListApi(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ApiService_ListApi_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ApiServiceServer).ListApi(ctx, req.(*ApiListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// ApiService_ServiceDesc is the grpc.ServiceDesc for ApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BaseService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "sysclient.BaseService",
-	HandlerType: (*BaseServiceServer)(nil),
+var ApiService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysclient.ApiService",
+	HandlerType: (*ApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "InitApi",
-			Handler:    _BaseService_InitApi_Handler,
+			Handler:    _ApiService_InitApi_Handler,
+		},
+		{
+			MethodName: "ListApi",
+			Handler:    _ApiService_ListApi_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "rpc/sys/sys.proto",
+}
+
+const (
+	MenuService_AddMenu_FullMethodName = "/sysclient.MenuService/addMenu"
+)
+
+// MenuServiceClient is the client API for MenuService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type MenuServiceClient interface {
+	AddMenu(ctx context.Context, in *AddMenuReq, opts ...grpc.CallOption) (*AddMenuResp, error)
+}
+
+type menuServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewMenuServiceClient(cc grpc.ClientConnInterface) MenuServiceClient {
+	return &menuServiceClient{cc}
+}
+
+func (c *menuServiceClient) AddMenu(ctx context.Context, in *AddMenuReq, opts ...grpc.CallOption) (*AddMenuResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddMenuResp)
+	err := c.cc.Invoke(ctx, MenuService_AddMenu_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MenuServiceServer is the server API for MenuService service.
+// All implementations must embed UnimplementedMenuServiceServer
+// for forward compatibility.
+type MenuServiceServer interface {
+	AddMenu(context.Context, *AddMenuReq) (*AddMenuResp, error)
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+// UnimplementedMenuServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedMenuServiceServer struct{}
+
+func (UnimplementedMenuServiceServer) AddMenu(context.Context, *AddMenuReq) (*AddMenuResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) mustEmbedUnimplementedMenuServiceServer() {}
+func (UnimplementedMenuServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeMenuServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MenuServiceServer will
+// result in compilation errors.
+type UnsafeMenuServiceServer interface {
+	mustEmbedUnimplementedMenuServiceServer()
+}
+
+func RegisterMenuServiceServer(s grpc.ServiceRegistrar, srv MenuServiceServer) {
+	// If the following call pancis, it indicates UnimplementedMenuServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&MenuService_ServiceDesc, srv)
+}
+
+func _MenuService_AddMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMenuReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).AddMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_AddMenu_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).AddMenu(ctx, req.(*AddMenuReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// MenuService_ServiceDesc is the grpc.ServiceDesc for MenuService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var MenuService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysclient.MenuService",
+	HandlerType: (*MenuServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "addMenu",
+			Handler:    _MenuService_AddMenu_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

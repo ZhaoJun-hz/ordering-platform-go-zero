@@ -3,6 +3,28 @@
 
 package types
 
+type ApiListData struct {
+	Id         int64  `json:"id"`
+	Handle     string `json:"handle"`     // 方法名
+	Title      string `json:"title"`      // 方法描述
+	Path       string `json:"path"`       // 请求路径
+	Type       string `json:"type"`       // 类型 1 系统 2 业务
+	Action     string `json:"action"`     // 请求方式
+	CreateTime string `json:"createTime"` // 创建时间
+}
+
+type ApiListReq struct {
+	Type     string `form:"type,optional"`       // 系统 业务
+	Action   string `form:"action,optional"`     // 请求方法 GET POST DELETE PUT
+	PageNum  int64  `form:"pageNum,default=1"`   //  第几页
+	PageSize int64  `form:"pageSize,default=10"` // 每页的数量
+}
+
+type ApiListResp struct {
+	Total int64          `json:"total"`
+	Data  []*ApiListData `json:"data"`
+}
+
 type InitApiReq struct {
 }
 
@@ -19,13 +41,13 @@ type LoginResp struct {
 }
 
 type Menu struct {
-	MenuId       int64    `json:"menuId"`
-	ParentMenuId int64    `json:"parentMenuId"`
-	Name         string   `json:"name"`      // 路由名称
-	Path         string   `json:"path"`      // 路由地址
-	Component    string   `json:"component"` // 组件地址
-	MenuMate     MenuMate `json:"meta"`
-	Children     []Menu   `json:"children,omitempty"`
+	MenuId       int64     `json:"menuId"`
+	ParentMenuId int64     `json:"parentMenuId"`
+	Name         string    `json:"name"`      // 路由名称
+	Path         string    `json:"path"`      // 路由地址
+	Component    string    `json:"component"` // 组件地址
+	MenuMate     *MenuMate `json:"meta"`
+	Children     []*Menu   `json:"children,omitempty"`
 }
 
 type MenuMate struct {

@@ -14,6 +14,11 @@ import (
 )
 
 type (
+	AddMenuReq       = sysclient.AddMenuReq
+	AddMenuResp      = sysclient.AddMenuResp
+	ApiInfo          = sysclient.ApiInfo
+	ApiListReq       = sysclient.ApiListReq
+	ApiListResp      = sysclient.ApiListResp
 	InfoReq          = sysclient.InfoReq
 	InfoResp         = sysclient.InfoResp
 	InitApiReq       = sysclient.InitApiReq

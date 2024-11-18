@@ -1,0 +1,58 @@
+syntax = "v1"
+
+info(
+    desc: "基础操作"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+type (
+    InitApiReq {
+
+    }
+
+    InitApiResp {
+
+    }
+
+    ApiListReq {
+        Type string    `form:"type,optional"`     // 系统 业务
+        Action string  `form:"action,optional"`   // 请求方法 GET POST DELETE PUT
+        PageNum int64  `form:"pageNum,default=1"`   //  第几页
+        PageSize int64 `form:"pageSize,default=10"`  // 每页的数量
+    }
+
+    ApiListData {
+        Id int64 `json:"id"`
+        Handle string `json:"handle"` // 方法名
+        Title string `json:"title"`   // 方法描述
+        Path string `json:"path"`   // 请求路径
+        Type string `json:"type"`  // 类型 1 系统 2 业务
+        Action  string `json:"action"`  // 请求方式
+        CreateTime  string `json:"createTime"` // 创建时间
+    }
+
+    ApiListResp {
+        Total int64  `json:"total"`
+        data []*ApiListData `json:"data"`
+    }
+)
+
+@server(
+    group: sys/api
+    prefix:     /api/sys/api
+)
+service admin-api {
+    @doc(
+        summary: "初始化api"
+    )
+    @handler InitApi
+    get /initapi (InitApiReq) returns (InitApiResp)
+
+    @doc(
+        summary: "查询 api 列表"
+    )
+    @handler ApiList
+    get /list (ApiListReq) returns (ApiListResp)
+
+}

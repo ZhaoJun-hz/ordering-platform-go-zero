@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/sys/base/initapi": {
+    "/api/sys/api/initapi": {
       "get": {
         "summary": "初始化api",
         "operationId": "InitApi",
@@ -29,7 +29,61 @@
           }
         },
         "tags": [
-          "sys/base"
+          "sys/api"
+        ]
+      }
+    },
+    "/api/sys/api/list": {
+      "get": {
+        "summary": "查询 api 列表",
+        "operationId": "ApiList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ApiListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "description": " 系统 业务",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "action",
+            "description": " 请求方法 GET POST DELETE PUT",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNum",
+            "description": "  第几页",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "description": " 每页的数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "sys/api"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -135,6 +189,99 @@
     }
   },
   "definitions": {
+    "ApiListData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "handle": {
+          "type": "string",
+          "description": " 方法名"
+        },
+        "title": {
+          "type": "string",
+          "description": " 方法描述"
+        },
+        "path": {
+          "type": "string",
+          "description": " 请求路径"
+        },
+        "type": {
+          "type": "string",
+          "description": " 类型 1 系统 2 业务"
+        },
+        "action": {
+          "type": "string",
+          "description": " 请求方式"
+        },
+        "createTime": {
+          "type": "string",
+          "description": " 创建时间"
+        }
+      },
+      "title": "ApiListData",
+      "required": [
+        "id",
+        "handle",
+        "title",
+        "path",
+        "type",
+        "action",
+        "createTime"
+      ]
+    },
+    "ApiListReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": " 系统 业务"
+        },
+        "action": {
+          "type": "string",
+          "description": " 请求方法 GET POST DELETE PUT"
+        },
+        "pageNum": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1",
+          "description": "  第几页"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "default": "10",
+          "description": " 每页的数量"
+        }
+      },
+      "title": "ApiListReq",
+      "required": [
+        "pageNum",
+        "pageSize"
+      ]
+    },
+    "ApiListResp": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiListData"
+          }
+        }
+      },
+      "title": "ApiListResp",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
     "InitApiReq": {
       "type": "object",
       "title": "InitApiReq"

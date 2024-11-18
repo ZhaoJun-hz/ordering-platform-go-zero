@@ -5,7 +5,8 @@ import (
 	"github.com/zeromicro/go-zero/zrpc"
 	"ordering-platform/api/admin/internal/config"
 	"ordering-platform/api/admin/internal/middleware"
-	"ordering-platform/rpc/sys/client/baseservice"
+	"ordering-platform/rpc/sys/client/apiservice"
+	"ordering-platform/rpc/sys/client/menuservice"
 	"ordering-platform/rpc/sys/client/userservice"
 )
 
@@ -15,7 +16,8 @@ type ServiceContext struct {
 	PermissionAction rest.Middleware
 
 	UserService userservice.UserService
-	BaseService baseservice.BaseService
+	ApiService  apiservice.ApiService
+	MenuService menuservice.MenuService
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -27,6 +29,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		PermissionAction: middleware.NewPermissionActionMiddleware().Handle,
 
 		UserService: userservice.NewUserService(sysClient),
-		BaseService: baseservice.NewBaseService(sysClient),
+		ApiService:  apiservice.NewApiService(sysClient),
+		MenuService: menuservice.NewMenuService(sysClient),
 	}
 }
