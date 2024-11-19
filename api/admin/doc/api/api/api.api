@@ -1,7 +1,7 @@
 syntax = "v1"
 
 info(
-    desc: "基础操作"
+    desc: "api相关操作"
     author: "闲不下来的程序猿"
     email: "zhaojuncodeing@163.com"
 )
@@ -54,5 +54,6 @@ service admin-api {
     )
     @handler ApiList
     get /list (ApiListReq) returns (ApiListResp)
-
 }
+
+

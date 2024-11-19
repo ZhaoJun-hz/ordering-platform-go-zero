@@ -1,0 +1,144 @@
+syntax = "v1"
+
+info(
+    desc: "menu 相关操作"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+
+
+type(
+    AddMenuReq {
+        menuType string `json:"menuType"` // 菜单类型
+        title string `json:"title"`  // 菜单标题
+        sort int32 `json:"sort"`  // 显示排序
+        parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
+        icon string `json:"icon,optional"` // 图标
+        name string `json:"name,optional"` // 路由名称
+        component string `json:"component,optional"` // 组件路径
+        path string `json:"path,optional"` // 路由地址
+        permission string `json:"permission,optional"` // 权限标识
+        hideInMenu bool `json:"hideInMenu,optional"`
+        ignoreKeepAlive bool `json:"ignoreKeepAlive,optional"`
+        linkFlag bool `json:"linkFlag,optional"`
+        link string `json:"link,optional"` // 组件路径
+        disabled bool `json:"disabled,optional"`
+        selectApi []int64 `json:"selectApi,optional"`
+    }
+
+    AddMenuResp {
+
+    }
+
+    UpdateMenuReq {
+        menuId int64 `path:"menuId"`
+        menuType string `json:"menuType"` // 菜单类型
+        title string `json:"title"`  // 菜单标题
+        sort int32 `json:"sort"`  // 显示排序
+        parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
+        icon string `json:"icon,optional"` // 图标
+        name string `json:"name,optional"` // 路由名称
+        component string `json:"component,optional"` // 组件路径
+        path string `json:"path,optional"` // 路由地址
+        permission string `json:"permission,optional"` // 权限标识
+        hideInMenu bool `json:"hideInMenu,optional"`
+        ignoreKeepAlive bool `json:"ignoreKeepAlive,optional"`
+        linkFlag bool `json:"linkFlag,optional"`
+        link string `json:"link,optional"` // 组件路径
+        disabled bool `json:"disabled,optional"`
+        selectApi []int64 `json:"selectApi,optional"`
+    }
+
+    UpdateMenuResp {
+
+    }
+
+    DeleteMenuReq {
+        menuId int64 `path:"menuId"`
+    }
+
+    DeleteMenuResp {
+
+    }
+
+    MenuInfoReq {
+        menuId int64 `path:"menuId"`
+    }
+
+    MenuInfoData {
+        menuId int64 `json:"menuId"`
+        menuType string `json:"menuType"` // 菜单类型
+        title string `json:"title"`  // 菜单标题
+        sort int32 `json:"sort"`  // 显示排序
+        parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
+        icon string `json:"icon"` // 图标
+        name string `json:"name"` // 路由名称
+        component string `json:"component"` // 组件路径
+        path string `json:"path"` // 路由地址
+        permission string `json:"permission"` // 权限标识
+        hideInMenu bool `json:"hideInMenu"`
+        ignoreKeepAlive bool `json:"ignoreKeepAlive"`
+        linkFlag bool `json:"linkFlag"`
+        link string `json:"link"` // 组件路径
+        disabled bool `json:"disabled"`
+        selectApi []int64 `json:"selectApi"`
+    }
+
+    ListMenuReq {
+
+    }
+
+    ListMenuData {
+        menuId int64 `json:"menuId"`
+        menuType string `json:"menuType"` // 菜单类型
+        title string `json:"title"`  // 菜单标题
+        sort int32 `json:"sort"`  // 显示排序
+        parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
+        icon string `json:"icon"` // 图标
+        name string `json:"name"` // 路由名称
+        component string `json:"component"` // 组件路径
+        path string `json:"path"` // 路由地址
+        permission string `json:"permission"` // 权限标识
+        hideInMenu bool `json:"hideInMenu"`
+        ignoreKeepAlive bool `json:"ignoreKeepAlive"`
+        linkFlag bool `json:"linkFlag"`
+        link string `json:"link"` // 组件路径
+        disabled bool `json:"disabled"`
+    }
+
+    ListMenuResp {
+        data []*ListMenuData `json:"data"`
+    }
+)
+
+
+@server(
+    jwt: Auth
+    middleware: AuthCheckRole,PermissionAction
+    group:      sys/menu
+    prefix:     /api/sys/menu
+)
+service admin-api {
+    @doc(
+        summary: "添加menu"
+    )
+    @handler AddMenu
+    post / (AddMenuReq) returns (AddMenuResp)
+
+    @handler UpdateMenu
+    put /:menuId (UpdateMenuReq) returns (UpdateMenuResp)
+
+    @handler DeleteMenu
+    delete /:menuId (DeleteMenuReq) returns (DeleteMenuResp)
+
+    @handler MenuInfo
+    get /:menuId (MenuInfoReq) returns (MenuInfoData)
+
+    @handler ListMenu
+    get / (ListMenuReq) returns (ListMenuResp)
+
+}
+
+
+

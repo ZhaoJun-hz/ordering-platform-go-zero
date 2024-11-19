@@ -52,29 +52,108 @@ service ApiService {
 
 // 添加菜单信息表
 message AddMenuReq {
-  string background_url = 1; //接口地址
-  string create_by = 2; //创建者
-  string vue_redirect = 3; //vue的路由重定向
-  string vue_icon = 4; //vue的图标
-  string vue_path = 5; //vue系统的path
-  string menu_icon = 6; //菜单图标
-  string menu_name = 7; //菜单名称
-  string menu_path = 8; //前端路由
-  string menu_perms = 9; //权限标识
-  int32 menu_sort = 10; //菜单排序
-  int32 menu_status = 11; //菜单状态
-  int32 menu_type = 12; //类型 0：目录,1：菜单,2：按钮,3：外链
-  int64 parent_id = 13; //父菜单ID，一级菜单为0
-  string remark = 14; //备注信息
-  string vue_component = 15; //vue的页面
-  int32 is_visible = 16; //是否可见  0：否  1：是
+  string menuType = 1;
+  string title = 2;
+  int32 sort = 3;
+  int64 parentMenuId = 4;
+  string icon = 5;
+  string name = 6;
+  string component = 7;
+  string path = 8;
+  string permission = 9;
+  bool hideInMenu = 10;
+  bool ignoreKeepAlive = 11;
+  bool linkFlag = 12;
+  string link = 13;
+  bool disabled = 14;
+  repeated int64 selectApi = 15;
 }
 
 message AddMenuResp {
 }
 
+message UpdateMenuReq {
+  int64 menuId = 1;
+  string menuType = 2;
+  string title = 3;
+  int32 sort = 4;
+  int64 parentMenuId = 5;
+  string icon = 6;
+  string name = 7;
+  string component = 8;
+  string path = 9;
+  string permission = 10;
+  bool hideInMenu = 11;
+  bool ignoreKeepAlive = 12;
+  bool linkFlag = 13;
+  string link = 14;
+  bool disabled = 15;
+  repeated int64 selectApi = 16;
+}
+
+message UpdateMenuResp {
+}
+
+message DeleteMenuReq {
+  int64 menuId = 1;
+}
+
+message DeleteMenuResp {
+}
+
+message MenuInfoReq {
+  int64 menuId = 1;
+}
+
+message MenuInfoResp {
+  int64 menuId = 1;
+  string menuType = 2;
+  string title = 3;
+  int32 sort = 4;
+  int64 parentMenuId = 5;
+  string icon = 6;
+  string name = 7;
+  string component = 8;
+  string path = 9;
+  string permission = 10;
+  bool hideInMenu = 11;
+  bool ignoreKeepAlive = 12;
+  bool linkFlag = 13;
+  string link = 14;
+  bool disabled = 15;
+  repeated int64 selectApi = 16;
+}
+
+message ListMenuReq {
+
+}
+message ListMenuData {
+  int64 menuId = 1;
+  string menuType = 2;
+  string title = 3;
+  int32 sort = 4;
+  int64 parentMenuId = 5;
+  string icon = 6;
+  string name = 7;
+  string component = 8;
+  string path = 9;
+  string permission = 10;
+  bool hideInMenu = 11;
+  bool ignoreKeepAlive = 12;
+  bool linkFlag = 13;
+  string link = 14;
+  bool disabled = 15;
+}
+message ListMenuResp {
+  repeated ListMenuData data = 1;
+}
+
 service MenuService {
-  rpc addMenu(AddMenuReq) returns(AddMenuResp);
+  rpc AddMenu(AddMenuReq) returns(AddMenuResp); // 新增Menu
+  rpc UpdateMenu(UpdateMenuReq) returns (UpdateMenuResp); // 更新Menu
+  rpc DeleteMenu(DeleteMenuReq) returns (DeleteMenuResp); // 删除Menu, 判断有没有角色关联Menu，再判断有无子菜单
+  rpc MenuInfo(MenuInfoReq) returns (MenuInfoResp); // 详情
+  rpc ListMenu(ListMenuReq) returns (ListMenuResp); // 列表
 }
 
 message LoginReq {

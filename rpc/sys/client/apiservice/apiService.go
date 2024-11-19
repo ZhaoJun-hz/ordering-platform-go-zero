@@ -2,7 +2,7 @@
 // goctl 1.7.2
 // Source: sys.proto
 
-package userservice
+package apiservice
 
 import (
 	"context"
@@ -36,32 +36,30 @@ type (
 	UpdateMenuReq    = sysclient.UpdateMenuReq
 	UpdateMenuResp   = sysclient.UpdateMenuResp
 
-	UserService interface {
-		// 用户登录
-		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
-		// 获取用户个人信息
-		UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+	ApiService interface {
+		// 初始化Api
+		InitApi(ctx context.Context, in *InitApiReq, opts ...grpc.CallOption) (*InitApiResp, error)
+		ListApi(ctx context.Context, in *ApiListReq, opts ...grpc.CallOption) (*ApiListResp, error)
 	}
 
-	defaultUserService struct {
+	defaultApiService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewUserService(cli zrpc.Client) UserService {
-	return &defaultUserService{
+func NewApiService(cli zrpc.Client) ApiService {
+	return &defaultApiService{
 		cli: cli,
 	}
 }
 
-// 用户登录
-func (m *defaultUserService) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	client := sysclient.NewUserServiceClient(m.cli.Conn())
-	return client.Login(ctx, in, opts...)
+// 初始化Api
+func (m *defaultApiService) InitApi(ctx context.Context, in *InitApiReq, opts ...grpc.CallOption) (*InitApiResp, error) {
+	client := sysclient.NewApiServiceClient(m.cli.Conn())
+	return client.InitApi(ctx, in, opts...)
 }
 
-// 获取用户个人信息
-func (m *defaultUserService) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
-	client := sysclient.NewUserServiceClient(m.cli.Conn())
-	return client.UserInfo(ctx, in, opts...)
+func (m *defaultApiService) ListApi(ctx context.Context, in *ApiListReq, opts ...grpc.CallOption) (*ApiListResp, error) {
+	client := sysclient.NewApiServiceClient(m.cli.Conn())
+	return client.ListApi(ctx, in, opts...)
 }

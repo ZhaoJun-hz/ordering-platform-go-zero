@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	sysapi "ordering-platform/api/admin/internal/handler/sys/api"
+	sysmenu "ordering-platform/api/admin/internal/handler/sys/menu"
 	sysuser "ordering-platform/api/admin/internal/handler/sys/user"
 	"ordering-platform/api/admin/internal/svc"
 
@@ -30,6 +31,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 		rest.WithPrefix("/api/sys/api"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
+			[]rest.Route{
+				{
+					// 添加menu
+					Method:  http.MethodPost,
+					Path:    "/",
+					Handler: sysmenu.AddMenuHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/",
+					Handler: sysmenu.ListMenuHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/:menuId",
+					Handler: sysmenu.UpdateMenuHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodDelete,
+					Path:    "/:menuId",
+					Handler: sysmenu.DeleteMenuHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/:menuId",
+					Handler: sysmenu.MenuInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sys/menu"),
 	)
 
 	server.AddRoutes(

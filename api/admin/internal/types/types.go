@@ -3,6 +3,27 @@
 
 package types
 
+type AddMenuReq struct {
+	MenuType        string  `json:"menuType"`            // 菜单类型
+	Title           string  `json:"title"`               // 菜单标题
+	Sort            int32   `json:"sort"`                // 显示排序
+	ParentMenuId    int64   `json:"parentMenuId"`        // 上级菜单
+	Icon            string  `json:"icon,optional"`       // 图标
+	Name            string  `json:"name,optional"`       // 路由名称
+	Component       string  `json:"component,optional"`  // 组件路径
+	Path            string  `json:"path,optional"`       // 路由地址
+	Permission      string  `json:"permission,optional"` // 权限标识
+	HideInMenu      bool    `json:"hideInMenu,optional"`
+	IgnoreKeepAlive bool    `json:"ignoreKeepAlive,optional"`
+	LinkFlag        bool    `json:"linkFlag,optional"`
+	Link            string  `json:"link,optional"` // 组件路径
+	Disabled        bool    `json:"disabled,optional"`
+	SelectApi       []int64 `json:"selectApi,optional"`
+}
+
+type AddMenuResp struct {
+}
+
 type ApiListData struct {
 	Id         int64  `json:"id"`
 	Handle     string `json:"handle"`     // 方法名
@@ -25,10 +46,42 @@ type ApiListResp struct {
 	Data  []*ApiListData `json:"data"`
 }
 
+type DeleteMenuReq struct {
+	MenuId int64 `path:"menuId"`
+}
+
+type DeleteMenuResp struct {
+}
+
 type InitApiReq struct {
 }
 
 type InitApiResp struct {
+}
+
+type ListMenuData struct {
+	MenuId          int64  `json:"menuId"`
+	MenuType        string `json:"menuType"`     // 菜单类型
+	Title           string `json:"title"`        // 菜单标题
+	Sort            int32  `json:"sort"`         // 显示排序
+	ParentMenuId    int64  `json:"parentMenuId"` // 上级菜单
+	Icon            string `json:"icon"`         // 图标
+	Name            string `json:"name"`         // 路由名称
+	Component       string `json:"component"`    // 组件路径
+	Path            string `json:"path"`         // 路由地址
+	Permission      string `json:"permission"`   // 权限标识
+	HideInMenu      bool   `json:"hideInMenu"`
+	IgnoreKeepAlive bool   `json:"ignoreKeepAlive"`
+	LinkFlag        bool   `json:"linkFlag"`
+	Link            string `json:"link"` // 组件路径
+	Disabled        bool   `json:"disabled"`
+}
+
+type ListMenuReq struct {
+}
+
+type ListMenuResp struct {
+	Data []*ListMenuData `json:"data"`
 }
 
 type LoginReq struct {
@@ -50,6 +103,29 @@ type Menu struct {
 	Children     []*Menu   `json:"children,omitempty"`
 }
 
+type MenuInfoData struct {
+	MenuId          int64   `json:"menuId"`
+	MenuType        string  `json:"menuType"`     // 菜单类型
+	Title           string  `json:"title"`        // 菜单标题
+	Sort            int32   `json:"sort"`         // 显示排序
+	ParentMenuId    int64   `json:"parentMenuId"` // 上级菜单
+	Icon            string  `json:"icon"`         // 图标
+	Name            string  `json:"name"`         // 路由名称
+	Component       string  `json:"component"`    // 组件路径
+	Path            string  `json:"path"`         // 路由地址
+	Permission      string  `json:"permission"`   // 权限标识
+	HideInMenu      bool    `json:"hideInMenu"`
+	IgnoreKeepAlive bool    `json:"ignoreKeepAlive"`
+	LinkFlag        bool    `json:"linkFlag"`
+	Link            string  `json:"link"` // 组件路径
+	Disabled        bool    `json:"disabled"`
+	SelectApi       []int64 `json:"selectApi"`
+}
+
+type MenuInfoReq struct {
+	MenuId int64 `path:"menuId"`
+}
+
 type MenuMate struct {
 	Title                    string `json:"title"`                    // 菜单名称
 	Order                    int64  `json:"order"`                    // 排序
@@ -58,6 +134,28 @@ type MenuMate struct {
 	KeepAlive                bool   `json:"keepAlive"`                // 是否缓存
 	MenuVisibleWithForbidden bool   `json:"menuVisibleWithForbidden"` // 是否启用
 	Link                     string `json:"link"`                     // 用于配置外链跳转路径，会在新窗口打开。
+}
+
+type UpdateMenuReq struct {
+	MenuId          int64   `path:"menuId"`
+	MenuType        string  `json:"menuType"`            // 菜单类型
+	Title           string  `json:"title"`               // 菜单标题
+	Sort            int32   `json:"sort"`                // 显示排序
+	ParentMenuId    int64   `json:"parentMenuId"`        // 上级菜单
+	Icon            string  `json:"icon,optional"`       // 图标
+	Name            string  `json:"name,optional"`       // 路由名称
+	Component       string  `json:"component,optional"`  // 组件路径
+	Path            string  `json:"path,optional"`       // 路由地址
+	Permission      string  `json:"permission,optional"` // 权限标识
+	HideInMenu      bool    `json:"hideInMenu,optional"`
+	IgnoreKeepAlive bool    `json:"ignoreKeepAlive,optional"`
+	LinkFlag        bool    `json:"linkFlag,optional"`
+	Link            string  `json:"link,optional"` // 组件路径
+	Disabled        bool    `json:"disabled,optional"`
+	SelectApi       []int64 `json:"selectApi,optional"`
+}
+
+type UpdateMenuResp struct {
 }
 
 type UserInfoResp struct {

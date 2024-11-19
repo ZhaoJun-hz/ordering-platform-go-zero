@@ -85,3 +85,5 @@ service admin-api {
     @handler UserLogin
     post /api/sys/user/login (LoginReq) returns (LoginResp)
 }
+
+
