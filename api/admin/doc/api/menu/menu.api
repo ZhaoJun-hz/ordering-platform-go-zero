@@ -157,19 +157,30 @@ service admin-api {
     )
     @handler AddMenu
     post / (AddMenuReq) returns (AddMenuResp)
-
+    @doc(
+        summary: "更新menu"
+    )
     @handler UpdateMenu
     put /:menuId (UpdateMenuReq) returns (UpdateMenuResp)
 
+    @doc(
+        summary: "删除menu"
+    )
     @handler DeleteMenu
     delete /:menuId (DeleteMenuReq) returns (DeleteMenuResp)
-
+    @doc(
+        summary: "menu详情"
+    )
     @handler MenuInfo
     get /:menuId (MenuInfoReq) returns (MenuInfoData)
-
+    @doc(
+        summary: "menu列表"
+    )
     @handler ListMenu
     get / (ListMenuReq) returns (ListMenuResp)
-
+    @doc(
+        summary: "获取 menu tree 结构"
+    )
     @handler  TreeMenu
     get /tree (TreeMenuReq) returns (TreeMenuResp)
 }

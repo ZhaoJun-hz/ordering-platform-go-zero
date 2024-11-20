@@ -1,0 +1,133 @@
+syntax = "v1"
+
+info(
+    desc: "dept 相关操作"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+
+type(
+    DeptAddReq{
+        parentDeptId int64 `json:"parentDeptId"`
+        deptName string `json:"deptName"`
+        sort int32 `json:"sort"`
+        leader string `json:"leader"`
+        phone string `json:"phone"`
+        email string `json:"email"`
+        status int32 `json:"status"`
+    }
+    DeptAddResp {
+
+    }
+
+    DeptUpdateReq {
+        deptId int64 `json:"deptId"`
+        parentDeptId int64 `json:"parentDeptId"`
+        deptName string `json:"deptName"`
+        sort int32 `json:"sort"`
+        leader string `json:"leader"`
+        phone string `json:"phone"`
+        email string `json:"email"`
+        status int32 `json:"status"`
+    }
+
+    DeptUpdateResp {
+
+    }
+
+    DeptDeleteReq {
+        deptId int64 `path:"deptId"`
+    }
+
+    DeptDeleteResp {
+
+    }
+
+    DeptInfoReq {
+        deptId int64 `path:"deptId"`
+    }
+
+    DeptInfoData {
+        deptId int64 `json:"deptId"`
+        parentDeptId int64 `json:"parentDeptId"`
+        deptName string `json:"deptName"`
+        sort int32 `json:"sort"`
+        leader string `json:"leader"`
+        phone string `json:"phone"`
+        email string `json:"email"`
+        status int32 `json:"status"`
+        createTime string `json:"createTime"`
+    }
+
+    DeptListReq {
+
+    }
+
+    DeptListResp {
+        data []*DeptInfoData `json:"data"`
+    }
+
+    DeptTreeReq {
+
+    }
+
+    DeptTreeData {
+        deptId int64 `json:"deptId"`
+        value int64  `json:"value"` // 还是deptId
+        parentDeptId int64 `json:"parentDeptId"`
+        deptName string `json:"deptName"`
+        sort int32 `json:"sort"`
+        leader string `json:"leader"`
+        phone string `json:"phone"`
+        email string `json:"email"`
+        status int32 `json:"status"`
+        createTime string `json:"createTime"`
+        children []*DeptTreeData `json:"children"`
+    }
+
+    DeptTreeResp {
+        data []*DeptTreeData `json:"data"`
+    }
+)
+
+@server(
+    jwt: Auth
+    middleware: AuthCheckRole,PermissionAction
+    group:      sys/dept
+    prefix:     /api/sys/dept
+)
+service admin-api {
+    @doc(
+        summary: "dept添加"
+    )
+    @handler DeptAdd
+    post / (DeptAddReq) returns (DeptAddResp)
+    @doc(
+        summary: "dept更新"
+    )
+    @handler DeptUpdate
+    put /:deptId (DeptUpdateReq) returns (DeptUpdateResp)
+
+    @doc(
+        summary: "dept删除"
+    )
+    @handler DeptDelete
+    delete /:deptId (DeptDeleteReq) returns (DeptDeleteResp)
+    @doc(
+        summary: "dept详情"
+    )
+    @handler DeptInfo
+    get /:deptId (DeptInfoReq) returns (DeptInfoData)
+    @doc(
+        summary: "dept列表"
+    )
+    @handler DeptList
+    get / (DeptListReq) returns (DeptListResp)
+    @doc(
+        summary: "获取 Dept tree 结构"
+    )
+    @handler  DeptTree
+    get /tree (DeptTreeReq) returns (DeptTreeResp)
+
+}

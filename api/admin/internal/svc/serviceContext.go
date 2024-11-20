@@ -6,6 +6,7 @@ import (
 	"ordering-platform/api/admin/internal/config"
 	"ordering-platform/api/admin/internal/middleware"
 	"ordering-platform/rpc/sys/client/apiservice"
+	"ordering-platform/rpc/sys/client/deptservice"
 	"ordering-platform/rpc/sys/client/menuservice"
 	"ordering-platform/rpc/sys/client/userservice"
 )
@@ -18,6 +19,7 @@ type ServiceContext struct {
 	UserService userservice.UserService
 	ApiService  apiservice.ApiService
 	MenuService menuservice.MenuService
+	DeptService deptservice.DeptService
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -31,5 +33,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserService: userservice.NewUserService(sysClient),
 		ApiService:  apiservice.NewApiService(sysClient),
 		MenuService: menuservice.NewMenuService(sysClient),
+		DeptService: deptservice.NewDeptService(sysClient),
 	}
 }

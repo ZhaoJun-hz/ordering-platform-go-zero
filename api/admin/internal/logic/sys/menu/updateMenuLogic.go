@@ -48,5 +48,5 @@ func (l *UpdateMenuLogic) UpdateMenu(req *types.UpdateMenuReq) (resp *types.Upda
 	if err != nil {
 		return nil, err
 	}
-	return &types.UpdateMenuResp{}, nil
+	return
 }

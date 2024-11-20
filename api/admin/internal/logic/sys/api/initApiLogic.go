@@ -73,5 +73,5 @@ func (l *InitApiLogic) InitApi(req *types.InitApiReq) (resp *types.InitApiResp, 
 	if err != nil {
 		return nil, err
 	}
-	return &types.InitApiResp{}, nil
+	return
 }

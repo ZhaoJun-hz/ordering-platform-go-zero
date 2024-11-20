@@ -21,6 +21,17 @@ type (
 	ApiListResp      = sysclient.ApiListResp
 	DeleteMenuReq    = sysclient.DeleteMenuReq
 	DeleteMenuResp   = sysclient.DeleteMenuResp
+	DeptAddReq       = sysclient.DeptAddReq
+	DeptAddResp      = sysclient.DeptAddResp
+	DeptDeleteReq    = sysclient.DeptDeleteReq
+	DeptDeleteResp   = sysclient.DeptDeleteResp
+	DeptInfoReq      = sysclient.DeptInfoReq
+	DeptInfoResp     = sysclient.DeptInfoResp
+	DeptListData     = sysclient.DeptListData
+	DeptListReq      = sysclient.DeptListReq
+	DeptListResp     = sysclient.DeptListResp
+	DeptUpdateReq    = sysclient.DeptUpdateReq
+	DeptUpdateResp   = sysclient.DeptUpdateResp
 	InfoReq          = sysclient.InfoReq
 	InfoResp         = sysclient.InfoResp
 	InitApiReq       = sysclient.InitApiReq

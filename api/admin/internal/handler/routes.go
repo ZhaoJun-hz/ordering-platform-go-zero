@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	sysapi "ordering-platform/api/admin/internal/handler/sys/api"
+	sysdept "ordering-platform/api/admin/internal/handler/sys/dept"
 	sysmenu "ordering-platform/api/admin/internal/handler/sys/menu"
 	sysuser "ordering-platform/api/admin/internal/handler/sys/user"
 	"ordering-platform/api/admin/internal/svc"
@@ -38,32 +39,83 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
 			[]rest.Route{
 				{
+					// dept添加
+					Method:  http.MethodPost,
+					Path:    "/",
+					Handler: sysdept.DeptAddHandler(serverCtx),
+				},
+				{
+					// dept列表
+					Method:  http.MethodGet,
+					Path:    "/",
+					Handler: sysdept.DeptListHandler(serverCtx),
+				},
+				{
+					// dept更新
+					Method:  http.MethodPut,
+					Path:    "/:deptId",
+					Handler: sysdept.DeptUpdateHandler(serverCtx),
+				},
+				{
+					// dept删除
+					Method:  http.MethodDelete,
+					Path:    "/:deptId",
+					Handler: sysdept.DeptDeleteHandler(serverCtx),
+				},
+				{
+					// dept详情
+					Method:  http.MethodGet,
+					Path:    "/:deptId",
+					Handler: sysdept.DeptInfoHandler(serverCtx),
+				},
+				{
+					// 获取 Dept tree 结构
+					Method:  http.MethodGet,
+					Path:    "/tree",
+					Handler: sysdept.DeptTreeHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sys/dept"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
+			[]rest.Route{
+				{
 					// 添加menu
 					Method:  http.MethodPost,
 					Path:    "/",
 					Handler: sysmenu.AddMenuHandler(serverCtx),
 				},
 				{
+					// menu列表
 					Method:  http.MethodGet,
 					Path:    "/",
 					Handler: sysmenu.ListMenuHandler(serverCtx),
 				},
 				{
+					// 更新menu
 					Method:  http.MethodPut,
 					Path:    "/:menuId",
 					Handler: sysmenu.UpdateMenuHandler(serverCtx),
 				},
 				{
+					// 删除menu
 					Method:  http.MethodDelete,
 					Path:    "/:menuId",
 					Handler: sysmenu.DeleteMenuHandler(serverCtx),
 				},
 				{
+					// menu详情
 					Method:  http.MethodGet,
 					Path:    "/:menuId",
 					Handler: sysmenu.MenuInfoHandler(serverCtx),
 				},
 				{
+					// 获取 menu tree 结构
 					Method:  http.MethodGet,
 					Path:    "/tree",
 					Handler: sysmenu.TreeMenuHandler(serverCtx),

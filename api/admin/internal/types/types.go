@@ -53,6 +53,84 @@ type DeleteMenuReq struct {
 type DeleteMenuResp struct {
 }
 
+type DeptAddReq struct {
+	ParentDeptId int64  `json:"parentDeptId"`
+	DeptName     string `json:"deptName"`
+	Sort         int32  `json:"sort"`
+	Leader       string `json:"leader"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Status       int32  `json:"status"`
+}
+
+type DeptAddResp struct {
+}
+
+type DeptDeleteReq struct {
+	DeptId int64 `path:"deptId"`
+}
+
+type DeptDeleteResp struct {
+}
+
+type DeptInfoData struct {
+	DeptId       int64  `json:"deptId"`
+	ParentDeptId int64  `json:"parentDeptId"`
+	DeptName     string `json:"deptName"`
+	Sort         int32  `json:"sort"`
+	Leader       string `json:"leader"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Status       int32  `json:"status"`
+	CreateTime   string `json:"createTime"`
+}
+
+type DeptInfoReq struct {
+	DeptId int64 `path:"deptId"`
+}
+
+type DeptListReq struct {
+}
+
+type DeptListResp struct {
+	Data []*DeptInfoData `json:"data"`
+}
+
+type DeptTreeData struct {
+	DeptId       int64           `json:"deptId"`
+	Value        int64           `json:"value"` // 还是deptId
+	ParentDeptId int64           `json:"parentDeptId"`
+	DeptName     string          `json:"deptName"`
+	Sort         int32           `json:"sort"`
+	Leader       string          `json:"leader"`
+	Phone        string          `json:"phone"`
+	Email        string          `json:"email"`
+	Status       int32           `json:"status"`
+	CreateTime   string          `json:"createTime"`
+	Children     []*DeptTreeData `json:"children"`
+}
+
+type DeptTreeReq struct {
+}
+
+type DeptTreeResp struct {
+	Data []*DeptTreeData `json:"data"`
+}
+
+type DeptUpdateReq struct {
+	DeptId       int64  `json:"deptId"`
+	ParentDeptId int64  `json:"parentDeptId"`
+	DeptName     string `json:"deptName"`
+	Sort         int32  `json:"sort"`
+	Leader       string `json:"leader"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Status       int32  `json:"status"`
+}
+
+type DeptUpdateResp struct {
+}
+
 type InitApiReq struct {
 }
 

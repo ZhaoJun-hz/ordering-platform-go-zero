@@ -1,4 +1,4 @@
-package menu
+package dept
 
 import (
 	"context"
@@ -10,26 +10,26 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DeleteMenuLogic struct {
+type DeptDeleteLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewDeleteMenuLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteMenuLogic {
-	return &DeleteMenuLogic{
+// dept删除
+func NewDeptDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeptDeleteLogic {
+	return &DeptDeleteLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *DeleteMenuLogic) DeleteMenu(req *types.DeleteMenuReq) (resp *types.DeleteMenuResp, err error) {
+func (l *DeptDeleteLogic) DeptDelete(req *types.DeptDeleteReq) (resp *types.DeptDeleteResp, err error) {
 	// todo: add your logic here and delete this line
-	_, err = l.svcCtx.MenuService.DeleteMenu(l.ctx, &sysclient.DeleteMenuReq{
-		MenuId: req.MenuId,
+	_, err = l.svcCtx.DeptService.DeptDelete(l.ctx, &sysclient.DeptDeleteReq{
+		DeptId: req.DeptId,
 	})
-
 	if err != nil {
 		return nil, err
 	}

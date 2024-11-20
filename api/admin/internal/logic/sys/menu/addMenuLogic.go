@@ -48,5 +48,5 @@ func (l *AddMenuLogic) AddMenu(req *types.AddMenuReq) (resp *types.AddMenuResp, 
 	if err != nil {
 		return nil, err
 	}
-	return &types.AddMenuResp{}, nil
+	return
 }

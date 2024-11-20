@@ -6,6 +6,7 @@ import (
 	"ordering-platform/pkg/interceptor/rpcserver"
 	"ordering-platform/rpc/sys/internal/config"
 	apiserviceServer "ordering-platform/rpc/sys/internal/server/apiservice"
+	deptserviceServer "ordering-platform/rpc/sys/internal/server/deptservice"
 	menuserviceServer "ordering-platform/rpc/sys/internal/server/menuservice"
 	userserviceServer "ordering-platform/rpc/sys/internal/server/userservice"
 	"ordering-platform/rpc/sys/internal/svc"
@@ -31,6 +32,7 @@ func main() {
 		sysclient.RegisterUserServiceServer(grpcServer, userserviceServer.NewUserServiceServer(ctx))
 		sysclient.RegisterApiServiceServer(grpcServer, apiserviceServer.NewApiServiceServer(ctx))
 		sysclient.RegisterMenuServiceServer(grpcServer, menuserviceServer.NewMenuServiceServer(ctx))
+		sysclient.RegisterDeptServiceServer(grpcServer, deptserviceServer.NewDeptServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

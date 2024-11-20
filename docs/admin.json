@@ -87,6 +87,358 @@
         ]
       }
     },
+    "/api/sys/dept/": {
+      "get": {
+        "summary": "dept列表",
+        "operationId": "DeptList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptListResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "dept添加",
+        "operationId": "DeptAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeptAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/dept/tree": {
+      "get": {
+        "summary": "获取 Dept tree 结构",
+        "operationId": "DeptTree",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptTreeResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/dept/{menuId}": {
+      "get": {
+        "summary": "dept详情",
+        "operationId": "DeptInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptInfoData"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "dept删除",
+        "operationId": "DeptDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeptDeleteReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "dept更新",
+        "operationId": "DeptUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeptUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeptUpdateReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/dept"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/menu/": {
+      "get": {
+        "summary": "menu列表",
+        "operationId": "ListMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListMenuResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "添加menu",
+        "operationId": "AddMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddMenuResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddMenuReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/menu/tree": {
+      "get": {
+        "summary": "获取 menu tree 结构",
+        "operationId": "TreeMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TreeMenuResp"
+            }
+          }
+        },
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/menu/{menuId}": {
+      "get": {
+        "summary": "menu详情",
+        "operationId": "MenuInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/MenuInfoData"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除menu",
+        "operationId": "DeleteMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteMenuResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteMenuReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "更新menu",
+        "operationId": "UpdateMenu",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateMenuResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateMenuReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/sys/user/codes": {
       "get": {
         "summary": "获取用户权限码",
@@ -189,6 +541,87 @@
     }
   },
   "definitions": {
+    "AddMenuReq": {
+      "type": "object",
+      "properties": {
+        "menuType": {
+          "type": "string",
+          "description": " 菜单类型"
+        },
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 显示排序"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上级菜单"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "permission": {
+          "type": "string",
+          "description": " 权限标识"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "ignoreKeepAlive": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "linkFlag": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "link": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "selectApi": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "AddMenuReq",
+      "required": [
+        "menuType",
+        "title",
+        "sort",
+        "parentMenuId"
+      ]
+    },
+    "AddMenuResp": {
+      "type": "object",
+      "title": "AddMenuResp"
+    },
     "ApiListData": {
       "type": "object",
       "properties": {
@@ -269,7 +702,7 @@
           "type": "integer",
           "format": "int64"
         },
-        "list": {
+        "data": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ApiListData"
@@ -279,8 +712,266 @@
       "title": "ApiListResp",
       "required": [
         "total",
-        "list"
+        "data"
       ]
+    },
+    "DeleteMenuReq": {
+      "type": "object",
+      "title": "DeleteMenuReq"
+    },
+    "DeleteMenuResp": {
+      "type": "object",
+      "title": "DeleteMenuResp"
+    },
+    "DeptAddReq": {
+      "type": "object",
+      "properties": {
+        "parentDeptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "leader": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "DeptAddReq",
+      "required": [
+        "parentDeptId",
+        "deptName",
+        "sort",
+        "leader",
+        "phone",
+        "email",
+        "status"
+      ]
+    },
+    "DeptAddResp": {
+      "type": "object",
+      "title": "DeptAddResp"
+    },
+    "DeptDeleteReq": {
+      "type": "object",
+      "title": "DeptDeleteReq"
+    },
+    "DeptDeleteResp": {
+      "type": "object",
+      "title": "DeptDeleteResp"
+    },
+    "DeptInfoData": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "parentDeptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "leader": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createTime": {
+          "type": "string"
+        }
+      },
+      "title": "DeptInfoData",
+      "required": [
+        "deptId",
+        "parentDeptId",
+        "deptName",
+        "sort",
+        "leader",
+        "phone",
+        "email",
+        "status",
+        "createTime"
+      ]
+    },
+    "DeptInfoReq": {
+      "type": "object",
+      "title": "DeptInfoReq"
+    },
+    "DeptListReq": {
+      "type": "object",
+      "title": "DeptListReq"
+    },
+    "DeptListResp": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeptInfoData"
+          }
+        }
+      },
+      "title": "DeptListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeptTreeData": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 还是deptId"
+        },
+        "parentDeptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "leader": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeptTreeData"
+          }
+        }
+      },
+      "title": "DeptTreeData",
+      "required": [
+        "deptId",
+        "value",
+        "parentDeptId",
+        "deptName",
+        "sort",
+        "leader",
+        "phone",
+        "email",
+        "status",
+        "createTime",
+        "children"
+      ]
+    },
+    "DeptTreeReq": {
+      "type": "object",
+      "title": "DeptTreeReq"
+    },
+    "DeptTreeResp": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeptTreeData"
+          }
+        }
+      },
+      "title": "DeptTreeResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeptUpdateReq": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "parentDeptId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "leader": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "DeptUpdateReq",
+      "required": [
+        "deptId",
+        "parentDeptId",
+        "deptName",
+        "sort",
+        "leader",
+        "phone",
+        "email",
+        "status"
+      ]
+    },
+    "DeptUpdateResp": {
+      "type": "object",
+      "title": "DeptUpdateResp"
     },
     "InitApiReq": {
       "type": "object",
@@ -289,6 +980,110 @@
     "InitApiResp": {
       "type": "object",
       "title": "InitApiResp"
+    },
+    "ListMenuData": {
+      "type": "object",
+      "properties": {
+        "menuId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "menuType": {
+          "type": "string",
+          "description": " 菜单类型"
+        },
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 显示排序"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上级菜单"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "permission": {
+          "type": "string",
+          "description": " 权限标识"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "ignoreKeepAlive": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "linkFlag": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "link": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "ListMenuData",
+      "required": [
+        "menuId",
+        "menuType",
+        "title",
+        "sort",
+        "parentMenuId",
+        "icon",
+        "name",
+        "component",
+        "path",
+        "permission",
+        "hideInMenu",
+        "ignoreKeepAlive",
+        "linkFlag",
+        "link",
+        "disabled"
+      ]
+    },
+    "ListMenuReq": {
+      "type": "object",
+      "title": "ListMenuReq"
+    },
+    "ListMenuResp": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListMenuData"
+          }
+        }
+      },
+      "title": "ListMenuResp",
+      "required": [
+        "data"
+      ]
     },
     "LoginReq": {
       "type": "object",
@@ -362,6 +1157,103 @@
         "meta"
       ]
     },
+    "MenuInfoData": {
+      "type": "object",
+      "properties": {
+        "menuId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "menuType": {
+          "type": "string",
+          "description": " 菜单类型"
+        },
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 显示排序"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上级菜单"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "permission": {
+          "type": "string",
+          "description": " 权限标识"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "ignoreKeepAlive": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "linkFlag": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "link": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "selectApi": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "MenuInfoData",
+      "required": [
+        "menuId",
+        "menuType",
+        "title",
+        "sort",
+        "parentMenuId",
+        "icon",
+        "name",
+        "component",
+        "path",
+        "permission",
+        "hideInMenu",
+        "ignoreKeepAlive",
+        "linkFlag",
+        "link",
+        "disabled",
+        "selectApi"
+      ]
+    },
+    "MenuInfoReq": {
+      "type": "object",
+      "title": "MenuInfoReq"
+    },
     "MenuMate": {
       "type": "object",
       "properties": {
@@ -408,6 +1300,217 @@
         "menuVisibleWithForbidden",
         "link"
       ]
+    },
+    "TreeMenuData": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 对应menuId"
+        },
+        "menuType": {
+          "type": "string",
+          "description": " 菜单类型"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上级菜单"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "permission": {
+          "type": "string",
+          "description": " 权限标识"
+        },
+        "linkFlag": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "meta": {
+          "$ref": "#/definitions/TreeMenuMeta"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TreeMenuData"
+          }
+        },
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        }
+      },
+      "title": "TreeMenuData",
+      "required": [
+        "value",
+        "menuType",
+        "parentMenuId",
+        "name",
+        "component",
+        "path",
+        "permission",
+        "linkFlag",
+        "meta",
+        "children",
+        "title"
+      ]
+    },
+    "TreeMenuMeta": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "keepAlive": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 对应ignoreKeepAlive"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "link": {
+          "type": "string"
+        },
+        "menuVisibleWithForbidden": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 对应 disabled"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32",
+          "description": " sort"
+        }
+      },
+      "title": "TreeMenuMeta",
+      "required": [
+        "title",
+        "icon",
+        "keepAlive",
+        "hideInMenu",
+        "link",
+        "menuVisibleWithForbidden",
+        "order"
+      ]
+    },
+    "TreeMenuReq": {
+      "type": "object",
+      "title": "TreeMenuReq"
+    },
+    "TreeMenuResp": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TreeMenuData"
+          }
+        }
+      },
+      "title": "TreeMenuResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateMenuReq": {
+      "type": "object",
+      "properties": {
+        "menuType": {
+          "type": "string",
+          "description": " 菜单类型"
+        },
+        "title": {
+          "type": "string",
+          "description": " 菜单标题"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 显示排序"
+        },
+        "parentMenuId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上级菜单"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 图标"
+        },
+        "name": {
+          "type": "string",
+          "description": " 路由名称"
+        },
+        "component": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "path": {
+          "type": "string",
+          "description": " 路由地址"
+        },
+        "permission": {
+          "type": "string",
+          "description": " 权限标识"
+        },
+        "hideInMenu": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "ignoreKeepAlive": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "linkFlag": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "link": {
+          "type": "string",
+          "description": " 组件路径"
+        },
+        "disabled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "selectApi": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "UpdateMenuReq",
+      "required": [
+        "menuType",
+        "title",
+        "sort",
+        "parentMenuId"
+      ]
+    },
+    "UpdateMenuResp": {
+      "type": "object",
+      "title": "UpdateMenuResp"
     },
     "UserInfoResp": {
       "type": "object",

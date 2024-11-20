@@ -161,6 +161,260 @@ var ApiService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	DeptService_DeptAdd_FullMethodName    = "/sysclient.DeptService/DeptAdd"
+	DeptService_DeptUpdate_FullMethodName = "/sysclient.DeptService/DeptUpdate"
+	DeptService_DeptDelete_FullMethodName = "/sysclient.DeptService/DeptDelete"
+	DeptService_DeptInfo_FullMethodName   = "/sysclient.DeptService/DeptInfo"
+	DeptService_DeptList_FullMethodName   = "/sysclient.DeptService/DeptList"
+)
+
+// DeptServiceClient is the client API for DeptService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type DeptServiceClient interface {
+	DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error)
+	DeptUpdate(ctx context.Context, in *DeptUpdateReq, opts ...grpc.CallOption) (*DeptUpdateResp, error)
+	DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...grpc.CallOption) (*DeptDeleteResp, error)
+	DeptInfo(ctx context.Context, in *DeptInfoReq, opts ...grpc.CallOption) (*DeptInfoResp, error)
+	DeptList(ctx context.Context, in *DeptListReq, opts ...grpc.CallOption) (*DeptListResp, error)
+}
+
+type deptServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDeptServiceClient(cc grpc.ClientConnInterface) DeptServiceClient {
+	return &deptServiceClient{cc}
+}
+
+func (c *deptServiceClient) DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeptAddResp)
+	err := c.cc.Invoke(ctx, DeptService_DeptAdd_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deptServiceClient) DeptUpdate(ctx context.Context, in *DeptUpdateReq, opts ...grpc.CallOption) (*DeptUpdateResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeptUpdateResp)
+	err := c.cc.Invoke(ctx, DeptService_DeptUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deptServiceClient) DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...grpc.CallOption) (*DeptDeleteResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeptDeleteResp)
+	err := c.cc.Invoke(ctx, DeptService_DeptDelete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deptServiceClient) DeptInfo(ctx context.Context, in *DeptInfoReq, opts ...grpc.CallOption) (*DeptInfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeptInfoResp)
+	err := c.cc.Invoke(ctx, DeptService_DeptInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deptServiceClient) DeptList(ctx context.Context, in *DeptListReq, opts ...grpc.CallOption) (*DeptListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeptListResp)
+	err := c.cc.Invoke(ctx, DeptService_DeptList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DeptServiceServer is the server API for DeptService service.
+// All implementations must embed UnimplementedDeptServiceServer
+// for forward compatibility.
+type DeptServiceServer interface {
+	DeptAdd(context.Context, *DeptAddReq) (*DeptAddResp, error)
+	DeptUpdate(context.Context, *DeptUpdateReq) (*DeptUpdateResp, error)
+	DeptDelete(context.Context, *DeptDeleteReq) (*DeptDeleteResp, error)
+	DeptInfo(context.Context, *DeptInfoReq) (*DeptInfoResp, error)
+	DeptList(context.Context, *DeptListReq) (*DeptListResp, error)
+	mustEmbedUnimplementedDeptServiceServer()
+}
+
+// UnimplementedDeptServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedDeptServiceServer struct{}
+
+func (UnimplementedDeptServiceServer) DeptAdd(context.Context, *DeptAddReq) (*DeptAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptAdd not implemented")
+}
+func (UnimplementedDeptServiceServer) DeptUpdate(context.Context, *DeptUpdateReq) (*DeptUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptUpdate not implemented")
+}
+func (UnimplementedDeptServiceServer) DeptDelete(context.Context, *DeptDeleteReq) (*DeptDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptDelete not implemented")
+}
+func (UnimplementedDeptServiceServer) DeptInfo(context.Context, *DeptInfoReq) (*DeptInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptInfo not implemented")
+}
+func (UnimplementedDeptServiceServer) DeptList(context.Context, *DeptListReq) (*DeptListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeptList not implemented")
+}
+func (UnimplementedDeptServiceServer) mustEmbedUnimplementedDeptServiceServer() {}
+func (UnimplementedDeptServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeDeptServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DeptServiceServer will
+// result in compilation errors.
+type UnsafeDeptServiceServer interface {
+	mustEmbedUnimplementedDeptServiceServer()
+}
+
+func RegisterDeptServiceServer(s grpc.ServiceRegistrar, srv DeptServiceServer) {
+	// If the following call pancis, it indicates UnimplementedDeptServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&DeptService_ServiceDesc, srv)
+}
+
+func _DeptService_DeptAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeptServiceServer).DeptAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeptService_DeptAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeptServiceServer).DeptAdd(ctx, req.(*DeptAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeptService_DeptUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeptServiceServer).DeptUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeptService_DeptUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeptServiceServer).DeptUpdate(ctx, req.(*DeptUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeptService_DeptDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeptServiceServer).DeptDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeptService_DeptDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeptServiceServer).DeptDelete(ctx, req.(*DeptDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeptService_DeptInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeptServiceServer).DeptInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeptService_DeptInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeptServiceServer).DeptInfo(ctx, req.(*DeptInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeptService_DeptList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeptListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeptServiceServer).DeptList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeptService_DeptList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeptServiceServer).DeptList(ctx, req.(*DeptListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// DeptService_ServiceDesc is the grpc.ServiceDesc for DeptService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var DeptService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysclient.DeptService",
+	HandlerType: (*DeptServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "DeptAdd",
+			Handler:    _DeptService_DeptAdd_Handler,
+		},
+		{
+			MethodName: "DeptUpdate",
+			Handler:    _DeptService_DeptUpdate_Handler,
+		},
+		{
+			MethodName: "DeptDelete",
+			Handler:    _DeptService_DeptDelete_Handler,
+		},
+		{
+			MethodName: "DeptInfo",
+			Handler:    _DeptService_DeptInfo_Handler,
+		},
+		{
+			MethodName: "DeptList",
+			Handler:    _DeptService_DeptList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "rpc/sys/sys.proto",
+}
+
+const (
 	MenuService_AddMenu_FullMethodName    = "/sysclient.MenuService/AddMenu"
 	MenuService_UpdateMenu_FullMethodName = "/sysclient.MenuService/UpdateMenu"
 	MenuService_DeleteMenu_FullMethodName = "/sysclient.MenuService/DeleteMenu"
