@@ -110,6 +110,38 @@ type(
     ListMenuResp {
         data []*ListMenuData `json:"data"`
     }
+
+    TreeMenuReq {
+
+    }
+
+    TreeMenuData {
+        value int64 `json:"value"` // 对应menuId
+        menuType string `json:"menuType"` // 菜单类型
+        parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
+        name string `json:"name"` // 路由名称
+        component string `json:"component"` // 组件路径
+        path string `json:"path"` // 路由地址
+        permission string `json:"permission"` // 权限标识
+        linkFlag bool `json:"linkFlag"`
+        meta *TreeMenuMeta `json:"meta"`
+        children []*TreeMenuData `json:"children"`
+        title string `json:"title"`  // 菜单标题
+    }
+
+    TreeMenuMeta {
+        title string `json:"title"`  // 菜单标题
+        icon string `json:"icon"` // 图标
+        keepAlive bool `json:"keepAlive"` // 对应ignoreKeepAlive
+        hideInMenu bool `json:"hideInMenu"`
+        link string `json:"link"`
+        menuVisibleWithForbidden bool `json:"menuVisibleWithForbidden"` // 对应 disabled
+        order int32 `json:"order"` // sort
+    }
+
+    TreeMenuResp {
+        data []*TreeMenuData `json:"data"`
+    }
 )
 
 
@@ -138,6 +170,8 @@ service admin-api {
     @handler ListMenu
     get / (ListMenuReq) returns (ListMenuResp)
 
+    @handler  TreeMenu
+    get /tree (TreeMenuReq) returns (TreeMenuResp)
 }
 
 

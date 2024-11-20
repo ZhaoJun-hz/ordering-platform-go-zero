@@ -43,7 +43,15 @@ func (l *DeleteMenuLogic) DeleteMenu(in *sysclient.DeleteMenuReq) (*sysclient.De
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
 	}
 	// 校验一下有没有子菜单
-
+	subMenuNumber, err := query.SysMenu.WithContext(l.ctx).Where(query.SysMenu.ParentMenuID.Eq(in.MenuId)).Count()
+	if err != nil {
+		logc.Errorf(l.ctx, "查询 Menu失败,参数：%d,异常:%s", in.MenuId, err.Error())
+		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
+	}
+	if subMenuNumber > 0 {
+		logc.Errorf(l.ctx, "Menu 下有子菜单,禁止删除")
+		return nil, errors.WithStack(errcode.MenuHaveSubMenuError)
+	}
 	// 校验一下有没有角色关联该菜单，有的话不允许修改
 	count, err := query.SysRoleMenu.WithContext(l.ctx).Where(query.SysRoleMenu.MenuID.Eq(in.MenuId)).Count()
 	if err != nil {
@@ -52,7 +60,7 @@ func (l *DeleteMenuLogic) DeleteMenu(in *sysclient.DeleteMenuReq) (*sysclient.De
 	}
 	if count > 0 {
 		logc.Errorf(l.ctx, "Menu 关联的有角色,不允许操作")
-		return nil, errors.WithStack(errcode.MenuUpdateMenuTypeError)
+		return nil, errors.WithStack(errcode.MenuHaveAllocationRoleError)
 	}
 
 	tx := query.Q.Begin()

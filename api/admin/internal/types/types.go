@@ -136,6 +136,37 @@ type MenuMate struct {
 	Link                     string `json:"link"`                     // 用于配置外链跳转路径，会在新窗口打开。
 }
 
+type TreeMenuData struct {
+	Value        int64           `json:"value"`        // 对应menuId
+	MenuType     string          `json:"menuType"`     // 菜单类型
+	ParentMenuId int64           `json:"parentMenuId"` // 上级菜单
+	Name         string          `json:"name"`         // 路由名称
+	Component    string          `json:"component"`    // 组件路径
+	Path         string          `json:"path"`         // 路由地址
+	Permission   string          `json:"permission"`   // 权限标识
+	LinkFlag     bool            `json:"linkFlag"`
+	Meta         *TreeMenuMeta   `json:"meta"`
+	Children     []*TreeMenuData `json:"children"`
+	Title        string          `json:"title"` // 菜单标题
+}
+
+type TreeMenuMeta struct {
+	Title                    string `json:"title"`     // 菜单标题
+	Icon                     string `json:"icon"`      // 图标
+	KeepAlive                bool   `json:"keepAlive"` // 对应ignoreKeepAlive
+	HideInMenu               bool   `json:"hideInMenu"`
+	Link                     string `json:"link"`
+	MenuVisibleWithForbidden bool   `json:"menuVisibleWithForbidden"` // 对应 disabled
+	Order                    int32  `json:"order"`                    // sort
+}
+
+type TreeMenuReq struct {
+}
+
+type TreeMenuResp struct {
+	Data []*TreeMenuData `json:"data"`
+}
+
 type UpdateMenuReq struct {
 	MenuId          int64   `path:"menuId"`
 	MenuType        string  `json:"menuType"`            // 菜单类型

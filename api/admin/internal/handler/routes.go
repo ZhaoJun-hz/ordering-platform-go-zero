@@ -63,6 +63,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/:menuId",
 					Handler: sysmenu.MenuInfoHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/tree",
+					Handler: sysmenu.TreeMenuHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),

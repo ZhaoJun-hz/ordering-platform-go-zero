@@ -14,4 +14,5 @@ var (
 	MenuNotExistError           = xerr.New(2010007, "菜单不存在")
 	MenuUpdateMenuTypeError     = xerr.New(2010008, "更新菜单时，不允许修改菜单类型")
 	MenuHaveAllocationRoleError = xerr.New(2010009, "菜单已经分配过角色，不允许修改")
+	MenuHaveSubMenuError        = xerr.New(2010010, "菜单下还有子菜单，不允许删除")
 )
