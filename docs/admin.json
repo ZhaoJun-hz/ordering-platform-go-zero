@@ -161,7 +161,7 @@
         ]
       }
     },
-    "/api/sys/dept/{menuId}": {
+    "/api/sys/dept/{deptId}": {
       "get": {
         "summary": "dept详情",
         "operationId": "DeptInfo",
@@ -175,7 +175,7 @@
         },
         "parameters": [
           {
-            "name": "menuId",
+            "name": "deptId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -203,7 +203,7 @@
         },
         "parameters": [
           {
-            "name": "menuId",
+            "name": "deptId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -239,7 +239,7 @@
         },
         "parameters": [
           {
-            "name": "menuId",
+            "name": "deptId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -327,8 +327,21 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "needButton",
+            "description": " 是否需要按钮",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "format": "boolean"
+          }
+        ],
         "tags": [
           "sys/menu"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ],
         "security": [
           {
@@ -431,6 +444,205 @@
         ],
         "tags": [
           "sys/menu"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/role/": {
+      "get": {
+        "summary": "role列表",
+        "operationId": "RoleList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RoleListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roleName",
+            "description": " 角色名称",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roleKey",
+            "description": "  权限字符",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "description": " 状态 1 停用 2 启用",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageNum",
+            "description": "  第几页",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "description": " 每页的数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "sys/role"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "role添加",
+        "operationId": "RoleAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RoleAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RoleAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/role"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/role/{deptId}": {
+      "get": {
+        "summary": "role详情",
+        "operationId": "RoleInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RoleInfoData"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "deptId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "sys/role"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "role删除",
+        "operationId": "RoleDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RoleDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "deptId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RoleDeleteReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/role"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "role更新",
+        "operationId": "RoleUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RoleUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "deptId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RoleUpdateReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/role"
         ],
         "security": [
           {
@@ -756,9 +968,6 @@
         "parentDeptId",
         "deptName",
         "sort",
-        "leader",
-        "phone",
-        "email",
         "status"
       ]
     },
@@ -963,9 +1172,6 @@
         "parentDeptId",
         "deptName",
         "sort",
-        "leader",
-        "phone",
-        "email",
         "status"
       ]
     },
@@ -1301,6 +1507,271 @@
         "link"
       ]
     },
+    "RoleAddReq": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "description": " 角色名称"
+        },
+        "roleKey": {
+          "type": "string",
+          "description": "  权限字符"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 排序"
+        },
+        "selectMenus": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 菜单权限"
+        },
+        "defaultRouter": {
+          "type": "string",
+          "description": " 默认路由"
+        }
+      },
+      "title": "RoleAddReq",
+      "required": [
+        "roleName",
+        "roleKey",
+        "status",
+        "sort",
+        "selectMenus",
+        "defaultRouter"
+      ]
+    },
+    "RoleAddResp": {
+      "type": "object",
+      "title": "RoleAddResp"
+    },
+    "RoleDeleteReq": {
+      "type": "object",
+      "title": "RoleDeleteReq"
+    },
+    "RoleDeleteResp": {
+      "type": "object",
+      "title": "RoleDeleteResp"
+    },
+    "RoleInfoData": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "description": " 角色名称"
+        },
+        "roleKey": {
+          "type": "string",
+          "description": "  权限字符"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 排序"
+        },
+        "defaultRouter": {
+          "type": "string",
+          "description": " 默认路由"
+        },
+        "selectMenus": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 菜单权限"
+        },
+        "admin": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "RoleInfoData",
+      "required": [
+        "roleId",
+        "roleName",
+        "roleKey",
+        "status",
+        "sort",
+        "defaultRouter",
+        "admin"
+      ]
+    },
+    "RoleInfoReq": {
+      "type": "object",
+      "title": "RoleInfoReq"
+    },
+    "RoleListData": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "description": " 角色名称"
+        },
+        "roleKey": {
+          "type": "string",
+          "description": "  权限字符"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 排序"
+        },
+        "defaultRouter": {
+          "type": "string",
+          "description": " 默认路由"
+        },
+        "createTime": {
+          "type": "string",
+          "description": " 创建时间"
+        },
+        "admin": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "RoleListData",
+      "required": [
+        "roleId",
+        "roleName",
+        "roleKey",
+        "status",
+        "sort",
+        "defaultRouter",
+        "createTime",
+        "admin"
+      ]
+    },
+    "RoleListReq": {
+      "type": "object",
+      "properties": {
+        "roleName": {
+          "type": "string",
+          "description": " 角色名称"
+        },
+        "roleKey": {
+          "type": "string",
+          "description": "  权限字符"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "pageNum": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1",
+          "description": "  第几页"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "default": "10",
+          "description": " 每页的数量"
+        }
+      },
+      "title": "RoleListReq",
+      "required": [
+        "pageNum",
+        "pageSize"
+      ]
+    },
+    "RoleListResp": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleListData"
+          }
+        }
+      },
+      "title": "RoleListResp",
+      "required": [
+        "total",
+        "data"
+      ]
+    },
+    "RoleUpdateReq": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "roleName": {
+          "type": "string",
+          "description": " 角色名称"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 排序"
+        },
+        "selectMenus": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 菜单权限"
+        },
+        "defaultRouter": {
+          "type": "string",
+          "description": " 默认路由"
+        }
+      },
+      "title": "RoleUpdateReq",
+      "required": [
+        "roleId",
+        "roleName",
+        "status",
+        "sort",
+        "defaultRouter"
+      ]
+    },
+    "RoleUpdateResp": {
+      "type": "object",
+      "title": "RoleUpdateResp"
+    },
     "TreeMenuData": {
       "type": "object",
       "properties": {
@@ -1414,7 +1885,17 @@
     },
     "TreeMenuReq": {
       "type": "object",
-      "title": "TreeMenuReq"
+      "properties": {
+        "needButton": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否需要按钮"
+        }
+      },
+      "title": "TreeMenuReq",
+      "required": [
+        "needButton"
+      ]
     },
     "TreeMenuResp": {
       "type": "object",

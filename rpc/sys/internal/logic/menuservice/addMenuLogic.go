@@ -102,14 +102,14 @@ func (l *AddMenuLogic) AddMenu(in *sysclient.AddMenuReq) (*sysclient.AddMenuResp
 		return nil, errors.Wrapf(xerr.NewDBErr(), "创建 menu 失败 %v, req %v", err, sysMenu)
 	}
 	// 添加 sys_menu_api_rule
-	list := []*model.SysMenuAPIRule{}
+	list := []*model.SysMenuAPI{}
 	for _, item := range in.SelectApi {
-		list = append(list, &model.SysMenuAPIRule{
-			SysMenuMenuID: sysMenu.MenuID,
-			SysAPIID:      item,
+		list = append(list, &model.SysMenuAPI{
+			SysMenuID: sysMenu.MenuID,
+			SysAPIID:  item,
 		})
 	}
-	err = tx.SysMenuAPIRule.WithContext(l.ctx).CreateInBatches(list, len(list))
+	err = tx.SysMenuAPI.WithContext(l.ctx).CreateInBatches(list, len(list))
 	if err != nil {
 		logc.Errorf(l.ctx, "批量创建 SysMenuAPIRule 失败,参数：%+v,异常:%s", list, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "批量创建 SysMenuAPIRule 失败 %v, 参数 %v", err, list)

@@ -9,6 +9,7 @@ import (
 	sysapi "ordering-platform/api/admin/internal/handler/sys/api"
 	sysdept "ordering-platform/api/admin/internal/handler/sys/dept"
 	sysmenu "ordering-platform/api/admin/internal/handler/sys/menu"
+	sysrole "ordering-platform/api/admin/internal/handler/sys/role"
 	sysuser "ordering-platform/api/admin/internal/handler/sys/user"
 	"ordering-platform/api/admin/internal/svc"
 
@@ -124,6 +125,46 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/sys/menu"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
+			[]rest.Route{
+				{
+					// role添加
+					Method:  http.MethodPost,
+					Path:    "/",
+					Handler: sysrole.RoleAddHandler(serverCtx),
+				},
+				{
+					// role列表
+					Method:  http.MethodGet,
+					Path:    "/",
+					Handler: sysrole.RoleListHandler(serverCtx),
+				},
+				{
+					// role更新
+					Method:  http.MethodPut,
+					Path:    "/:roleId",
+					Handler: sysrole.RoleUpdateHandler(serverCtx),
+				},
+				{
+					// role删除
+					Method:  http.MethodDelete,
+					Path:    "/:roleId",
+					Handler: sysrole.RoleDeleteHandler(serverCtx),
+				},
+				{
+					// role详情
+					Method:  http.MethodGet,
+					Path:    "/:roleId",
+					Handler: sysrole.RoleInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/sys/role"),
 	)
 
 	server.AddRoutes(

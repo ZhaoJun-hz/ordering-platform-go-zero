@@ -669,6 +669,260 @@ var MenuService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	RoleService_RoleAdd_FullMethodName    = "/sysclient.RoleService/RoleAdd"
+	RoleService_RoleUpdate_FullMethodName = "/sysclient.RoleService/RoleUpdate"
+	RoleService_RoleDelete_FullMethodName = "/sysclient.RoleService/RoleDelete"
+	RoleService_RoleInfo_FullMethodName   = "/sysclient.RoleService/RoleInfo"
+	RoleService_RoleList_FullMethodName   = "/sysclient.RoleService/RoleList"
+)
+
+// RoleServiceClient is the client API for RoleService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RoleServiceClient interface {
+	RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
+	RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...grpc.CallOption) (*RoleUpdateResp, error)
+	RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error)
+	RoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*RoleInfoResp, error)
+	RoleList(ctx context.Context, in *RoleListReq, opts ...grpc.CallOption) (*RoleListResp, error)
+}
+
+type roleServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRoleServiceClient(cc grpc.ClientConnInterface) RoleServiceClient {
+	return &roleServiceClient{cc}
+}
+
+func (c *roleServiceClient) RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleAddResp)
+	err := c.cc.Invoke(ctx, RoleService_RoleAdd_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...grpc.CallOption) (*RoleUpdateResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleUpdateResp)
+	err := c.cc.Invoke(ctx, RoleService_RoleUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleDeleteResp)
+	err := c.cc.Invoke(ctx, RoleService_RoleDelete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) RoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*RoleInfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleInfoResp)
+	err := c.cc.Invoke(ctx, RoleService_RoleInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) RoleList(ctx context.Context, in *RoleListReq, opts ...grpc.CallOption) (*RoleListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleListResp)
+	err := c.cc.Invoke(ctx, RoleService_RoleList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RoleServiceServer is the server API for RoleService service.
+// All implementations must embed UnimplementedRoleServiceServer
+// for forward compatibility.
+type RoleServiceServer interface {
+	RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error)
+	RoleUpdate(context.Context, *RoleUpdateReq) (*RoleUpdateResp, error)
+	RoleDelete(context.Context, *RoleDeleteReq) (*RoleDeleteResp, error)
+	RoleInfo(context.Context, *RoleInfoReq) (*RoleInfoResp, error)
+	RoleList(context.Context, *RoleListReq) (*RoleListResp, error)
+	mustEmbedUnimplementedRoleServiceServer()
+}
+
+// UnimplementedRoleServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedRoleServiceServer struct{}
+
+func (UnimplementedRoleServiceServer) RoleAdd(context.Context, *RoleAddReq) (*RoleAddResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleAdd not implemented")
+}
+func (UnimplementedRoleServiceServer) RoleUpdate(context.Context, *RoleUpdateReq) (*RoleUpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleUpdate not implemented")
+}
+func (UnimplementedRoleServiceServer) RoleDelete(context.Context, *RoleDeleteReq) (*RoleDeleteResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleDelete not implemented")
+}
+func (UnimplementedRoleServiceServer) RoleInfo(context.Context, *RoleInfoReq) (*RoleInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleInfo not implemented")
+}
+func (UnimplementedRoleServiceServer) RoleList(context.Context, *RoleListReq) (*RoleListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleList not implemented")
+}
+func (UnimplementedRoleServiceServer) mustEmbedUnimplementedRoleServiceServer() {}
+func (UnimplementedRoleServiceServer) testEmbeddedByValue()                     {}
+
+// UnsafeRoleServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RoleServiceServer will
+// result in compilation errors.
+type UnsafeRoleServiceServer interface {
+	mustEmbedUnimplementedRoleServiceServer()
+}
+
+func RegisterRoleServiceServer(s grpc.ServiceRegistrar, srv RoleServiceServer) {
+	// If the following call pancis, it indicates UnimplementedRoleServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&RoleService_ServiceDesc, srv)
+}
+
+func _RoleService_RoleAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RoleAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RoleAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RoleAdd(ctx, req.(*RoleAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_RoleUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleUpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RoleUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RoleUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RoleUpdate(ctx, req.(*RoleUpdateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_RoleDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RoleDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RoleDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RoleDelete(ctx, req.(*RoleDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_RoleInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RoleInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RoleInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RoleInfo(ctx, req.(*RoleInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_RoleList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RoleList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RoleList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RoleList(ctx, req.(*RoleListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RoleService_ServiceDesc is the grpc.ServiceDesc for RoleService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RoleService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysclient.RoleService",
+	HandlerType: (*RoleServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "RoleAdd",
+			Handler:    _RoleService_RoleAdd_Handler,
+		},
+		{
+			MethodName: "RoleUpdate",
+			Handler:    _RoleService_RoleUpdate_Handler,
+		},
+		{
+			MethodName: "RoleDelete",
+			Handler:    _RoleService_RoleDelete_Handler,
+		},
+		{
+			MethodName: "RoleInfo",
+			Handler:    _RoleService_RoleInfo_Handler,
+		},
+		{
+			MethodName: "RoleList",
+			Handler:    _RoleService_RoleList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "rpc/sys/sys.proto",
+}
+
+const (
 	UserService_Login_FullMethodName    = "/sysclient.UserService/Login"
 	UserService_UserInfo_FullMethodName = "/sysclient.UserService/UserInfo"
 )

@@ -29,7 +29,7 @@ func main() {
 		g.GenerateModel("sys_casbin_rule"),
 		g.GenerateModel("sys_dept"),
 		g.GenerateModel("sys_menu"),
-		g.GenerateModel("sys_menu_api_rule"),
+		g.GenerateModel("sys_menu_api"),
 		g.GenerateModel("sys_role"),
 		g.GenerateModel("sys_role_menu"),
 		g.GenerateModel("sys_user"),

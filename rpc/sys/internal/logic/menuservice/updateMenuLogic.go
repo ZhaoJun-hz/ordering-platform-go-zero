@@ -121,26 +121,23 @@ func (l *UpdateMenuLogic) UpdateMenu(in *sysclient.UpdateMenuReq) (*sysclient.Up
 	}
 
 	// 删除 sys_menu_api_rule
-	_, err = tx.SysMenuAPIRule.WithContext(l.ctx).Where(query.SysMenuAPIRule.SysMenuMenuID.Eq(in.MenuId)).Delete()
+	_, err = tx.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.Eq(in.MenuId)).Delete()
 	if err != nil {
 		logc.Errorf(l.ctx, "删除 sys_menu_api_rule 失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "删除 sys_menu_api_rule 失败 %v, 参数 %d", err, in.MenuId)
 	}
 	// 添加，重新生成 sys_menu_api_rule
-	// TODO casbin 加一个字段 SysMenuAPIRule.id 方便删除
-	list := []*model.SysMenuAPIRule{}
+	list := []*model.SysMenuAPI{}
 	for _, item := range in.SelectApi {
-		list = append(list, &model.SysMenuAPIRule{
-			SysMenuMenuID: sysMenu.MenuID,
-			SysAPIID:      item,
+		list = append(list, &model.SysMenuAPI{
+			SysMenuID: sysMenu.MenuID,
+			SysAPIID:  item,
 		})
 	}
-	err = tx.SysMenuAPIRule.WithContext(l.ctx).CreateInBatches(list, len(list))
+	err = tx.SysMenuAPI.WithContext(l.ctx).CreateInBatches(list, len(list))
 	if err != nil {
 		logc.Errorf(l.ctx, "批量创建 SysMenuAPIRule 失败,参数：%+v,异常:%s", list, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "批量创建 SysMenuAPIRule 失败 %v, 参数 %v", err, list)
 	}
-	// TODO casbin 加一个字段 SysMenuAPIRule.id 方便增加
-	// TODO 重新生成或者加载 casbin
 	return &sysclient.UpdateMenuResp{}, nil
 }

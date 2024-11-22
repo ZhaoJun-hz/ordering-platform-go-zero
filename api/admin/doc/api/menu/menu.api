@@ -112,11 +112,11 @@ type(
     }
 
     TreeMenuReq {
-
+        needButton bool `form:"needButton"` // 是否需要按钮
     }
 
     TreeMenuData {
-        value int64 `json:"value"` // 对应menuId
+        menuId int64 `json:"menuId"` // 对应menuId
         menuType string `json:"menuType"` // 菜单类型
         parentMenuId int64 `json:"parentMenuId"`  // 上级菜单
         name string `json:"name"` // 路由名称

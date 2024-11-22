@@ -34,8 +34,8 @@ message ApiInfo {
 message ApiListReq {
   string type = 1;    // 系统 业务
   string action = 2;  // 请求方法 GET POST DELETE PUT
-  int64 page_num = 3; //  第几页
-  int64 page_size = 4; // 每页的数量
+  int64 pageNum = 3; //  第几页
+  int64 pageSize = 4; // 每页的数量
 }
 
 message ApiListResp {

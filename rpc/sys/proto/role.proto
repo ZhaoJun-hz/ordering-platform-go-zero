@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./proto";
+
+
+message RoleAddReq {
+  string roleName = 1;
+  string roleKey = 2;
+  int32 status = 3;
+  int32 sort = 4;
+  repeated int64 selectMenus = 5;
+  string defaultRouter = 6;
+}
+
+message RoleAddResp {
+  repeated ApiInfo data = 1;
+}
+
+message RoleUpdateReq {
+  int64 roleId = 1;
+  string roleName = 2;
+  int32 status = 4;
+  int32 sort = 5;
+  repeated int64 selectMenus = 6;
+  string defaultRouter = 7;
+}
+
+message RoleUpdateResp {
+  string roleKey = 1;
+  repeated ApiInfo data = 2;
+}
+
+message RoleListReq {
+  string roleName = 1;
+  string roleKey = 2;
+  int32 status = 3;
+  int64 pageNum = 4;
+  int64 pageSize = 5;
+}
+
+message RoleListData {
+  int64 roleId = 1;
+  string roleName = 2;
+  string roleKey = 3;
+  int32 status = 4;
+  int32 sort = 5;
+  string defaultRouter = 6;
+  string createTime = 7;
+  bool admin = 8;
+}
+
+message RoleListResp {
+  int64 total = 1;
+  repeated RoleListData data = 2;
+}
+
+message RoleDeleteReq {
+  int64 roleId = 1;
+}
+
+message RoleDeleteResp {
+  string roleKey = 1;
+}
+
+message RoleInfoReq {
+  int64 roleId = 1;
+}
+
+message RoleInfoResp {
+  int64 roleId = 1;
+  string roleName = 2;
+  string roleKey = 3;
+  int32 status = 4;
+  int32 sort = 5;
+  repeated int64 selectMenus = 6;
+  string defaultRouter = 7;
+  bool admin = 8;
+}
+
+service RoleService {
+  rpc RoleAdd(RoleAddReq) returns (RoleAddResp);
+  rpc RoleUpdate(RoleUpdateReq) returns (RoleUpdateResp);
+  rpc RoleDelete(RoleDeleteReq) returns (RoleDeleteResp);
+  rpc RoleInfo(RoleInfoReq) returns (RoleInfoResp);
+  rpc RoleList(RoleListReq) returns (RoleListResp);
+}
+

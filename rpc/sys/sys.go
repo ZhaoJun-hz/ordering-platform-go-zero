@@ -8,6 +8,7 @@ import (
 	apiserviceServer "ordering-platform/rpc/sys/internal/server/apiservice"
 	deptserviceServer "ordering-platform/rpc/sys/internal/server/deptservice"
 	menuserviceServer "ordering-platform/rpc/sys/internal/server/menuservice"
+	roleserviceServer "ordering-platform/rpc/sys/internal/server/roleservice"
 	userserviceServer "ordering-platform/rpc/sys/internal/server/userservice"
 	"ordering-platform/rpc/sys/internal/svc"
 	"ordering-platform/rpc/sys/sysclient"
@@ -33,6 +34,7 @@ func main() {
 		sysclient.RegisterApiServiceServer(grpcServer, apiserviceServer.NewApiServiceServer(ctx))
 		sysclient.RegisterMenuServiceServer(grpcServer, menuserviceServer.NewMenuServiceServer(ctx))
 		sysclient.RegisterDeptServiceServer(grpcServer, deptserviceServer.NewDeptServiceServer(ctx))
+		sysclient.RegisterRoleServiceServer(grpcServer, roleserviceServer.NewRoleServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

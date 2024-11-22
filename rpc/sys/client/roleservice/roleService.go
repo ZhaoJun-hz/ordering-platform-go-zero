@@ -2,7 +2,7 @@
 // goctl 1.7.2
 // Source: sys.proto
 
-package deptservice
+package roleservice
 
 import (
 	"context"
@@ -58,46 +58,46 @@ type (
 	UpdateMenuReq    = sysclient.UpdateMenuReq
 	UpdateMenuResp   = sysclient.UpdateMenuResp
 
-	DeptService interface {
-		DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error)
-		DeptUpdate(ctx context.Context, in *DeptUpdateReq, opts ...grpc.CallOption) (*DeptUpdateResp, error)
-		DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...grpc.CallOption) (*DeptDeleteResp, error)
-		DeptInfo(ctx context.Context, in *DeptInfoReq, opts ...grpc.CallOption) (*DeptInfoResp, error)
-		DeptList(ctx context.Context, in *DeptListReq, opts ...grpc.CallOption) (*DeptListResp, error)
+	RoleService interface {
+		RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error)
+		RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...grpc.CallOption) (*RoleUpdateResp, error)
+		RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error)
+		RoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*RoleInfoResp, error)
+		RoleList(ctx context.Context, in *RoleListReq, opts ...grpc.CallOption) (*RoleListResp, error)
 	}
 
-	defaultDeptService struct {
+	defaultRoleService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewDeptService(cli zrpc.Client) DeptService {
-	return &defaultDeptService{
+func NewRoleService(cli zrpc.Client) RoleService {
+	return &defaultRoleService{
 		cli: cli,
 	}
 }
 
-func (m *defaultDeptService) DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error) {
-	client := sysclient.NewDeptServiceClient(m.cli.Conn())
-	return client.DeptAdd(ctx, in, opts...)
+func (m *defaultRoleService) RoleAdd(ctx context.Context, in *RoleAddReq, opts ...grpc.CallOption) (*RoleAddResp, error) {
+	client := sysclient.NewRoleServiceClient(m.cli.Conn())
+	return client.RoleAdd(ctx, in, opts...)
 }
 
-func (m *defaultDeptService) DeptUpdate(ctx context.Context, in *DeptUpdateReq, opts ...grpc.CallOption) (*DeptUpdateResp, error) {
-	client := sysclient.NewDeptServiceClient(m.cli.Conn())
-	return client.DeptUpdate(ctx, in, opts...)
+func (m *defaultRoleService) RoleUpdate(ctx context.Context, in *RoleUpdateReq, opts ...grpc.CallOption) (*RoleUpdateResp, error) {
+	client := sysclient.NewRoleServiceClient(m.cli.Conn())
+	return client.RoleUpdate(ctx, in, opts...)
 }
 
-func (m *defaultDeptService) DeptDelete(ctx context.Context, in *DeptDeleteReq, opts ...grpc.CallOption) (*DeptDeleteResp, error) {
-	client := sysclient.NewDeptServiceClient(m.cli.Conn())
-	return client.DeptDelete(ctx, in, opts...)
+func (m *defaultRoleService) RoleDelete(ctx context.Context, in *RoleDeleteReq, opts ...grpc.CallOption) (*RoleDeleteResp, error) {
+	client := sysclient.NewRoleServiceClient(m.cli.Conn())
+	return client.RoleDelete(ctx, in, opts...)
 }
 
-func (m *defaultDeptService) DeptInfo(ctx context.Context, in *DeptInfoReq, opts ...grpc.CallOption) (*DeptInfoResp, error) {
-	client := sysclient.NewDeptServiceClient(m.cli.Conn())
-	return client.DeptInfo(ctx, in, opts...)
+func (m *defaultRoleService) RoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*RoleInfoResp, error) {
+	client := sysclient.NewRoleServiceClient(m.cli.Conn())
+	return client.RoleInfo(ctx, in, opts...)
 }
 
-func (m *defaultDeptService) DeptList(ctx context.Context, in *DeptListReq, opts ...grpc.CallOption) (*DeptListResp, error) {
-	client := sysclient.NewDeptServiceClient(m.cli.Conn())
-	return client.DeptList(ctx, in, opts...)
+func (m *defaultRoleService) RoleList(ctx context.Context, in *RoleListReq, opts ...grpc.CallOption) (*RoleListResp, error) {
+	client := sysclient.NewRoleServiceClient(m.cli.Conn())
+	return client.RoleList(ctx, in, opts...)
 }

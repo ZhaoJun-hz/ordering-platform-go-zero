@@ -57,9 +57,9 @@ type DeptAddReq struct {
 	ParentDeptId int64  `json:"parentDeptId"`
 	DeptName     string `json:"deptName"`
 	Sort         int32  `json:"sort"`
-	Leader       string `json:"leader"`
-	Phone        string `json:"phone"`
-	Email        string `json:"email"`
+	Leader       string `json:"leader,optional"`
+	Phone        string `json:"phone,optional"`
+	Email        string `json:"email,optional"`
 	Status       int32  `json:"status"`
 }
 
@@ -122,9 +122,9 @@ type DeptUpdateReq struct {
 	ParentDeptId int64  `json:"parentDeptId"`
 	DeptName     string `json:"deptName"`
 	Sort         int32  `json:"sort"`
-	Leader       string `json:"leader"`
-	Phone        string `json:"phone"`
-	Email        string `json:"email"`
+	Leader       string `json:"leader,optional"`
+	Phone        string `json:"phone,optional"`
+	Email        string `json:"email,optional"`
 	Status       int32  `json:"status"`
 }
 
@@ -214,8 +214,78 @@ type MenuMate struct {
 	Link                     string `json:"link"`                     // 用于配置外链跳转路径，会在新窗口打开。
 }
 
+type RoleAddReq struct {
+	RoleName      string  `json:"roleName"`      // 角色名称
+	RoleKey       string  `json:"roleKey"`       //  权限字符
+	Status        int32   `json:"status"`        // 状态 1 停用 2 启用
+	Sort          int32   `json:"sort"`          // 排序
+	SelectMenus   []int64 `json:"selectMenus"`   // 菜单权限
+	DefaultRouter string  `json:"defaultRouter"` // 默认路由
+}
+
+type RoleAddResp struct {
+}
+
+type RoleDeleteReq struct {
+	RoleId int64 `path:"roleId"`
+}
+
+type RoleDeleteResp struct {
+}
+
+type RoleInfoData struct {
+	RoleId        int64   `json:"roleId"`
+	RoleName      string  `json:"roleName"`             // 角色名称
+	RoleKey       string  `json:"roleKey"`              //  权限字符
+	Status        int32   `json:"status"`               // 状态 1 停用 2 启用
+	Sort          int32   `json:"sort"`                 // 排序
+	DefaultRouter string  `json:"defaultRouter"`        // 默认路由
+	SelectMenus   []int64 `json:"selectMenus,optional"` // 菜单权限
+	Admin         bool    `json:"admin"`
+}
+
+type RoleInfoReq struct {
+	RoleId int64 `path:"roleId"`
+}
+
+type RoleListData struct {
+	RoleId        int64  `json:"roleId"`
+	RoleName      string `json:"roleName"`      // 角色名称
+	RoleKey       string `json:"roleKey"`       //  权限字符
+	Status        int32  `json:"status"`        // 状态 1 停用 2 启用
+	Sort          int32  `json:"sort"`          // 排序
+	DefaultRouter string `json:"defaultRouter"` // 默认路由
+	CreateTime    string `json:"createTime"`    // 创建时间
+	Admin         bool   `json:"admin"`
+}
+
+type RoleListReq struct {
+	RoleName string `form:"roleName,optional"`   // 角色名称
+	RoleKey  string `form:"roleKey,optional"`    //  权限字符
+	Status   int32  `form:"status,optional"`     // 状态 1 停用 2 启用
+	PageNum  int64  `form:"pageNum,default=1"`   //  第几页
+	PageSize int64  `form:"pageSize,default=10"` // 每页的数量
+}
+
+type RoleListResp struct {
+	Total int64           `json:"total"`
+	Data  []*RoleListData `json:"data"`
+}
+
+type RoleUpdateReq struct {
+	RoleId        int64   `json:"roleId"`
+	RoleName      string  `json:"roleName"`             // 角色名称
+	Status        int32   `json:"status"`               // 状态 1 停用 2 启用
+	Sort          int32   `json:"sort"`                 // 排序
+	SelectMenus   []int64 `json:"selectMenus,optional"` // 菜单权限
+	DefaultRouter string  `json:"defaultRouter"`        // 默认路由
+}
+
+type RoleUpdateResp struct {
+}
+
 type TreeMenuData struct {
-	Value        int64           `json:"value"`        // 对应menuId
+	MenuId       int64           `json:"menuId"`       // 对应menuId
 	MenuType     string          `json:"menuType"`     // 菜单类型
 	ParentMenuId int64           `json:"parentMenuId"` // 上级菜单
 	Name         string          `json:"name"`         // 路由名称
@@ -239,6 +309,7 @@ type TreeMenuMeta struct {
 }
 
 type TreeMenuReq struct {
+	NeedButton bool `form:"needButton"` // 是否需要按钮
 }
 
 type TreeMenuResp struct {

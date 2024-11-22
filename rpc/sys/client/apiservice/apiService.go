@@ -44,6 +44,17 @@ type (
 	LoginResp        = sysclient.LoginResp
 	MenuInfoReq      = sysclient.MenuInfoReq
 	MenuInfoResp     = sysclient.MenuInfoResp
+	RoleAddReq       = sysclient.RoleAddReq
+	RoleAddResp      = sysclient.RoleAddResp
+	RoleDeleteReq    = sysclient.RoleDeleteReq
+	RoleDeleteResp   = sysclient.RoleDeleteResp
+	RoleInfoReq      = sysclient.RoleInfoReq
+	RoleInfoResp     = sysclient.RoleInfoResp
+	RoleListData     = sysclient.RoleListData
+	RoleListReq      = sysclient.RoleListReq
+	RoleListResp     = sysclient.RoleListResp
+	RoleUpdateReq    = sysclient.RoleUpdateReq
+	RoleUpdateResp   = sysclient.RoleUpdateResp
 	UpdateMenuReq    = sysclient.UpdateMenuReq
 	UpdateMenuResp   = sysclient.UpdateMenuResp
 

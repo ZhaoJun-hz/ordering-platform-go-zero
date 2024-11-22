@@ -1,0 +1,117 @@
+syntax = "v1"
+
+info(
+    desc: "role 相关操作"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+type(
+    RoleAddReq {
+        roleName string `json:"roleName"` // 角色名称
+        roleKey string `json:"roleKey"` //  权限字符
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        sort int32 `json:"sort"` // 排序
+        selectMenus []int64 `json:"selectMenus"` // 菜单权限
+        defaultRouter string `json:"defaultRouter"` // 默认路由
+    }
+
+    RoleAddResp {
+
+    }
+
+    RoleUpdateReq {
+        roleId int64 `json:"roleId"`
+        roleName string `json:"roleName"` // 角色名称
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        sort int32 `json:"sort"` // 排序
+        selectMenus []int64 `json:"selectMenus,optional"` // 菜单权限
+        defaultRouter string `json:"defaultRouter"` // 默认路由
+    }
+
+    RoleUpdateResp {
+
+    }
+
+    RoleListReq {
+        roleName string `form:"roleName,optional"` // 角色名称
+        roleKey string `form:"roleKey,optional"` //  权限字符
+        status int32 `form:"status,optional"`  // 状态 1 停用 2 启用
+        PageNum int64  `form:"pageNum,default=1"`   //  第几页
+        PageSize int64 `form:"pageSize,default=10"`  // 每页的数量
+    }
+
+    RoleListData {
+        roleId int64 `json:"roleId"`
+        roleName string `json:"roleName"` // 角色名称
+        roleKey string `json:"roleKey"` //  权限字符
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        sort int32 `json:"sort"` // 排序
+        defaultRouter string `json:"defaultRouter"` // 默认路由
+        CreateTime  string `json:"createTime"` // 创建时间
+        admin bool  `json:"admin"`
+    }
+
+    RoleListResp {
+        Total int64  `json:"total"`
+        data []*RoleListData `json:"data"`
+    }
+
+    RoleDeleteReq {
+        roleId int64 `path:"roleId"`
+    }
+
+    RoleDeleteResp {
+        roleKey string `form:"roleKey,optional"` //  权限字符
+    }
+
+    RoleInfoReq {
+        roleId int64 `path:"roleId"`
+    }
+
+    RoleInfoData {
+        roleId int64 `json:"roleId"`
+        roleName string `json:"roleName"` // 角色名称
+        roleKey string `json:"roleKey"` //  权限字符
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        sort int32 `json:"sort"` // 排序
+        defaultRouter string `json:"defaultRouter"` // 默认路由
+        selectMenus []int64 `json:"selectMenus,optional"` // 菜单权限
+        admin bool  `json:"admin"`
+    }
+)
+
+@server(
+    jwt: Auth
+    middleware: AuthCheckRole,PermissionAction
+    group:      sys/role
+    prefix:     /api/sys/role
+)
+service admin-api {
+    @doc(
+        summary: "role添加"
+    )
+    @handler RoleAdd
+    post / (RoleAddReq) returns (RoleAddResp)
+    @doc(
+        summary: "role更新"
+    )
+    @handler RoleUpdate
+    put /:roleId (RoleUpdateReq) returns (RoleUpdateResp)
+
+    @doc(
+        summary: "role删除"
+    )
+    @handler RoleDelete
+    delete /:roleId (RoleDeleteReq) returns (RoleDeleteResp)
+    @doc(
+        summary: "role详情"
+    )
+    @handler RoleInfo
+    get /:roleId (RoleInfoReq) returns (RoleInfoData)
+    @doc(
+        summary: "role列表"
+    )
+    @handler RoleList
+    get / (RoleListReq) returns (RoleListResp)
+}

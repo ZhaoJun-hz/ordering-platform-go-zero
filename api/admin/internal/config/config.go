@@ -12,6 +12,10 @@ type Config struct {
 		AccessExpire int64
 	}
 
+	Mysql struct {
+		Datasource string
+	}
+
 	//系统
 	SysRpc zrpc.RpcClientConf
 }

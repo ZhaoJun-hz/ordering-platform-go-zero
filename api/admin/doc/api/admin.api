@@ -4,6 +4,7 @@ import "sys/user.api"
 import "api/api.api"
 import "menu/menu.api"
 import "dept/dept.api"
+import "role/role.api"
 
 info (
 	desc:   "ordering platform admin"

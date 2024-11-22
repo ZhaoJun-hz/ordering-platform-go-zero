@@ -54,8 +54,16 @@ func (l *InitApiLogic) InitApi(req *types.InitApiReq) (resp *types.InitApiResp, 
 			if strings.HasPrefix(urlPath, "/api/sys/") {
 				routeType = "SYS"
 			}
-			apiTitle, _ := jsonData.Get("paths").Get(urlPath).Get(strings.ToLower(route.Method)).Get("summary").String()
-			handler, _ := jsonData.Get("paths").Get(urlPath).Get(strings.ToLower(route.Method)).Get("operationId").String()
+			apiTitle := ""
+			handler := ""
+			apiTitle, _ = jsonData.Get("paths").Get(urlPath).Get(strings.ToLower(route.Method)).Get("summary").String()
+			if apiTitle == "" {
+				apiTitle, _ = jsonData.Get("paths").Get(urlPath + "/").Get(strings.ToLower(route.Method)).Get("summary").String()
+			}
+			handler, _ = jsonData.Get("paths").Get(urlPath).Get(strings.ToLower(route.Method)).Get("operationId").String()
+			if handler == "" {
+				handler, _ = jsonData.Get("paths").Get(urlPath + "/").Get(strings.ToLower(route.Method)).Get("operationId").String()
+			}
 
 			routeData.Title = apiTitle
 			routeData.Path = urlPath

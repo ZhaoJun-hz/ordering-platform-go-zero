@@ -33,28 +33,29 @@ func (l *TreeMenuLogic) TreeMenu(req *types.TreeMenuReq) (resp *types.TreeMenuRe
 	}
 	var treeData = make(map[int64]*types.TreeMenuData)
 	for _, data := range result.Data {
-		if data.MenuType != "F" {
-			treeData[data.MenuId] = &types.TreeMenuData{
-				Value:        data.MenuId,
-				MenuType:     data.MenuType,
-				ParentMenuId: data.ParentMenuId,
-				Name:         data.Name,
-				Component:    data.Component,
-				Path:         data.Path,
-				Permission:   data.Permission,
-				LinkFlag:     data.LinkFlag,
-				Title:        data.Title,
-				Meta: &types.TreeMenuMeta{
-					Title:                    data.Title,
-					Icon:                     data.Icon,
-					KeepAlive:                data.IgnoreKeepAlive,
-					HideInMenu:               data.HideInMenu,
-					Link:                     data.Link,
-					MenuVisibleWithForbidden: data.Disabled,
-					Order:                    data.Sort,
-				},
-				Children: nil,
-			}
+		if data.MenuType == "F" && !req.NeedButton {
+			continue
+		}
+		treeData[data.MenuId] = &types.TreeMenuData{
+			MenuId:       data.MenuId,
+			MenuType:     data.MenuType,
+			ParentMenuId: data.ParentMenuId,
+			Name:         data.Name,
+			Component:    data.Component,
+			Path:         data.Path,
+			Permission:   data.Permission,
+			LinkFlag:     data.LinkFlag,
+			Title:        data.Title,
+			Meta: &types.TreeMenuMeta{
+				Title:                    data.Title,
+				Icon:                     data.Icon,
+				KeepAlive:                data.IgnoreKeepAlive,
+				HideInMenu:               data.HideInMenu,
+				Link:                     data.Link,
+				MenuVisibleWithForbidden: data.Disabled,
+				Order:                    data.Sort,
+			},
+			Children: nil,
 		}
 	}
 

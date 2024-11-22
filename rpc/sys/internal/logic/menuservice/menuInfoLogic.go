@@ -43,7 +43,7 @@ func (l *MenuInfoLogic) MenuInfo(in *sysclient.MenuInfoReq) (*sysclient.MenuInfo
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
 	}
 
-	sysMenuApis, err := query.SysMenuAPIRule.WithContext(l.ctx).Where(query.SysMenuAPIRule.SysMenuMenuID.Eq(in.MenuId)).Find()
+	sysMenuApis, err := query.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.Eq(in.MenuId)).Find()
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 SysMenuAPIRule 失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 SysMenuAPIRule 失败 %v, param %v", err, in.MenuId)

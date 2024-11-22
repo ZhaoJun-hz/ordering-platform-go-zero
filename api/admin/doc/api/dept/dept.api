@@ -12,9 +12,9 @@ type(
         parentDeptId int64 `json:"parentDeptId"`
         deptName string `json:"deptName"`
         sort int32 `json:"sort"`
-        leader string `json:"leader"`
-        phone string `json:"phone"`
-        email string `json:"email"`
+        leader string `json:"leader,optional"`
+        phone string `json:"phone,optional"`
+        email string `json:"email,optional"`
         status int32 `json:"status"`
     }
     DeptAddResp {
@@ -26,9 +26,9 @@ type(
         parentDeptId int64 `json:"parentDeptId"`
         deptName string `json:"deptName"`
         sort int32 `json:"sort"`
-        leader string `json:"leader"`
-        phone string `json:"phone"`
-        email string `json:"email"`
+        leader string `json:"leader,optional"`
+        phone string `json:"phone,optional"`
+        email string `json:"email,optional"`
         status int32 `json:"status"`
     }
 

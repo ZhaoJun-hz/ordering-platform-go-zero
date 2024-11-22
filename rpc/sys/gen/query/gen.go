@@ -16,15 +16,15 @@ import (
 )
 
 var (
-	Q              = new(Query)
-	SysAPI         *sysAPI
-	SysCasbinRule  *sysCasbinRule
-	SysDept        *sysDept
-	SysMenu        *sysMenu
-	SysMenuAPIRule *sysMenuAPIRule
-	SysRole        *sysRole
-	SysRoleMenu    *sysRoleMenu
-	SysUser        *sysUser
+	Q             = new(Query)
+	SysAPI        *sysAPI
+	SysCasbinRule *sysCasbinRule
+	SysDept       *sysDept
+	SysMenu       *sysMenu
+	SysMenuAPI    *sysMenuAPI
+	SysRole       *sysRole
+	SysRoleMenu   *sysRoleMenu
+	SysUser       *sysUser
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
@@ -33,7 +33,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	SysCasbinRule = &Q.SysCasbinRule
 	SysDept = &Q.SysDept
 	SysMenu = &Q.SysMenu
-	SysMenuAPIRule = &Q.SysMenuAPIRule
+	SysMenuAPI = &Q.SysMenuAPI
 	SysRole = &Q.SysRole
 	SysRoleMenu = &Q.SysRoleMenu
 	SysUser = &Q.SysUser
@@ -41,44 +41,44 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:             db,
-		SysAPI:         newSysAPI(db, opts...),
-		SysCasbinRule:  newSysCasbinRule(db, opts...),
-		SysDept:        newSysDept(db, opts...),
-		SysMenu:        newSysMenu(db, opts...),
-		SysMenuAPIRule: newSysMenuAPIRule(db, opts...),
-		SysRole:        newSysRole(db, opts...),
-		SysRoleMenu:    newSysRoleMenu(db, opts...),
-		SysUser:        newSysUser(db, opts...),
+		db:            db,
+		SysAPI:        newSysAPI(db, opts...),
+		SysCasbinRule: newSysCasbinRule(db, opts...),
+		SysDept:       newSysDept(db, opts...),
+		SysMenu:       newSysMenu(db, opts...),
+		SysMenuAPI:    newSysMenuAPI(db, opts...),
+		SysRole:       newSysRole(db, opts...),
+		SysRoleMenu:   newSysRoleMenu(db, opts...),
+		SysUser:       newSysUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	SysAPI         sysAPI
-	SysCasbinRule  sysCasbinRule
-	SysDept        sysDept
-	SysMenu        sysMenu
-	SysMenuAPIRule sysMenuAPIRule
-	SysRole        sysRole
-	SysRoleMenu    sysRoleMenu
-	SysUser        sysUser
+	SysAPI        sysAPI
+	SysCasbinRule sysCasbinRule
+	SysDept       sysDept
+	SysMenu       sysMenu
+	SysMenuAPI    sysMenuAPI
+	SysRole       sysRole
+	SysRoleMenu   sysRoleMenu
+	SysUser       sysUser
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:             db,
-		SysAPI:         q.SysAPI.clone(db),
-		SysCasbinRule:  q.SysCasbinRule.clone(db),
-		SysDept:        q.SysDept.clone(db),
-		SysMenu:        q.SysMenu.clone(db),
-		SysMenuAPIRule: q.SysMenuAPIRule.clone(db),
-		SysRole:        q.SysRole.clone(db),
-		SysRoleMenu:    q.SysRoleMenu.clone(db),
-		SysUser:        q.SysUser.clone(db),
+		db:            db,
+		SysAPI:        q.SysAPI.clone(db),
+		SysCasbinRule: q.SysCasbinRule.clone(db),
+		SysDept:       q.SysDept.clone(db),
+		SysMenu:       q.SysMenu.clone(db),
+		SysMenuAPI:    q.SysMenuAPI.clone(db),
+		SysRole:       q.SysRole.clone(db),
+		SysRoleMenu:   q.SysRoleMenu.clone(db),
+		SysUser:       q.SysUser.clone(db),
 	}
 }
 
@@ -92,39 +92,39 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:             db,
-		SysAPI:         q.SysAPI.replaceDB(db),
-		SysCasbinRule:  q.SysCasbinRule.replaceDB(db),
-		SysDept:        q.SysDept.replaceDB(db),
-		SysMenu:        q.SysMenu.replaceDB(db),
-		SysMenuAPIRule: q.SysMenuAPIRule.replaceDB(db),
-		SysRole:        q.SysRole.replaceDB(db),
-		SysRoleMenu:    q.SysRoleMenu.replaceDB(db),
-		SysUser:        q.SysUser.replaceDB(db),
+		db:            db,
+		SysAPI:        q.SysAPI.replaceDB(db),
+		SysCasbinRule: q.SysCasbinRule.replaceDB(db),
+		SysDept:       q.SysDept.replaceDB(db),
+		SysMenu:       q.SysMenu.replaceDB(db),
+		SysMenuAPI:    q.SysMenuAPI.replaceDB(db),
+		SysRole:       q.SysRole.replaceDB(db),
+		SysRoleMenu:   q.SysRoleMenu.replaceDB(db),
+		SysUser:       q.SysUser.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	SysAPI         ISysAPIDo
-	SysCasbinRule  ISysCasbinRuleDo
-	SysDept        ISysDeptDo
-	SysMenu        ISysMenuDo
-	SysMenuAPIRule ISysMenuAPIRuleDo
-	SysRole        ISysRoleDo
-	SysRoleMenu    ISysRoleMenuDo
-	SysUser        ISysUserDo
+	SysAPI        ISysAPIDo
+	SysCasbinRule ISysCasbinRuleDo
+	SysDept       ISysDeptDo
+	SysMenu       ISysMenuDo
+	SysMenuAPI    ISysMenuAPIDo
+	SysRole       ISysRoleDo
+	SysRoleMenu   ISysRoleMenuDo
+	SysUser       ISysUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		SysAPI:         q.SysAPI.WithContext(ctx),
-		SysCasbinRule:  q.SysCasbinRule.WithContext(ctx),
-		SysDept:        q.SysDept.WithContext(ctx),
-		SysMenu:        q.SysMenu.WithContext(ctx),
-		SysMenuAPIRule: q.SysMenuAPIRule.WithContext(ctx),
-		SysRole:        q.SysRole.WithContext(ctx),
-		SysRoleMenu:    q.SysRoleMenu.WithContext(ctx),
-		SysUser:        q.SysUser.WithContext(ctx),
+		SysAPI:        q.SysAPI.WithContext(ctx),
+		SysCasbinRule: q.SysCasbinRule.WithContext(ctx),
+		SysDept:       q.SysDept.WithContext(ctx),
+		SysMenu:       q.SysMenu.WithContext(ctx),
+		SysMenuAPI:    q.SysMenuAPI.WithContext(ctx),
+		SysRole:       q.SysRole.WithContext(ctx),
+		SysRoleMenu:   q.SysRoleMenu.WithContext(ctx),
+		SysUser:       q.SysUser.WithContext(ctx),
 	}
 }
 
