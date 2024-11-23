@@ -9,8 +9,6 @@ import (
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/errcode"
 	"ordering-platform/rpc/sys/gen/query"
-	"strings"
-
 	"ordering-platform/rpc/sys/internal/svc"
 	"ordering-platform/rpc/sys/sysclient"
 
@@ -66,7 +64,6 @@ func (l *RoleInfoLogic) RoleInfo(in *sysclient.RoleInfoReq) (*sysclient.RoleInfo
 		})
 	}
 	tree := buildMenuTree(treeData, 0)
-	printTree(tree, 0)
 
 	var selectMenuIds = make(map[int64]bool, 0)
 	for _, roleMenu := range roleMenus {
@@ -74,8 +71,8 @@ func (l *RoleInfoLogic) RoleInfo(in *sysclient.RoleInfoReq) (*sysclient.RoleInfo
 	}
 
 	filteredMenus := filterMenus(tree, selectMenuIds)
-
-	realSelectMenuIds := getAllMenuIds(filteredMenus)
+	// 仅包含 31 41
+	//realSelectMenuIds := getAllMenuIds(filteredMenus)
 
 	return &sysclient.RoleInfoResp{
 		RoleId:        role.RoleID,
@@ -83,7 +80,7 @@ func (l *RoleInfoLogic) RoleInfo(in *sysclient.RoleInfoReq) (*sysclient.RoleInfo
 		RoleKey:       role.RoleKey,
 		Status:        role.Status,
 		Sort:          role.Sort,
-		SelectMenus:   realSelectMenuIds,
+		SelectMenus:   filteredMenus,
 		DefaultRouter: role.DefaultRouter,
 		Admin:         role.Admin,
 	}, nil
@@ -119,67 +116,44 @@ func buildMenuTree(menus []MenuTree, parentMenuId int64) []*MenuTree {
 }
 
 // 过滤菜单，剔除未选中所有子菜单的父菜单
-func filterMenus(menuTree []*MenuTree, selectedIDs map[int64]bool) []*MenuTree {
-	var filtered []*MenuTree
+func filterMenus(menuTree []*MenuTree, selectedIDs map[int64]bool) []int64 {
+	// 用于存储最终过滤后的选中菜单ID
+	var result []int64
 
-	for _, menu := range menuTree {
-		if len(menu.Children) == 0 {
-			// 叶子节点：直接检查是否被选中
-			if selectedIDs[menu.MenuId] {
-				filtered = append(filtered, menu)
-			}
-		} else {
-			// 非叶子节点：递归过滤子菜单
-			menu.Children = filterMenus(menu.Children, selectedIDs)
+	// 辅助函数，对菜单树进行递归过滤
+	var dfs func(node *MenuTree) bool
+	dfs = func(node *MenuTree) bool {
+		// 是否保留当前节点
+		keep := selectedIDs[node.MenuId]
 
-			// 检查所有子菜单是否都被选中
+		// 如果当前节点有子节点，递归检查子节点
+		if len(node.Children) > 0 {
 			allChildrenSelected := true
-			for _, child := range menu.Children {
-				if !selectedIDs[child.MenuId] {
+
+			for _, child := range node.Children {
+				childKeep := dfs(child) // 递归检查子节点是否保留
+				if !childKeep {
 					allChildrenSelected = false
-					break
 				}
 			}
 
-			// 如果当前菜单被选中，且所有子菜单都被选中，则保留父菜单
-			if allChildrenSelected && selectedIDs[menu.MenuId] {
-				filtered = append(filtered, menu)
-			} else if len(menu.Children) > 0 {
-				// 如果当前菜单未满足条件，但部分子菜单满足，保留子菜单
-				filtered = append(filtered, menu.Children...)
+			// 如果所有子节点都被选择，且当前节点被选择，则保留当前节点
+			if !allChildrenSelected {
+				keep = false // 如果有未选中的子节点，则当前节点不能保留
 			}
 		}
-	}
-	return filtered
-}
 
-func getAllMenuIds(menus []*MenuTree) []int64 {
-	var result []int64
-
-	// 定义递归函数
-	var collectMenuIds func(menu *MenuTree)
-	collectMenuIds = func(menu *MenuTree) {
-		// 添加当前菜单的 MenuId
-		result = append(result, menu.MenuId)
-
-		// 递归处理子菜单
-		for _, child := range menu.Children {
-			collectMenuIds(child)
+		// 如果当前节点被保留，则添加到结果中
+		if keep {
+			result = append(result, node.MenuId)
 		}
+		return keep
 	}
 
-	// 遍历菜单列表
-	for _, menu := range menus {
-		collectMenuIds(menu)
+	// 遍历根节点（即 menuTree 的每个顶级节点）
+	for _, root := range menuTree {
+		dfs(root)
 	}
+
 	return result
-}
-
-func printTree(tree []*MenuTree, level int) {
-	for _, menu := range tree {
-		fmt.Printf("%sMenuId: %d, ParentMenuId: %d\n", strings.Repeat("  ", level), menu.MenuId, menu.ParentMenuId)
-		if len(menu.Children) > 0 {
-			printTree(menu.Children, level+1)
-		}
-	}
 }
