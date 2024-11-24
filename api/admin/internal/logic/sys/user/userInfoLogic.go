@@ -2,12 +2,10 @@ package user
 
 import (
 	"context"
-	"encoding/json"
+	"github.com/zeromicro/go-zero/core/logx"
 	"ordering-platform/api/admin/internal/svc"
 	"ordering-platform/api/admin/internal/types"
 	"ordering-platform/rpc/sys/sysclient"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UserInfoLogic struct {
@@ -24,26 +22,25 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 	}
 }
 
-func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
+func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoData, err error) {
 	// todo: add your logic here and delete this line
-
-	// 这里的key和生成jwt token时传入的key一致
-	userId, _ := l.ctx.Value("userId").(json.Number).Int64()
-
-	infoResp, err := l.svcCtx.UserService.UserInfo(l.ctx, &sysclient.InfoReq{
-		UserId: userId,
+	info, err := l.svcCtx.UserService.UserInfo(l.ctx, &sysclient.UserInfoReq{
+		UserId: req.UserId,
 	})
-
 	if err != nil {
 		return nil, err
 	}
-
-	return &types.UserInfoResp{
-		Avater:   infoResp.Avatar,
-		Roles:    infoResp.Roles,
-		UserId:   infoResp.UserId,
-		Username: infoResp.Username,
-		Desc:     infoResp.Desc,
-		HomePath: infoResp.HomePath,
+	return &types.UserInfoData{
+		UserId:      info.UserId,
+		Status:      info.Status,
+		Username:    info.Username,
+		Nickname:    info.Nickname,
+		Description: info.Description,
+		Mobile:      info.Mobile,
+		Email:       info.Email,
+		Avatar:      info.Avatar,
+		DeptId:      info.DeptId,
+		RoleId:      info.RoleId,
+		CreateTime:  info.CreateTime,
 	}, nil
 }

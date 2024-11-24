@@ -32,8 +32,6 @@ type (
 	DeptListResp     = sysclient.DeptListResp
 	DeptUpdateReq    = sysclient.DeptUpdateReq
 	DeptUpdateResp   = sysclient.DeptUpdateResp
-	InfoReq          = sysclient.InfoReq
-	InfoResp         = sysclient.InfoResp
 	InitApiReq       = sysclient.InitApiReq
 	InitApiResp      = sysclient.InitApiResp
 	InitApiRouteData = sysclient.InitApiRouteData
@@ -57,12 +55,35 @@ type (
 	RoleUpdateResp   = sysclient.RoleUpdateResp
 	UpdateMenuReq    = sysclient.UpdateMenuReq
 	UpdateMenuResp   = sysclient.UpdateMenuResp
+	UserAddReq       = sysclient.UserAddReq
+	UserAddResp      = sysclient.UserAddResp
+	UserDeleteReq    = sysclient.UserDeleteReq
+	UserDeleteResp   = sysclient.UserDeleteResp
+	UserDetailReq    = sysclient.UserDetailReq
+	UserDetailResp   = sysclient.UserDetailResp
+	UserInfoReq      = sysclient.UserInfoReq
+	UserInfoResp     = sysclient.UserInfoResp
+	UserListData     = sysclient.UserListData
+	UserListReq      = sysclient.UserListReq
+	UserListResp     = sysclient.UserListResp
+	UserUpdateReq    = sysclient.UserUpdateReq
+	UserUpdateResp   = sysclient.UserUpdateResp
 
 	UserService interface {
 		// 用户登录
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
-		// 获取用户个人信息
-		UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+		// 登录获取用户个人信息
+		UserDetail(ctx context.Context, in *UserDetailReq, opts ...grpc.CallOption) (*UserDetailResp, error)
+		// 添加user
+		UserAdd(ctx context.Context, in *UserAddReq, opts ...grpc.CallOption) (*UserAddResp, error)
+		// 更新user
+		UserUpdate(ctx context.Context, in *UserUpdateReq, opts ...grpc.CallOption) (*UserUpdateResp, error)
+		// 删除user
+		UserDelete(ctx context.Context, in *UserDeleteReq, opts ...grpc.CallOption) (*UserDeleteResp, error)
+		// user详情
+		UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error)
+		// user列表
+		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
 	}
 
 	defaultUserService struct {
@@ -82,8 +103,38 @@ func (m *defaultUserService) Login(ctx context.Context, in *LoginReq, opts ...gr
 	return client.Login(ctx, in, opts...)
 }
 
-// 获取用户个人信息
-func (m *defaultUserService) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+// 登录获取用户个人信息
+func (m *defaultUserService) UserDetail(ctx context.Context, in *UserDetailReq, opts ...grpc.CallOption) (*UserDetailResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserDetail(ctx, in, opts...)
+}
+
+// 添加user
+func (m *defaultUserService) UserAdd(ctx context.Context, in *UserAddReq, opts ...grpc.CallOption) (*UserAddResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserAdd(ctx, in, opts...)
+}
+
+// 更新user
+func (m *defaultUserService) UserUpdate(ctx context.Context, in *UserUpdateReq, opts ...grpc.CallOption) (*UserUpdateResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserUpdate(ctx, in, opts...)
+}
+
+// 删除user
+func (m *defaultUserService) UserDelete(ctx context.Context, in *UserDeleteReq, opts ...grpc.CallOption) (*UserDeleteResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserDelete(ctx, in, opts...)
+}
+
+// user详情
+func (m *defaultUserService) UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
 	client := sysclient.NewUserServiceClient(m.cli.Conn())
 	return client.UserInfo(ctx, in, opts...)
+}
+
+// user列表
+func (m *defaultUserService) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.UserList(ctx, in, opts...)
 }

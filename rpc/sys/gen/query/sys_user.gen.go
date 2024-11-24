@@ -54,7 +54,7 @@ type sysUser struct {
 
 	ALL         field.Asterisk
 	UserID      field.Int64  // 编码
-	Status      field.Int32  // 状态 1 正常 2 禁用
+	Status      field.Int32  // 状态 1 停用  2 正常
 	Username    field.String // 登录名
 	Password    field.String // 密码
 	Nickname    field.String // 昵称

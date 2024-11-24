@@ -52,8 +52,8 @@ func (l *DeptUpdateLogic) DeptUpdate(in *sysclient.DeptUpdateReq) (*sysclient.De
 		return nil, errors.WithStack(errcode.DeptNotExistError)
 	}
 	if err != nil {
-		logc.Errorf(l.ctx, "查询父 Dept失败,参数：%d,异常:%s", in.DeptId, err.Error())
-		return nil, errors.Wrapf(xerr.NewDBErr(), "查询父 Dept失败 %v, param %v", err, in.DeptId)
+		logc.Errorf(l.ctx, "查询 Dept失败,参数：%d,异常:%s", in.DeptId, err.Error())
+		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Dept失败 %v, param %v", err, in.DeptId)
 	}
 
 	dept := &model.SysDept{

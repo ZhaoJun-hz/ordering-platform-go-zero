@@ -1,0 +1,203 @@
+syntax = "v1"
+
+info(
+    desc: "user 相关操作"
+    author: "闲不下来的程序猿"
+    email: "zhaojuncodeing@163.com"
+)
+
+type(
+    // 用户登录
+    LoginReq {
+        Username string `json:"username"` //用户名
+        Password string `json:"password"`
+    }
+    LoginResp {
+        AccessToken string `json:"accessToken"`
+    }
+
+    // 用户个人信息
+    UserDetailResp {
+        Avater string `json:"avater"`
+        Roles []string `json:"roles"`
+        UserId string `json:"userId"`
+        Username string `json:"username"`
+        Desc string `json:"desc"`
+        HomePath string `json:"homePath"`
+    }
+
+
+        // 用户拥有的菜单权限
+    Menu {
+        MenuId int64 `json:"menuId"`
+        ParentMenuId int64 `json:"parentMenuId"`
+        Name string `json:"name"`           // 路由名称
+        Path string `json:"path"`           // 路由地址
+        Component string `json:"component"` // 组件地址
+        MenuMate *MenuMate `json:"meta"`
+        Children []*Menu `json:"children,omitempty"`
+    }
+
+    MenuMate {
+        Title string `json:"title"`                                      // 菜单名称
+        Order int64 `json:"order"`                                       // 排序
+        Icon string `json:"icon"`                                        // 图标
+        HideInMenu bool `json:"hideInMenu"`                              // 是否隐藏
+        KeepAlive bool `json:"keepAlive"`                                // 是否缓存
+        MenuVisibleWithForbidden bool `json:"menuVisibleWithForbidden"`  // 是否启用
+        Link string `json:"link"`                                        // 用于配置外链跳转路径，会在新窗口打开。
+    }
+
+
+    UserAddReq {
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        username string `json:"username"` // 登录名
+        password string `json:"password"` // 密码
+        nickname string `json:"nickname,optional"` // 昵称
+        description string `json:"description,optional"` // 描述
+        mobile string `json:"mobile,optional"` // 手机号
+        email string `json:"email,optional"` // 邮箱
+        avatar string `json:"avatar,optional"` // 头像
+        deptId int64  `json:"deptId"` // 部门id
+        roleId int64  `json:"roleId"` // 角色id
+    }
+
+    UserAddResp {
+
+    }
+
+    UserUpdateReq {
+        userId int64  `json:"userId"`
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        username string `json:"username"` // 登录名
+        password string `json:"password"` // 密码
+        nickname string `json:"nickname,optional"` // 昵称
+        description string `json:"description,optional"` // 描述
+        mobile string `json:"mobile,optional"` // 手机号
+        email string `json:"email,optional"` // 邮箱
+        avatar string `json:"avatar,optional"` // 头像
+        deptId int64  `json:"deptId"` // 部门id
+        roleId int64  `json:"roleId"` // 角色id
+    }
+
+    UserUpdateResp {
+
+    }
+
+    UserListReq {
+        username string `form:"username,optional"` // 登录名
+        nickname string `form:"nickname,optional"` // 昵称
+        mobile string `form:"mobile,optional"` // 手机号
+        email string `form:"email,optional"` // 邮箱
+        deptId int64  `form:"deptId"` // 部门id
+        roleId int64  `form:"roleId,optional"` // 角色id
+        PageNum int64  `form:"pageNum,default=1"`   //  第几页
+        PageSize int64 `form:"pageSize,default=10"`  // 每页的数量
+    }
+
+    UserListData {
+        userId int64  `json:"userId"`
+        username string `json:"username"` // 登录名
+        nickname string `json:"nickname"` // 昵称
+        mobile string `json:"mobile"` // 手机号
+        email string `json:"email"` // 邮箱
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        createTime string `json:"createTime"`
+    }
+
+    UserListResp {
+        Total int64  `json:"total"`
+        data []*UserListData `json:"data"`
+    }
+
+    UserDeleteReq {
+        userId int64  `path:"userId"`
+    }
+
+    UserDeleteResp {
+
+    }
+
+    UserInfoReq {
+        userId int64  `path:"userId"`
+    }
+
+    UserInfoData {
+        userId int64  `json:"userId"`
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        username string `json:"username"` // 登录名
+        nickname string `json:"nickname"` // 昵称
+        description string `json:"description"` // 描述
+        mobile string `json:"mobile"` // 手机号
+        email string `json:"email"` // 邮箱
+        avatar string `json:"avatar"` // 头像
+        deptId int64  `json:"deptId"` // 部门id
+        roleId int64  `json:"roleId"` // 角色id
+        createTime string `json:"createTime"`
+    }
+)
+
+@server(
+    jwt: Auth
+    middleware: AuthCheckRole,PermissionAction
+    group:      sys/user
+    prefix:     /api/sys/user
+)
+service admin-api {
+    @doc(
+        summary: "登录获取用户信息"
+    )
+    @handler UserDetail
+    get /detail returns (UserDetailResp)
+
+    @doc(
+        summary: "获取用户权限码"
+    )
+    @handler UserCodes
+    get /codes returns ([]string)
+
+    @doc(
+        summary: "获取用户菜单"
+    )
+    @handler UserMenus
+    get /menus returns ([]Menu)
+
+    @doc(
+        summary: "user添加"
+    )
+    @handler UserAdd
+    post / (UserAddReq) returns (UserAddResp)
+    @doc(
+        summary: "user更新"
+    )
+    @handler UserUpdate
+    put /:userId (UserUpdateReq) returns (UserUpdateResp)
+
+    @doc(
+        summary: "user删除"
+    )
+    @handler UserDelete
+    delete /:userId (UserDeleteReq) returns (UserDeleteResp)
+    @doc(
+        summary: "user详情"
+    )
+    @handler UserInfo
+    get /:userId (UserInfoReq) returns (UserInfoData)
+    @doc(
+        summary: "user列表"
+    )
+    @handler UserList
+    get / (UserListReq) returns (UserListResp)
+}
+
+@server(
+    group: sys/user
+)
+service admin-api {
+    @doc(
+        summary: "用户登录"
+    )
+    @handler UserLogin
+    post /api/sys/user/login (LoginReq) returns (LoginResp)
+}
+

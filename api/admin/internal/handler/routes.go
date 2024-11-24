@@ -172,16 +172,46 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
 			[]rest.Route{
 				{
+					// user添加
+					Method:  http.MethodPost,
+					Path:    "/",
+					Handler: sysuser.UserAddHandler(serverCtx),
+				},
+				{
+					// user列表
+					Method:  http.MethodGet,
+					Path:    "/",
+					Handler: sysuser.UserListHandler(serverCtx),
+				},
+				{
+					// user更新
+					Method:  http.MethodPut,
+					Path:    "/:userId",
+					Handler: sysuser.UserUpdateHandler(serverCtx),
+				},
+				{
+					// user删除
+					Method:  http.MethodDelete,
+					Path:    "/:userId",
+					Handler: sysuser.UserDeleteHandler(serverCtx),
+				},
+				{
+					// user详情
+					Method:  http.MethodGet,
+					Path:    "/:userId",
+					Handler: sysuser.UserInfoHandler(serverCtx),
+				},
+				{
 					// 获取用户权限码
 					Method:  http.MethodGet,
 					Path:    "/codes",
 					Handler: sysuser.UserCodesHandler(serverCtx),
 				},
 				{
-					// 获取用户信息
+					// 登录获取用户信息
 					Method:  http.MethodGet,
-					Path:    "/info",
-					Handler: sysuser.UserInfoHandler(serverCtx),
+					Path:    "/detail",
+					Handler: sysuser.UserDetailHandler(serverCtx),
 				},
 				{
 					// 获取用户菜单

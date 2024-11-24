@@ -32,8 +32,6 @@ type (
 	DeptListResp     = sysclient.DeptListResp
 	DeptUpdateReq    = sysclient.DeptUpdateReq
 	DeptUpdateResp   = sysclient.DeptUpdateResp
-	InfoReq          = sysclient.InfoReq
-	InfoResp         = sysclient.InfoResp
 	InitApiReq       = sysclient.InitApiReq
 	InitApiResp      = sysclient.InitApiResp
 	InitApiRouteData = sysclient.InitApiRouteData
@@ -57,6 +55,19 @@ type (
 	RoleUpdateResp   = sysclient.RoleUpdateResp
 	UpdateMenuReq    = sysclient.UpdateMenuReq
 	UpdateMenuResp   = sysclient.UpdateMenuResp
+	UserAddReq       = sysclient.UserAddReq
+	UserAddResp      = sysclient.UserAddResp
+	UserDeleteReq    = sysclient.UserDeleteReq
+	UserDeleteResp   = sysclient.UserDeleteResp
+	UserDetailReq    = sysclient.UserDetailReq
+	UserDetailResp   = sysclient.UserDetailResp
+	UserInfoReq      = sysclient.UserInfoReq
+	UserInfoResp     = sysclient.UserInfoResp
+	UserListData     = sysclient.UserListData
+	UserListReq      = sysclient.UserListReq
+	UserListResp     = sysclient.UserListResp
+	UserUpdateReq    = sysclient.UserUpdateReq
+	UserUpdateResp   = sysclient.UserUpdateResp
 
 	MenuService interface {
 		AddMenu(ctx context.Context, in *AddMenuReq, opts ...grpc.CallOption) (*AddMenuResp, error)

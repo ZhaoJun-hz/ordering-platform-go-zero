@@ -42,7 +42,7 @@ func (l *RoleUpdateLogic) RoleUpdate(in *sysclient.RoleUpdateReq) (*sysclient.Ro
 	}
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 Role失败,参数：%d,异常:%s", in.RoleId, err.Error())
-		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.RoleId)
+		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Role失败 %v, param %v", err, in.RoleId)
 	}
 	sysMenus, err := query.SysMenu.WithContext(l.ctx).Where(query.SysMenu.MenuID.In(in.SelectMenus...)).Find()
 	if err != nil {

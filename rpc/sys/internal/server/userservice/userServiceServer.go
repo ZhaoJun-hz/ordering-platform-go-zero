@@ -29,8 +29,38 @@ func (s *UserServiceServer) Login(ctx context.Context, in *sysclient.LoginReq) (
 	return l.Login(in)
 }
 
-// 获取用户个人信息
-func (s *UserServiceServer) UserInfo(ctx context.Context, in *sysclient.InfoReq) (*sysclient.InfoResp, error) {
+// 登录获取用户个人信息
+func (s *UserServiceServer) UserDetail(ctx context.Context, in *sysclient.UserDetailReq) (*sysclient.UserDetailResp, error) {
+	l := userservicelogic.NewUserDetailLogic(ctx, s.svcCtx)
+	return l.UserDetail(in)
+}
+
+// 添加user
+func (s *UserServiceServer) UserAdd(ctx context.Context, in *sysclient.UserAddReq) (*sysclient.UserAddResp, error) {
+	l := userservicelogic.NewUserAddLogic(ctx, s.svcCtx)
+	return l.UserAdd(in)
+}
+
+// 更新user
+func (s *UserServiceServer) UserUpdate(ctx context.Context, in *sysclient.UserUpdateReq) (*sysclient.UserUpdateResp, error) {
+	l := userservicelogic.NewUserUpdateLogic(ctx, s.svcCtx)
+	return l.UserUpdate(in)
+}
+
+// 删除user
+func (s *UserServiceServer) UserDelete(ctx context.Context, in *sysclient.UserDeleteReq) (*sysclient.UserDeleteResp, error) {
+	l := userservicelogic.NewUserDeleteLogic(ctx, s.svcCtx)
+	return l.UserDelete(in)
+}
+
+// user详情
+func (s *UserServiceServer) UserInfo(ctx context.Context, in *sysclient.UserInfoReq) (*sysclient.UserInfoResp, error) {
 	l := userservicelogic.NewUserInfoLogic(ctx, s.svcCtx)
 	return l.UserInfo(in)
+}
+
+// user列表
+func (s *UserServiceServer) UserList(ctx context.Context, in *sysclient.UserListReq) (*sysclient.UserListResp, error) {
+	l := userservicelogic.NewUserListLogic(ctx, s.svcCtx)
+	return l.UserList(in)
 }

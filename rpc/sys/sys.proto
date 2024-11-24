@@ -329,11 +329,11 @@ message loginResp {
   string AccessToken = 2;
 }
 
-message InfoReq {
+message UserDetailReq {
   int64 UserId = 1;
 }
 
-message InfoResp {
+message UserDetailResp {
   string avatar = 1;
   string username = 2;
   repeated string roles = 3;
@@ -342,11 +342,108 @@ message InfoResp {
   string homePath = 6;
 }
 
+message UserAddReq {
+  int32 status = 1;
+  string username = 2;
+  string password = 3;
+  string nickname = 4;
+  string description = 5;
+  string mobile = 6;
+  string email = 7;
+  string avatar = 8;
+  int64 deptId = 9;
+  int64 roleId = 10;
+}
+
+message UserAddResp {
+
+}
+
+message UserUpdateReq {
+  int64 userId = 1;
+  int32 status = 2;
+  string username = 3;
+  string password = 4;
+  string nickname = 5;
+  string description = 6;
+  string mobile = 7;
+  string email = 8;
+  string avatar = 9;
+  int64 deptId = 10;
+  int64 roleId = 11;
+}
+
+message UserUpdateResp {
+
+}
+
+message UserListReq {
+  string username = 1;
+  string nickname = 2;
+  string mobile = 3;
+  string email = 4;
+  int64 deptId = 5;
+  int64 roleId = 6;
+  int64 pageNum = 7;
+  int64 pageSize = 8;
+}
+
+message UserListData {
+  int64 userId = 1;
+  string username = 2;
+  string nickname = 3;
+  string mobile = 4;
+  string email = 5;
+  int32 status = 6;
+  string createTime = 7;
+}
+
+message UserListResp {
+  int64 total = 1;
+  repeated UserListData data = 2;
+}
+
+message UserDeleteReq {
+  int64 userId = 1;
+}
+
+message UserDeleteResp {
+
+}
+
+message UserInfoReq {
+  int64 userId = 1;
+}
+
+message UserInfoResp {
+  int64 userId = 1;
+  int32 status = 2;
+  string username = 3;
+  string nickname = 4;
+  string description = 5;
+  string mobile = 6;
+  string email = 7;
+  string avatar = 8;
+  int64 deptId = 9;
+  int64 roleId = 10;
+  string createTime = 11;
+}
+
 service UserService {
   // 用户登录
   rpc Login(LoginReq) returns(loginResp);
 
-  // 获取用户个人信息
-  rpc UserInfo(InfoReq) returns(InfoResp);
+  // 登录获取用户个人信息
+  rpc UserDetail(UserDetailReq) returns(UserDetailResp);
+  // 添加user
+  rpc UserAdd(UserAddReq) returns (UserAddResp);
+  // 更新user
+  rpc UserUpdate(UserUpdateReq) returns (UserUpdateResp);
+  // 删除user
+  rpc UserDelete(UserDeleteReq) returns (UserDeleteResp);
+  // user详情
+  rpc UserInfo(UserInfoReq) returns (UserInfoResp);
+  // user列表
+  rpc UserList(UserListReq) returns (UserListResp);
 }
 

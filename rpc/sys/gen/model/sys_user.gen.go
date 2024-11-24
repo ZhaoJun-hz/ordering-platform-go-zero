@@ -15,7 +15,7 @@ const TableNameSysUser = "sys_user"
 // SysUser mapped from table <sys_user>
 type SysUser struct {
 	UserID      int64          `gorm:"column:user_id;primaryKey;autoIncrement:true;comment:编码" json:"user_id"`              // 编码
-	Status      *int32         `gorm:"column:status;default:1;comment:状态 1 正常 2 禁用" json:"status"`                          // 状态 1 正常 2 禁用
+	Status      int32          `gorm:"column:status;not null;default:1;comment:状态 1 停用  2 正常" json:"status"`                // 状态 1 停用  2 正常
 	Username    string         `gorm:"column:username;not null;comment:登录名" json:"username"`                                // 登录名
 	Password    string         `gorm:"column:password;not null;comment:密码" json:"password"`                                 // 密码
 	Nickname    string         `gorm:"column:nickname;not null;comment:昵称" json:"nickname"`                                 // 昵称
