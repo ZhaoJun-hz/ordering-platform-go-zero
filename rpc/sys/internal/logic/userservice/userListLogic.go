@@ -34,10 +34,10 @@ func (l *UserListLogic) UserList(in *sysclient.UserListReq) (*sysclient.UserList
 	sysUser := query.SysUser
 	q := sysUser.WithContext(l.ctx)
 	if in.RoleId != 0 {
-		q.Where(sysUser.RoleID.Eq(in.RoleId))
+		q = q.Where(sysUser.RoleID.Eq(in.RoleId))
 	}
 	if in.DeptId != 0 {
-		q.Where(sysUser.DeptID.Eq(in.DeptId))
+		q = q.Where(sysUser.DeptID.Eq(in.DeptId))
 	}
 	if in.Username != "" {
 		q = q.Where(sysUser.Username.Like("%" + in.Username + "%"))
@@ -62,13 +62,17 @@ func (l *UserListLogic) UserList(in *sysclient.UserListReq) (*sysclient.UserList
 	var result []*sysclient.UserListData
 	for _, item := range sysUsers {
 		result = append(result, &sysclient.UserListData{
-			UserId:     item.UserID,
-			Username:   item.Username,
-			Nickname:   item.Nickname,
-			Mobile:     item.Mobile,
-			Email:      item.Email,
-			Status:     item.Status,
-			CreateTime: common.TimeToString(&item.CreatedAt),
+			UserId:      item.UserID,
+			Status:      item.Status,
+			Username:    item.Username,
+			Nickname:    item.Nickname,
+			Description: item.Description,
+			Mobile:      item.Mobile,
+			Email:       item.Email,
+			Avatar:      item.Avatar,
+			DeptId:      item.DeptID,
+			RoleId:      item.RoleID,
+			CreateTime:  common.TimeToString(&item.CreatedAt),
 		})
 	}
 

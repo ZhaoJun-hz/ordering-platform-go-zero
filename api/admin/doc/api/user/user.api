@@ -89,7 +89,7 @@ type(
         nickname string `form:"nickname,optional"` // 昵称
         mobile string `form:"mobile,optional"` // 手机号
         email string `form:"email,optional"` // 邮箱
-        deptId int64  `form:"deptId"` // 部门id
+        deptId int64  `form:"deptId,optional"` // 部门id
         roleId int64  `form:"roleId,optional"` // 角色id
         PageNum int64  `form:"pageNum,default=1"`   //  第几页
         PageSize int64 `form:"pageSize,default=10"`  // 每页的数量
@@ -97,11 +97,15 @@ type(
 
     UserListData {
         userId int64  `json:"userId"`
+        status int32 `json:"status"`  // 状态 1 停用 2 启用
         username string `json:"username"` // 登录名
         nickname string `json:"nickname"` // 昵称
+        description string `json:"description"` // 描述
         mobile string `json:"mobile"` // 手机号
         email string `json:"email"` // 邮箱
-        status int32 `json:"status"`  // 状态 1 停用 2 启用
+        avatar string `json:"avatar"` // 头像
+        deptId int64  `json:"deptId"` // 部门id
+        roleId int64  `json:"roleId"` // 角色id
         createTime string `json:"createTime"`
     }
 

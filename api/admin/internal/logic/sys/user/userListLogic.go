@@ -44,13 +44,17 @@ func (l *UserListLogic) UserList(req *types.UserListReq) (resp *types.UserListRe
 	var list []*types.UserListData
 	for _, item := range result.Data {
 		list = append(list, &types.UserListData{
-			UserId:     item.UserId,
-			Username:   item.Username,
-			Nickname:   item.Nickname,
-			Mobile:     item.Mobile,
-			Email:      item.Email,
-			Status:     item.Status,
-			CreateTime: item.CreateTime,
+			UserId:      item.UserId,
+			Status:      item.Status,
+			Username:    item.Username,
+			Nickname:    item.Nickname,
+			Description: item.Description,
+			Mobile:      item.Mobile,
+			Email:       item.Email,
+			Avatar:      item.Avatar,
+			DeptId:      item.DeptId,
+			RoleId:      item.RoleId,
+			CreateTime:  item.CreateTime,
 		})
 	}
 	return &types.UserListResp{

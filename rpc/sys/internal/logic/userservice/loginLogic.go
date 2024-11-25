@@ -55,8 +55,8 @@ func (l *LoginLogic) Login(in *sysclient.LoginReq) (*sysclient.LoginResp, error)
 	}
 
 	// 3. 校验用户状态
-	if *user.Status != 1 {
-		logc.Errorf(l.ctx, "用户状态不正确,status:%d", *user.Status)
+	if user.Status != 1 {
+		logc.Errorf(l.ctx, "用户状态不正确,status:%d", user.Status)
 		return nil, errors.WithStack(errcode.UserStatusError)
 	}
 

@@ -390,13 +390,17 @@ type UserInfoReq struct {
 }
 
 type UserListData struct {
-	UserId     int64  `json:"userId"`
-	Username   string `json:"username"` // 登录名
-	Nickname   string `json:"nickname"` // 昵称
-	Mobile     string `json:"mobile"`   // 手机号
-	Email      string `json:"email"`    // 邮箱
-	Status     int32  `json:"status"`   // 状态 1 停用 2 启用
-	CreateTime string `json:"createTime"`
+	UserId      int64  `json:"userId"`
+	Status      int32  `json:"status"`      // 状态 1 停用 2 启用
+	Username    string `json:"username"`    // 登录名
+	Nickname    string `json:"nickname"`    // 昵称
+	Description string `json:"description"` // 描述
+	Mobile      string `json:"mobile"`      // 手机号
+	Email       string `json:"email"`       // 邮箱
+	Avatar      string `json:"avatar"`      // 头像
+	DeptId      int64  `json:"deptId"`      // 部门id
+	RoleId      int64  `json:"roleId"`      // 角色id
+	CreateTime  string `json:"createTime"`
 }
 
 type UserListReq struct {
@@ -404,7 +408,7 @@ type UserListReq struct {
 	Nickname string `form:"nickname,optional"`   // 昵称
 	Mobile   string `form:"mobile,optional"`     // 手机号
 	Email    string `form:"email,optional"`      // 邮箱
-	DeptId   int64  `form:"deptId"`              // 部门id
+	DeptId   int64  `form:"deptId,optional"`     // 部门id
 	RoleId   int64  `form:"roleId,optional"`     // 角色id
 	PageNum  int64  `form:"pageNum,default=1"`   //  第几页
 	PageSize int64  `form:"pageSize,default=10"` // 每页的数量

@@ -390,12 +390,16 @@ message UserListReq {
 
 message UserListData {
   int64 userId = 1;
-  string username = 2;
-  string nickname = 3;
-  string mobile = 4;
-  string email = 5;
-  int32 status = 6;
-  string createTime = 7;
+  int32 status = 2;
+  string username = 3;
+  string nickname = 4;
+  string description = 5;
+  string mobile = 6;
+  string email = 7;
+  string avatar = 8;
+  int64 deptId = 9;
+  int64 roleId = 10;
+  string createTime = 11;
 }
 
 message UserListResp {
