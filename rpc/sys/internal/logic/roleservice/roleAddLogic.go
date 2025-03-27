@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/gen/model"
 	"ordering-platform/rpc/sys/gen/query"
@@ -40,7 +40,7 @@ func (l *RoleAddLogic) RoleAdd(in *sysclient.RoleAddReq) (*sysclient.RoleAddResp
 	for _, menu := range sysMenus {
 		sysMenuIds = append(sysMenuIds, menu.MenuID)
 	}
-	menuApis, err := query.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.In(sysMenuIds...)).Find()
+	menuApis, err := query.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.MenuID.In(sysMenuIds...)).Find()
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 menu_api 列表失败,参数：%+v,异常:%s", sysMenuIds, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 menu_api 列表失败 %v, req %v", err, sysMenuIds)
@@ -48,7 +48,7 @@ func (l *RoleAddLogic) RoleAdd(in *sysclient.RoleAddReq) (*sysclient.RoleAddResp
 
 	apiIds := make([]int64, 0)
 	for _, menuApi := range menuApis {
-		apiIds = append(apiIds, menuApi.SysAPIID)
+		apiIds = append(apiIds, menuApi.APIID)
 	}
 
 	sysAPIS, err := query.SysAPI.WithContext(l.ctx).Where(query.SysAPI.ID.In(apiIds...)).Find()
@@ -71,7 +71,7 @@ func (l *RoleAddLogic) RoleAdd(in *sysclient.RoleAddReq) (*sysclient.RoleAddResp
 		RoleName:      in.RoleName,
 		Status:        in.Status,
 		RoleKey:       in.RoleKey,
-		Sort:          in.Sort,
+		RoleSort:      in.Sort,
 		Admin:         false,
 		DefaultRouter: in.DefaultRouter,
 	}
@@ -104,7 +104,7 @@ func (l *RoleAddLogic) RoleAdd(in *sysclient.RoleAddReq) (*sysclient.RoleAddResp
 			Path:       api.Path,
 			Type:       api.Type,
 			Action:     api.Action,
-			CreateTime: common.TimeToString(&api.CreatedAt),
+			CreateTime: utils.TimeToString(&api.CreatedAt),
 		})
 	}
 

@@ -57,14 +57,14 @@ func (l *DeptUpdateLogic) DeptUpdate(in *sysclient.DeptUpdateReq) (*sysclient.De
 	}
 
 	dept := &model.SysDept{
-		DeptID:       in.DeptId,
-		ParentDeptID: in.ParentDeptId,
-		DeptName:     in.DeptName,
-		Sort:         in.Sort,
-		Leader:       in.Leader,
-		Phone:        in.Phone,
-		Email:        in.Email,
-		Status:       in.Status,
+		DeptID:   in.DeptId,
+		ParentID: in.ParentDeptId,
+		DeptName: in.DeptName,
+		Sort:     in.Sort,
+		Leader:   in.Leader,
+		Phone:    in.Phone,
+		Email:    in.Email,
+		Status:   in.Status,
 	}
 	_, err = query.SysDept.WithContext(l.ctx).Updates(dept)
 	if err != nil {

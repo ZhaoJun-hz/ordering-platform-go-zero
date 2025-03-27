@@ -35,6 +35,8 @@ func newSysCasbinRule(db *gorm.DB, opts ...gen.DOOption) sysCasbinRule {
 	_sysCasbinRule.V3 = field.NewString(tableName, "v3")
 	_sysCasbinRule.V4 = field.NewString(tableName, "v4")
 	_sysCasbinRule.V5 = field.NewString(tableName, "v5")
+	_sysCasbinRule.V6 = field.NewString(tableName, "v6")
+	_sysCasbinRule.V7 = field.NewString(tableName, "v7")
 
 	_sysCasbinRule.fillFieldMap()
 
@@ -53,6 +55,8 @@ type sysCasbinRule struct {
 	V3    field.String
 	V4    field.String
 	V5    field.String
+	V6    field.String
+	V7    field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -77,6 +81,8 @@ func (s *sysCasbinRule) updateTableName(table string) *sysCasbinRule {
 	s.V3 = field.NewString(table, "v3")
 	s.V4 = field.NewString(table, "v4")
 	s.V5 = field.NewString(table, "v5")
+	s.V6 = field.NewString(table, "v6")
+	s.V7 = field.NewString(table, "v7")
 
 	s.fillFieldMap()
 
@@ -105,7 +111,7 @@ func (s *sysCasbinRule) GetFieldByName(fieldName string) (field.OrderExpr, bool)
 }
 
 func (s *sysCasbinRule) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 8)
+	s.fieldMap = make(map[string]field.Expr, 10)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["ptype"] = s.Ptype
 	s.fieldMap["v0"] = s.V0
@@ -114,6 +120,8 @@ func (s *sysCasbinRule) fillFieldMap() {
 	s.fieldMap["v3"] = s.V3
 	s.fieldMap["v4"] = s.V4
 	s.fieldMap["v5"] = s.V5
+	s.fieldMap["v6"] = s.V6
+	s.fieldMap["v7"] = s.V7
 }
 
 func (s sysCasbinRule) clone(db *gorm.DB) sysCasbinRule {

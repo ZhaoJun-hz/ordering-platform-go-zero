@@ -44,13 +44,13 @@ type (
 )
 service admin-api {
     @doc(
-        summary: "初始化api"
+        summary: "api 初始化"
     )
     @handler InitApi
     get /initapi (InitApiReq) returns (InitApiResp)
 
     @doc(
-        summary: "查询 api 列表"
+        summary: "api 列表"
     )
     @handler ApiList
     get /list (ApiListReq) returns (ApiListResp)

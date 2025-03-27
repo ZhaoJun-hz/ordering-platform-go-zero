@@ -125,7 +125,7 @@ service admin-api {
     @handler DeptList
     get / (DeptListReq) returns (DeptListResp)
     @doc(
-        summary: "获取 Dept tree 结构"
+        summary: "dept tree 结构获取"
     )
     @handler  DeptTree
     get /tree (DeptTreeReq) returns (DeptTreeResp)

@@ -22,3 +22,8 @@ func NewDBErr() error {
 func NewInternalErr() error {
 	return errors.New(SERVER_COMMON_ERROR, ErrMsg(SERVER_COMMON_ERROR))
 }
+
+// NewCodeInvalidArgumentError returns Code Error with custom invalid argument error code
+func NewCodeInvalidArgumentError(msg string) error {
+	return errors.New(REQUEST_PARAM_ERROR, msg)
+}

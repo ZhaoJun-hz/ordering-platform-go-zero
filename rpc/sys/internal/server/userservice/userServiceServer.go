@@ -23,12 +23,6 @@ func NewUserServiceServer(svcCtx *svc.ServiceContext) *UserServiceServer {
 	}
 }
 
-// 用户登录
-func (s *UserServiceServer) Login(ctx context.Context, in *sysclient.LoginReq) (*sysclient.LoginResp, error) {
-	l := userservicelogic.NewLoginLogic(ctx, s.svcCtx)
-	return l.Login(in)
-}
-
 // 登录获取用户个人信息
 func (s *UserServiceServer) UserDetail(ctx context.Context, in *sysclient.UserDetailReq) (*sysclient.UserDetailResp, error) {
 	l := userservicelogic.NewUserDetailLogic(ctx, s.svcCtx)
@@ -63,4 +57,10 @@ func (s *UserServiceServer) UserInfo(ctx context.Context, in *sysclient.UserInfo
 func (s *UserServiceServer) UserList(ctx context.Context, in *sysclient.UserListReq) (*sysclient.UserListResp, error) {
 	l := userservicelogic.NewUserListLogic(ctx, s.svcCtx)
 	return l.UserList(in)
+}
+
+// 根据用户名获取用户
+func (s *UserServiceServer) GetUserByUsername(ctx context.Context, in *sysclient.UsernameReq) (*sysclient.UserInfoResp, error) {
+	l := userservicelogic.NewGetUserByUsernameLogic(ctx, s.svcCtx)
+	return l.GetUserByUsername(in)
 }

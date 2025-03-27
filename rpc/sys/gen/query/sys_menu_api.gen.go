@@ -28,8 +28,8 @@ func newSysMenuAPI(db *gorm.DB, opts ...gen.DOOption) sysMenuAPI {
 	tableName := _sysMenuAPI.sysMenuAPIDo.TableName()
 	_sysMenuAPI.ALL = field.NewAsterisk(tableName)
 	_sysMenuAPI.ID = field.NewInt64(tableName, "id")
-	_sysMenuAPI.SysMenuID = field.NewInt64(tableName, "sys_menu_id")
-	_sysMenuAPI.SysAPIID = field.NewInt64(tableName, "sys_api_id")
+	_sysMenuAPI.MenuID = field.NewInt64(tableName, "menu_id")
+	_sysMenuAPI.APIID = field.NewInt64(tableName, "api_id")
 
 	_sysMenuAPI.fillFieldMap()
 
@@ -39,10 +39,10 @@ func newSysMenuAPI(db *gorm.DB, opts ...gen.DOOption) sysMenuAPI {
 type sysMenuAPI struct {
 	sysMenuAPIDo sysMenuAPIDo
 
-	ALL       field.Asterisk
-	ID        field.Int64
-	SysMenuID field.Int64
-	SysAPIID  field.Int64 // 主键编码
+	ALL    field.Asterisk
+	ID     field.Int64
+	MenuID field.Int64
+	APIID  field.Int64 // 主键编码
 
 	fieldMap map[string]field.Expr
 }
@@ -60,8 +60,8 @@ func (s sysMenuAPI) As(alias string) *sysMenuAPI {
 func (s *sysMenuAPI) updateTableName(table string) *sysMenuAPI {
 	s.ALL = field.NewAsterisk(table)
 	s.ID = field.NewInt64(table, "id")
-	s.SysMenuID = field.NewInt64(table, "sys_menu_id")
-	s.SysAPIID = field.NewInt64(table, "sys_api_id")
+	s.MenuID = field.NewInt64(table, "menu_id")
+	s.APIID = field.NewInt64(table, "api_id")
 
 	s.fillFieldMap()
 
@@ -90,8 +90,8 @@ func (s *sysMenuAPI) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 func (s *sysMenuAPI) fillFieldMap() {
 	s.fieldMap = make(map[string]field.Expr, 3)
 	s.fieldMap["id"] = s.ID
-	s.fieldMap["sys_menu_id"] = s.SysMenuID
-	s.fieldMap["sys_api_id"] = s.SysAPIID
+	s.fieldMap["menu_id"] = s.MenuID
+	s.fieldMap["api_id"] = s.APIID
 }
 
 func (s sysMenuAPI) clone(db *gorm.DB) sysMenuAPI {

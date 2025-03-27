@@ -43,7 +43,7 @@ func (l *ListMenuLogic) ListMenu(in *sysclient.ListMenuReq) (*sysclient.ListMenu
 			MenuType:        menu.MenuType,
 			Title:           menu.Title,
 			Sort:            menu.Sort,
-			ParentMenuId:    menu.ParentMenuID,
+			ParentMenuId:    menu.ParentID,
 			Icon:            menu.Icon,
 			Name:            menu.Name,
 			Component:       menu.Component,

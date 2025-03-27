@@ -19,6 +19,8 @@ type (
 	ApiInfo          = sysclient.ApiInfo
 	ApiListReq       = sysclient.ApiListReq
 	ApiListResp      = sysclient.ApiListResp
+	CreateTokenReq   = sysclient.CreateTokenReq
+	CreateTokenResp  = sysclient.CreateTokenResp
 	DeleteMenuReq    = sysclient.DeleteMenuReq
 	DeleteMenuResp   = sysclient.DeleteMenuResp
 	DeptAddReq       = sysclient.DeptAddReq
@@ -38,8 +40,7 @@ type (
 	ListMenuData     = sysclient.ListMenuData
 	ListMenuReq      = sysclient.ListMenuReq
 	ListMenuResp     = sysclient.ListMenuResp
-	LoginReq         = sysclient.LoginReq
-	LoginResp        = sysclient.LoginResp
+	ListMenuRoleReq  = sysclient.ListMenuRoleReq
 	MenuInfoReq      = sysclient.MenuInfoReq
 	MenuInfoResp     = sysclient.MenuInfoResp
 	RoleAddReq       = sysclient.RoleAddReq
@@ -68,10 +69,9 @@ type (
 	UserListResp     = sysclient.UserListResp
 	UserUpdateReq    = sysclient.UserUpdateReq
 	UserUpdateResp   = sysclient.UserUpdateResp
+	UsernameReq      = sysclient.UsernameReq
 
 	UserService interface {
-		// 用户登录
-		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		// 登录获取用户个人信息
 		UserDetail(ctx context.Context, in *UserDetailReq, opts ...grpc.CallOption) (*UserDetailResp, error)
 		// 添加user
@@ -84,6 +84,8 @@ type (
 		UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 		// user列表
 		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
+		// 根据用户名获取用户
+		GetUserByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 	}
 
 	defaultUserService struct {
@@ -95,12 +97,6 @@ func NewUserService(cli zrpc.Client) UserService {
 	return &defaultUserService{
 		cli: cli,
 	}
-}
-
-// 用户登录
-func (m *defaultUserService) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	client := sysclient.NewUserServiceClient(m.cli.Conn())
-	return client.Login(ctx, in, opts...)
 }
 
 // 登录获取用户个人信息
@@ -137,4 +133,10 @@ func (m *defaultUserService) UserInfo(ctx context.Context, in *UserInfoReq, opts
 func (m *defaultUserService) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error) {
 	client := sysclient.NewUserServiceClient(m.cli.Conn())
 	return client.UserList(ctx, in, opts...)
+}
+
+// 根据用户名获取用户
+func (m *defaultUserService) GetUserByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
+	client := sysclient.NewUserServiceClient(m.cli.Conn())
+	return client.GetUserByUsername(ctx, in, opts...)
 }

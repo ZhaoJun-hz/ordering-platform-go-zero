@@ -80,7 +80,7 @@ func (l *AddMenuLogic) AddMenu(in *sysclient.AddMenuReq) (*sysclient.AddMenuResp
 	}()
 	// 添加 menu
 	sysMenu := &model.SysMenu{
-		ParentMenuID:    in.ParentMenuId,
+		ParentID:        in.ParentMenuId,
 		Sort:            in.Sort,
 		MenuType:        in.MenuType,
 		Path:            in.Path,
@@ -105,8 +105,8 @@ func (l *AddMenuLogic) AddMenu(in *sysclient.AddMenuReq) (*sysclient.AddMenuResp
 	list := []*model.SysMenuAPI{}
 	for _, item := range in.SelectApi {
 		list = append(list, &model.SysMenuAPI{
-			SysMenuID: sysMenu.MenuID,
-			SysAPIID:  item,
+			MenuID: sysMenu.MenuID,
+			APIID:  item,
 		})
 	}
 	err = tx.SysMenuAPI.WithContext(l.ctx).CreateInBatches(list, len(list))

@@ -19,6 +19,8 @@ type (
 	ApiInfo          = sysclient.ApiInfo
 	ApiListReq       = sysclient.ApiListReq
 	ApiListResp      = sysclient.ApiListResp
+	CreateTokenReq   = sysclient.CreateTokenReq
+	CreateTokenResp  = sysclient.CreateTokenResp
 	DeleteMenuReq    = sysclient.DeleteMenuReq
 	DeleteMenuResp   = sysclient.DeleteMenuResp
 	DeptAddReq       = sysclient.DeptAddReq
@@ -38,8 +40,7 @@ type (
 	ListMenuData     = sysclient.ListMenuData
 	ListMenuReq      = sysclient.ListMenuReq
 	ListMenuResp     = sysclient.ListMenuResp
-	LoginReq         = sysclient.LoginReq
-	LoginResp        = sysclient.LoginResp
+	ListMenuRoleReq  = sysclient.ListMenuRoleReq
 	MenuInfoReq      = sysclient.MenuInfoReq
 	MenuInfoResp     = sysclient.MenuInfoResp
 	RoleAddReq       = sysclient.RoleAddReq
@@ -68,6 +69,7 @@ type (
 	UserListResp     = sysclient.UserListResp
 	UserUpdateReq    = sysclient.UserUpdateReq
 	UserUpdateResp   = sysclient.UserUpdateResp
+	UsernameReq      = sysclient.UsernameReq
 
 	MenuService interface {
 		AddMenu(ctx context.Context, in *AddMenuReq, opts ...grpc.CallOption) (*AddMenuResp, error)
@@ -75,6 +77,7 @@ type (
 		DeleteMenu(ctx context.Context, in *DeleteMenuReq, opts ...grpc.CallOption) (*DeleteMenuResp, error)
 		MenuInfo(ctx context.Context, in *MenuInfoReq, opts ...grpc.CallOption) (*MenuInfoResp, error)
 		ListMenu(ctx context.Context, in *ListMenuReq, opts ...grpc.CallOption) (*ListMenuResp, error)
+		ListMenuByRole(ctx context.Context, in *ListMenuRoleReq, opts ...grpc.CallOption) (*ListMenuResp, error)
 	}
 
 	defaultMenuService struct {
@@ -111,4 +114,9 @@ func (m *defaultMenuService) MenuInfo(ctx context.Context, in *MenuInfoReq, opts
 func (m *defaultMenuService) ListMenu(ctx context.Context, in *ListMenuReq, opts ...grpc.CallOption) (*ListMenuResp, error) {
 	client := sysclient.NewMenuServiceClient(m.cli.Conn())
 	return client.ListMenu(ctx, in, opts...)
+}
+
+func (m *defaultMenuService) ListMenuByRole(ctx context.Context, in *ListMenuRoleReq, opts ...grpc.CallOption) (*ListMenuResp, error) {
+	client := sysclient.NewMenuServiceClient(m.cli.Conn())
+	return client.ListMenuByRole(ctx, in, opts...)
 }

@@ -24,6 +24,7 @@ var (
 	SysMenuAPI    *sysMenuAPI
 	SysRole       *sysRole
 	SysRoleMenu   *sysRoleMenu
+	SysToken      *sysToken
 	SysUser       *sysUser
 )
 
@@ -36,6 +37,7 @@ func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	SysMenuAPI = &Q.SysMenuAPI
 	SysRole = &Q.SysRole
 	SysRoleMenu = &Q.SysRoleMenu
+	SysToken = &Q.SysToken
 	SysUser = &Q.SysUser
 }
 
@@ -49,6 +51,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		SysMenuAPI:    newSysMenuAPI(db, opts...),
 		SysRole:       newSysRole(db, opts...),
 		SysRoleMenu:   newSysRoleMenu(db, opts...),
+		SysToken:      newSysToken(db, opts...),
 		SysUser:       newSysUser(db, opts...),
 	}
 }
@@ -63,6 +66,7 @@ type Query struct {
 	SysMenuAPI    sysMenuAPI
 	SysRole       sysRole
 	SysRoleMenu   sysRoleMenu
+	SysToken      sysToken
 	SysUser       sysUser
 }
 
@@ -78,6 +82,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		SysMenuAPI:    q.SysMenuAPI.clone(db),
 		SysRole:       q.SysRole.clone(db),
 		SysRoleMenu:   q.SysRoleMenu.clone(db),
+		SysToken:      q.SysToken.clone(db),
 		SysUser:       q.SysUser.clone(db),
 	}
 }
@@ -100,6 +105,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		SysMenuAPI:    q.SysMenuAPI.replaceDB(db),
 		SysRole:       q.SysRole.replaceDB(db),
 		SysRoleMenu:   q.SysRoleMenu.replaceDB(db),
+		SysToken:      q.SysToken.replaceDB(db),
 		SysUser:       q.SysUser.replaceDB(db),
 	}
 }
@@ -112,6 +118,7 @@ type queryCtx struct {
 	SysMenuAPI    ISysMenuAPIDo
 	SysRole       ISysRoleDo
 	SysRoleMenu   ISysRoleMenuDo
+	SysToken      ISysTokenDo
 	SysUser       ISysUserDo
 }
 
@@ -124,6 +131,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		SysMenuAPI:    q.SysMenuAPI.WithContext(ctx),
 		SysRole:       q.SysRole.WithContext(ctx),
 		SysRoleMenu:   q.SysRoleMenu.WithContext(ctx),
+		SysToken:      q.SysToken.WithContext(ctx),
 		SysUser:       q.SysUser.WithContext(ctx),
 	}
 }

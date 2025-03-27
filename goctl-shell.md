@@ -12,7 +12,7 @@ goctl rpc protoc rpc/sys/sys.proto --go_out=./rpc/sys/ --go-grpc_out=./rpc/sys/ 
 
 ## 生成model代码
 ```shell
-goctl model mysql datasource -url="root:QWERtyui1234@tcp(10.166.66.14:3306)/ordering-platform" -table="sys*" -dir=./rpc/model/sysmodel -style goZero
+goctl model mysql datasource -url="root:QWERtyui1234@tcp(127.0.0.1:23306)/ordering-platform" -table="sys*" -dir=./rpc/model/sysmodel -style goZero
 ```
 
 ## swagger

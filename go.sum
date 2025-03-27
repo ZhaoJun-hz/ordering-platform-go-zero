@@ -40,6 +40,8 @@ github.com/casbin/gorm-adapter/v3 v3.32.0 h1:Au+IOILBIE9clox5BJhI2nA3p9t7Ep1ePlu
 github.com/casbin/gorm-adapter/v3 v3.32.0/go.mod h1:Zre/H8p17mpv5U3EaWgPoxLILLdXO3gHW5aoQQpUDZI=
 github.com/casbin/govaluate v1.2.0 h1:wXCXFmqyY+1RwiKfYo3jMKyrtZmOL3kHwaqDyCPOYak=
 github.com/casbin/govaluate v1.2.0/go.mod h1:G/UnbIjZk/0uMNaLwZZmFQrR72tYRZWQkO70si/iR7A=
+github.com/casbin/redis-watcher/v2 v2.5.0 h1:a0922GOKYDSSiD7hEQxmLh/psea2eLZtf1V12XzLI5w=
+github.com/casbin/redis-watcher/v2 v2.5.0/go.mod h1:lgtjnQrfbo+xZIwMPtLu9is/XpnCfAT94SLgMzY7HGk=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=

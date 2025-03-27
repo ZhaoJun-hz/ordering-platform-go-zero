@@ -47,3 +47,8 @@ func (s *MenuServiceServer) ListMenu(ctx context.Context, in *sysclient.ListMenu
 	l := menuservicelogic.NewListMenuLogic(ctx, s.svcCtx)
 	return l.ListMenu(in)
 }
+
+func (s *MenuServiceServer) ListMenuByRole(ctx context.Context, in *sysclient.ListMenuRoleReq) (*sysclient.ListMenuResp, error) {
+	l := menuservicelogic.NewListMenuByRoleLogic(ctx, s.svcCtx)
+	return l.ListMenuByRole(in)
+}

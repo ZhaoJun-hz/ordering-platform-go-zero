@@ -43,7 +43,7 @@ func (l *DeleteMenuLogic) DeleteMenu(in *sysclient.DeleteMenuReq) (*sysclient.De
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
 	}
 	// 校验一下有没有子菜单
-	subMenuNumber, err := query.SysMenu.WithContext(l.ctx).Where(query.SysMenu.ParentMenuID.Eq(in.MenuId)).Count()
+	subMenuNumber, err := query.SysMenu.WithContext(l.ctx).Where(query.SysMenu.ParentID.Eq(in.MenuId)).Count()
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 Menu失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
@@ -80,7 +80,7 @@ func (l *DeleteMenuLogic) DeleteMenu(in *sysclient.DeleteMenuReq) (*sysclient.De
 	}
 
 	// 删除 sys_menu_api_rule
-	_, err = tx.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.Eq(in.MenuId)).Delete()
+	_, err = tx.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.MenuID.Eq(in.MenuId)).Delete()
 	if err != nil {
 		logc.Errorf(l.ctx, "删除 sys_menu_api_rule 失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "删除 sys_menu_api_rule 失败 %v, 参数 %d", err, in.MenuId)

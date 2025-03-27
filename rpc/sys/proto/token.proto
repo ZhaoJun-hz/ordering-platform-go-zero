@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./proto";
+
+
+message CreateTokenReq {
+  int32 status = 1;
+  int64 userId = 2;
+  string username = 3;
+  string token = 4;
+  int64 expired_at = 5;
+}
+
+message CreateTokenResp {
+
+}
+
+//message TokenListReq {
+//  string username = 3;
+//  string nickname = 4;
+//  string email = 5;
+//  string uuid = 6;
+//  int64 pageNum = 7;
+//  int64 pageSize = 8;
+//}
+//
+//message TokenListResp {
+//  int64 total = 1;
+//  repeated TokenInfo data = 2;
+//}
+
+
+service TokenService {
+  rpc createToken(CreateTokenReq) returns (CreateTokenResp);
+//  rpc deleteToken(UUIDsReq) returns (BaseResp);
+//  rpc getTokenList(TokenListReq) returns (TokenListResp);
+//  rpc getTokenById(UUIDReq) returns (TokenInfo);
+//  rpc blockUserAllToken(UUIDReq) returns (BaseResp);
+//  rpc updateToken(TokenInfo) returns (BaseResp);
+}

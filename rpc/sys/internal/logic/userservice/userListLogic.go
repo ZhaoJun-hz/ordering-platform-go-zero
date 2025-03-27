@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/gen/query"
 
@@ -72,7 +72,7 @@ func (l *UserListLogic) UserList(in *sysclient.UserListReq) (*sysclient.UserList
 			Avatar:      item.Avatar,
 			DeptId:      item.DeptID,
 			RoleId:      item.RoleID,
-			CreateTime:  common.TimeToString(&item.CreatedAt),
+			CreateTime:  utils.TimeToString(&item.CreatedAt),
 		})
 	}
 

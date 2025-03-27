@@ -6,7 +6,8 @@ require (
 	github.com/bitly/go-simplejson v0.5.1
 	github.com/casbin/casbin/v2 v2.101.0
 	github.com/casbin/gorm-adapter/v3 v3.32.0
-	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/casbin/redis-watcher/v2 v2.5.0
+	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/pkg/errors v0.9.1
 	github.com/zeromicro/go-zero v1.7.3
 	github.com/zeromicro/x v0.0.0-20240408115609-8224c482b07e
@@ -42,6 +43,7 @@ require (
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect

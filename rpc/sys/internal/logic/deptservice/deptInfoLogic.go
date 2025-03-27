@@ -5,7 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
 	"gorm.io/gorm"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/errcode"
 	"ordering-platform/rpc/sys/gen/query"
@@ -45,13 +45,13 @@ func (l *DeptInfoLogic) DeptInfo(in *sysclient.DeptInfoReq) (*sysclient.DeptInfo
 	}
 	return &sysclient.DeptInfoResp{
 		DeptId:       sysDept.DeptID,
-		ParentDeptId: sysDept.ParentDeptID,
+		ParentDeptId: sysDept.ParentID,
 		DeptName:     sysDept.DeptName,
 		Sort:         sysDept.Sort,
 		Leader:       sysDept.Leader,
 		Phone:        sysDept.Phone,
 		Email:        sysDept.Email,
 		Status:       sysDept.Status,
-		CreateTime:   common.TimeToString(&sysDept.CreatedAt),
+		CreateTime:   utils.TimeToString(&sysDept.CreatedAt),
 	}, nil
 }

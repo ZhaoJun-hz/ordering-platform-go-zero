@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/gen/query"
 
@@ -54,7 +54,7 @@ func (l *ListApiLogic) ListApi(in *sysclient.ApiListReq) (*sysclient.ApiListResp
 			Path:       item.Path,
 			Type:       item.Type,
 			Action:     item.Action,
-			CreateTime: common.TimeToString(&item.CreatedAt),
+			CreateTime: utils.TimeToString(&item.CreatedAt),
 		})
 	}
 

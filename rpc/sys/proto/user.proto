@@ -5,16 +5,6 @@ package main;
 option go_package = "./proto";
 
 
-message LoginReq {
-  string username = 1;
-  string password = 2;
-}
-
-message loginResp {
-  int64 id = 1;
-  string AccessToken = 2;
-}
-
 message UserDetailReq {
   int64 UserId = 1;
 }
@@ -117,12 +107,14 @@ message UserInfoResp {
   int64 deptId = 9;
   int64 roleId = 10;
   string createTime = 11;
+  optional string password = 12;
+}
+
+message UsernameReq {
+  string username = 1;
 }
 
 service UserService {
-  // 用户登录
-  rpc Login(LoginReq) returns(loginResp);
-
   // 登录获取用户个人信息
   rpc UserDetail(UserDetailReq) returns(UserDetailResp);
   // 添加user
@@ -135,5 +127,9 @@ service UserService {
   rpc UserInfo(UserInfoReq) returns (UserInfoResp);
   // user列表
   rpc UserList(UserListReq) returns (UserListResp);
+  // 根据用户名获取用户
+  rpc getUserByUsername(UsernameReq) returns (UserInfoResp);
+
+
 }
 

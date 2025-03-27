@@ -16,6 +16,8 @@ type SysCasbinRule struct {
 	V3    *string `gorm:"column:v3" json:"v3"`
 	V4    *string `gorm:"column:v4" json:"v4"`
 	V5    *string `gorm:"column:v5" json:"v5"`
+	V6    string  `gorm:"column:v6;not null" json:"v6"`
+	V7    string  `gorm:"column:v7;not null" json:"v7"`
 }
 
 // TableName SysCasbinRule's table name

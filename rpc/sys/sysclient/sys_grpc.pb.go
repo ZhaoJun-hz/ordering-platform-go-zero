@@ -415,11 +415,12 @@ var DeptService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	MenuService_AddMenu_FullMethodName    = "/sysclient.MenuService/AddMenu"
-	MenuService_UpdateMenu_FullMethodName = "/sysclient.MenuService/UpdateMenu"
-	MenuService_DeleteMenu_FullMethodName = "/sysclient.MenuService/DeleteMenu"
-	MenuService_MenuInfo_FullMethodName   = "/sysclient.MenuService/MenuInfo"
-	MenuService_ListMenu_FullMethodName   = "/sysclient.MenuService/ListMenu"
+	MenuService_AddMenu_FullMethodName        = "/sysclient.MenuService/AddMenu"
+	MenuService_UpdateMenu_FullMethodName     = "/sysclient.MenuService/UpdateMenu"
+	MenuService_DeleteMenu_FullMethodName     = "/sysclient.MenuService/DeleteMenu"
+	MenuService_MenuInfo_FullMethodName       = "/sysclient.MenuService/MenuInfo"
+	MenuService_ListMenu_FullMethodName       = "/sysclient.MenuService/ListMenu"
+	MenuService_ListMenuByRole_FullMethodName = "/sysclient.MenuService/ListMenuByRole"
 )
 
 // MenuServiceClient is the client API for MenuService service.
@@ -431,6 +432,7 @@ type MenuServiceClient interface {
 	DeleteMenu(ctx context.Context, in *DeleteMenuReq, opts ...grpc.CallOption) (*DeleteMenuResp, error)
 	MenuInfo(ctx context.Context, in *MenuInfoReq, opts ...grpc.CallOption) (*MenuInfoResp, error)
 	ListMenu(ctx context.Context, in *ListMenuReq, opts ...grpc.CallOption) (*ListMenuResp, error)
+	ListMenuByRole(ctx context.Context, in *ListMenuRoleReq, opts ...grpc.CallOption) (*ListMenuResp, error)
 }
 
 type menuServiceClient struct {
@@ -491,6 +493,16 @@ func (c *menuServiceClient) ListMenu(ctx context.Context, in *ListMenuReq, opts 
 	return out, nil
 }
 
+func (c *menuServiceClient) ListMenuByRole(ctx context.Context, in *ListMenuRoleReq, opts ...grpc.CallOption) (*ListMenuResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListMenuResp)
+	err := c.cc.Invoke(ctx, MenuService_ListMenuByRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MenuServiceServer is the server API for MenuService service.
 // All implementations must embed UnimplementedMenuServiceServer
 // for forward compatibility.
@@ -500,6 +512,7 @@ type MenuServiceServer interface {
 	DeleteMenu(context.Context, *DeleteMenuReq) (*DeleteMenuResp, error)
 	MenuInfo(context.Context, *MenuInfoReq) (*MenuInfoResp, error)
 	ListMenu(context.Context, *ListMenuReq) (*ListMenuResp, error)
+	ListMenuByRole(context.Context, *ListMenuRoleReq) (*ListMenuResp, error)
 	mustEmbedUnimplementedMenuServiceServer()
 }
 
@@ -524,6 +537,9 @@ func (UnimplementedMenuServiceServer) MenuInfo(context.Context, *MenuInfoReq) (*
 }
 func (UnimplementedMenuServiceServer) ListMenu(context.Context, *ListMenuReq) (*ListMenuResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMenu not implemented")
+}
+func (UnimplementedMenuServiceServer) ListMenuByRole(context.Context, *ListMenuRoleReq) (*ListMenuResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMenuByRole not implemented")
 }
 func (UnimplementedMenuServiceServer) mustEmbedUnimplementedMenuServiceServer() {}
 func (UnimplementedMenuServiceServer) testEmbeddedByValue()                     {}
@@ -636,6 +652,24 @@ func _MenuService_ListMenu_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MenuService_ListMenuByRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMenuRoleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MenuServiceServer).ListMenuByRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MenuService_ListMenuByRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MenuServiceServer).ListMenuByRole(ctx, req.(*ListMenuRoleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MenuService_ServiceDesc is the grpc.ServiceDesc for MenuService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -662,6 +696,10 @@ var MenuService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListMenu",
 			Handler:    _MenuService_ListMenu_Handler,
+		},
+		{
+			MethodName: "ListMenuByRole",
+			Handler:    _MenuService_ListMenuByRole_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -923,21 +961,121 @@ var RoleService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	UserService_Login_FullMethodName      = "/sysclient.UserService/Login"
-	UserService_UserDetail_FullMethodName = "/sysclient.UserService/UserDetail"
-	UserService_UserAdd_FullMethodName    = "/sysclient.UserService/UserAdd"
-	UserService_UserUpdate_FullMethodName = "/sysclient.UserService/UserUpdate"
-	UserService_UserDelete_FullMethodName = "/sysclient.UserService/UserDelete"
-	UserService_UserInfo_FullMethodName   = "/sysclient.UserService/UserInfo"
-	UserService_UserList_FullMethodName   = "/sysclient.UserService/UserList"
+	TokenService_CreateToken_FullMethodName = "/sysclient.TokenService/createToken"
+)
+
+// TokenServiceClient is the client API for TokenService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type TokenServiceClient interface {
+	CreateToken(ctx context.Context, in *CreateTokenReq, opts ...grpc.CallOption) (*CreateTokenResp, error)
+}
+
+type tokenServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewTokenServiceClient(cc grpc.ClientConnInterface) TokenServiceClient {
+	return &tokenServiceClient{cc}
+}
+
+func (c *tokenServiceClient) CreateToken(ctx context.Context, in *CreateTokenReq, opts ...grpc.CallOption) (*CreateTokenResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateTokenResp)
+	err := c.cc.Invoke(ctx, TokenService_CreateToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// TokenServiceServer is the server API for TokenService service.
+// All implementations must embed UnimplementedTokenServiceServer
+// for forward compatibility.
+type TokenServiceServer interface {
+	CreateToken(context.Context, *CreateTokenReq) (*CreateTokenResp, error)
+	mustEmbedUnimplementedTokenServiceServer()
+}
+
+// UnimplementedTokenServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedTokenServiceServer struct{}
+
+func (UnimplementedTokenServiceServer) CreateToken(context.Context, *CreateTokenReq) (*CreateTokenResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateToken not implemented")
+}
+func (UnimplementedTokenServiceServer) mustEmbedUnimplementedTokenServiceServer() {}
+func (UnimplementedTokenServiceServer) testEmbeddedByValue()                      {}
+
+// UnsafeTokenServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TokenServiceServer will
+// result in compilation errors.
+type UnsafeTokenServiceServer interface {
+	mustEmbedUnimplementedTokenServiceServer()
+}
+
+func RegisterTokenServiceServer(s grpc.ServiceRegistrar, srv TokenServiceServer) {
+	// If the following call pancis, it indicates UnimplementedTokenServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&TokenService_ServiceDesc, srv)
+}
+
+func _TokenService_CreateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTokenReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TokenServiceServer).CreateToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TokenService_CreateToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TokenServiceServer).CreateToken(ctx, req.(*CreateTokenReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// TokenService_ServiceDesc is the grpc.ServiceDesc for TokenService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TokenService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysclient.TokenService",
+	HandlerType: (*TokenServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "createToken",
+			Handler:    _TokenService_CreateToken_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "rpc/sys/sys.proto",
+}
+
+const (
+	UserService_UserDetail_FullMethodName        = "/sysclient.UserService/UserDetail"
+	UserService_UserAdd_FullMethodName           = "/sysclient.UserService/UserAdd"
+	UserService_UserUpdate_FullMethodName        = "/sysclient.UserService/UserUpdate"
+	UserService_UserDelete_FullMethodName        = "/sysclient.UserService/UserDelete"
+	UserService_UserInfo_FullMethodName          = "/sysclient.UserService/UserInfo"
+	UserService_UserList_FullMethodName          = "/sysclient.UserService/UserList"
+	UserService_GetUserByUsername_FullMethodName = "/sysclient.UserService/getUserByUsername"
 )
 
 // UserServiceClient is the client API for UserService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
-	// 用户登录
-	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	// 登录获取用户个人信息
 	UserDetail(ctx context.Context, in *UserDetailReq, opts ...grpc.CallOption) (*UserDetailResp, error)
 	// 添加user
@@ -950,6 +1088,8 @@ type UserServiceClient interface {
 	UserInfo(ctx context.Context, in *UserInfoReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 	// user列表
 	UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
+	// 根据用户名获取用户
+	GetUserByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 }
 
 type userServiceClient struct {
@@ -958,16 +1098,6 @@ type userServiceClient struct {
 
 func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
-}
-
-func (c *userServiceClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginResp)
-	err := c.cc.Invoke(ctx, UserService_Login_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *userServiceClient) UserDetail(ctx context.Context, in *UserDetailReq, opts ...grpc.CallOption) (*UserDetailResp, error) {
@@ -1030,12 +1160,20 @@ func (c *userServiceClient) UserList(ctx context.Context, in *UserListReq, opts 
 	return out, nil
 }
 
+func (c *userServiceClient) GetUserByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserInfoResp)
+	err := c.cc.Invoke(ctx, UserService_GetUserByUsername_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
 type UserServiceServer interface {
-	// 用户登录
-	Login(context.Context, *LoginReq) (*LoginResp, error)
 	// 登录获取用户个人信息
 	UserDetail(context.Context, *UserDetailReq) (*UserDetailResp, error)
 	// 添加user
@@ -1048,6 +1186,8 @@ type UserServiceServer interface {
 	UserInfo(context.Context, *UserInfoReq) (*UserInfoResp, error)
 	// user列表
 	UserList(context.Context, *UserListReq) (*UserListResp, error)
+	// 根据用户名获取用户
+	GetUserByUsername(context.Context, *UsernameReq) (*UserInfoResp, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -1058,9 +1198,6 @@ type UserServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUserServiceServer struct{}
 
-func (UnimplementedUserServiceServer) Login(context.Context, *LoginReq) (*LoginResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
 func (UnimplementedUserServiceServer) UserDetail(context.Context, *UserDetailReq) (*UserDetailResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserDetail not implemented")
 }
@@ -1078,6 +1215,9 @@ func (UnimplementedUserServiceServer) UserInfo(context.Context, *UserInfoReq) (*
 }
 func (UnimplementedUserServiceServer) UserList(context.Context, *UserListReq) (*UserListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserList not implemented")
+}
+func (UnimplementedUserServiceServer) GetUserByUsername(context.Context, *UsernameReq) (*UserInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserByUsername not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -1098,24 +1238,6 @@ func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&UserService_ServiceDesc, srv)
-}
-
-func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).Login(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: UserService_Login_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Login(ctx, req.(*LoginReq))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _UserService_UserDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1226,6 +1348,24 @@ func _UserService_UserList_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GetUserByUsername_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UsernameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetUserByUsername(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetUserByUsername_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetUserByUsername(ctx, req.(*UsernameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1233,10 +1373,6 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "sysclient.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Login",
-			Handler:    _UserService_Login_Handler,
-		},
 		{
 			MethodName: "UserDetail",
 			Handler:    _UserService_UserDetail_Handler,
@@ -1260,6 +1396,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserList",
 			Handler:    _UserService_UserList_Handler,
+		},
+		{
+			MethodName: "getUserByUsername",
+			Handler:    _UserService_GetUserByUsername_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

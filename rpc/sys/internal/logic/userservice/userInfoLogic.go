@@ -5,7 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
 	"gorm.io/gorm"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/errcode"
 	"ordering-platform/rpc/sys/gen/query"
@@ -53,6 +53,6 @@ func (l *UserInfoLogic) UserInfo(in *sysclient.UserInfoReq) (*sysclient.UserInfo
 		Avatar:      sysUser.Avatar,
 		DeptId:      sysUser.DeptID,
 		RoleId:      sysUser.RoleID,
-		CreateTime:  common.TimeToString(&sysUser.CreatedAt),
+		CreateTime:  utils.TimeToString(&sysUser.CreatedAt),
 	}, nil
 }

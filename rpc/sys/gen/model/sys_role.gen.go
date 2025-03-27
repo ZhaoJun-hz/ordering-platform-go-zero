@@ -16,9 +16,9 @@ const TableNameSysRole = "sys_role"
 type SysRole struct {
 	RoleID        int64          `gorm:"column:role_id;primaryKey;autoIncrement:true" json:"role_id"`
 	RoleName      string         `gorm:"column:role_name;not null" json:"role_name"`
-	Status        int32          `gorm:"column:status;not null;default:2;comment:状态 1 停用 2 启用" json:"status"` // 状态 1 停用 2 启用
+	Status        int32          `gorm:"column:status;not null;default:1;comment:状态 1 启用 2 停用" json:"status"` // 状态 1 启用 2 停用
 	RoleKey       string         `gorm:"column:role_key;not null;comment:角色码" json:"role_key"`                // 角色码
-	Sort          int32          `gorm:"column:sort;not null;default:1;comment:排序" json:"sort"`               // 排序
+	RoleSort      int32          `gorm:"column:role_sort;not null;default:1" json:"role_sort"`
 	Remark        string         `gorm:"column:remark;not null" json:"remark"`
 	Admin         bool           `gorm:"column:admin;not null;comment:是否是管理员 0 不是 1 是" json:"admin"`                            // 是否是管理员 0 不是 1 是
 	DataScope     string         `gorm:"column:data_scope;not null;default:0;comment:数据范围" json:"data_scope"`                   // 数据范围

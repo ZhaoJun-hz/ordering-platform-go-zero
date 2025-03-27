@@ -43,14 +43,14 @@ func (l *MenuInfoLogic) MenuInfo(in *sysclient.MenuInfoReq) (*sysclient.MenuInfo
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Menu失败 %v, param %v", err, in.MenuId)
 	}
 
-	sysMenuApis, err := query.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.Eq(in.MenuId)).Find()
+	sysMenuApis, err := query.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.MenuID.Eq(in.MenuId)).Find()
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 SysMenuAPIRule 失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 SysMenuAPIRule 失败 %v, param %v", err, in.MenuId)
 	}
 	var selectApiIds []int64
 	for _, api := range sysMenuApis {
-		selectApiIds = append(selectApiIds, api.SysAPIID)
+		selectApiIds = append(selectApiIds, api.APIID)
 	}
 
 	return &sysclient.MenuInfoResp{
@@ -58,7 +58,7 @@ func (l *MenuInfoLogic) MenuInfo(in *sysclient.MenuInfoReq) (*sysclient.MenuInfo
 		MenuType:        sysMenu.MenuType,
 		Title:           sysMenu.Title,
 		Sort:            sysMenu.Sort,
-		ParentMenuId:    sysMenu.ParentMenuID,
+		ParentMenuId:    sysMenu.ParentID,
 		Icon:            sysMenu.Icon,
 		Name:            sysMenu.Name,
 		Component:       sysMenu.Component,

@@ -19,6 +19,8 @@ type (
 	ApiInfo          = sysclient.ApiInfo
 	ApiListReq       = sysclient.ApiListReq
 	ApiListResp      = sysclient.ApiListResp
+	CreateTokenReq   = sysclient.CreateTokenReq
+	CreateTokenResp  = sysclient.CreateTokenResp
 	DeleteMenuReq    = sysclient.DeleteMenuReq
 	DeleteMenuResp   = sysclient.DeleteMenuResp
 	DeptAddReq       = sysclient.DeptAddReq
@@ -38,8 +40,7 @@ type (
 	ListMenuData     = sysclient.ListMenuData
 	ListMenuReq      = sysclient.ListMenuReq
 	ListMenuResp     = sysclient.ListMenuResp
-	LoginReq         = sysclient.LoginReq
-	LoginResp        = sysclient.LoginResp
+	ListMenuRoleReq  = sysclient.ListMenuRoleReq
 	MenuInfoReq      = sysclient.MenuInfoReq
 	MenuInfoResp     = sysclient.MenuInfoResp
 	RoleAddReq       = sysclient.RoleAddReq
@@ -68,6 +69,7 @@ type (
 	UserListResp     = sysclient.UserListResp
 	UserUpdateReq    = sysclient.UserUpdateReq
 	UserUpdateResp   = sysclient.UserUpdateResp
+	UsernameReq      = sysclient.UsernameReq
 
 	DeptService interface {
 		DeptAdd(ctx context.Context, in *DeptAddReq, opts ...grpc.CallOption) (*DeptAddResp, error)

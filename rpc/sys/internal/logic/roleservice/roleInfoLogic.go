@@ -57,10 +57,10 @@ func (l *RoleInfoLogic) RoleInfo(in *sysclient.RoleInfoReq) (*sysclient.RoleInfo
 	// 构建树
 	var treeData []MenuTree
 	for _, menu := range menus {
-		fmt.Printf("MenuId: %d, ParentMenuId: %d\n", menu.MenuID, menu.ParentMenuID)
+		fmt.Printf("MenuId: %d, ParentMenuId: %d\n", menu.MenuID, menu.ParentID)
 		treeData = append(treeData, MenuTree{
 			MenuId:       menu.MenuID,
-			ParentMenuId: menu.ParentMenuID,
+			ParentMenuId: menu.ParentID,
 		})
 	}
 	tree := buildMenuTree(treeData, 0)
@@ -79,7 +79,7 @@ func (l *RoleInfoLogic) RoleInfo(in *sysclient.RoleInfoReq) (*sysclient.RoleInfo
 		RoleName:      role.RoleName,
 		RoleKey:       role.RoleKey,
 		Status:        role.Status,
-		Sort:          role.Sort,
+		Sort:          role.RoleSort,
 		SelectMenus:   filteredMenus,
 		DefaultRouter: role.DefaultRouter,
 		Admin:         role.Admin,
@@ -154,6 +154,5 @@ func filterMenus(menuTree []*MenuTree, selectedIDs map[int64]bool) []int64 {
 	for _, root := range menuTree {
 		dfs(root)
 	}
-
 	return result
 }

@@ -229,12 +229,17 @@ message ListMenuResp {
   repeated ListMenuData data = 1;
 }
 
+message ListMenuRoleReq {
+  int64 roleId = 1;
+}
+
 service MenuService {
   rpc AddMenu(AddMenuReq) returns(AddMenuResp); // 新增Menu
   rpc UpdateMenu(UpdateMenuReq) returns (UpdateMenuResp); // 更新Menu
   rpc DeleteMenu(DeleteMenuReq) returns (DeleteMenuResp); // 删除Menu, 判断有没有角色关联Menu，再判断有无子菜单
   rpc MenuInfo(MenuInfoReq) returns (MenuInfoResp); // 详情
   rpc ListMenu(ListMenuReq) returns (ListMenuResp); // 列表
+  rpc ListMenuByRole(ListMenuRoleReq) returns(ListMenuResp); // 根据角色获取Menu
 }
 
 message RoleAddReq {
@@ -319,17 +324,41 @@ service RoleService {
   rpc RoleList(RoleListReq) returns (RoleListResp);
 }
 
-message LoginReq {
-  string username = 1;
-  string password = 2;
+message CreateTokenReq {
+  int32 status = 1;
+  int64 userId = 2;
+  string username = 3;
+  string token = 4;
+  int64 expired_at = 5;
 }
 
-message loginResp {
-  int64 id = 1;
-  string AccessToken = 2;
+message CreateTokenResp {
+
 }
 
-message UserDetailReq {
+//message TokenListReq {
+//  string username = 3;
+//  string nickname = 4;
+//  string email = 5;
+//  string uuid = 6;
+//  int64 pageNum = 7;
+//  int64 pageSize = 8;
+//}
+//
+//message TokenListResp {
+//  int64 total = 1;
+//  repeated TokenInfo data = 2;
+//}
+
+
+service TokenService {
+  rpc createToken(CreateTokenReq) returns (CreateTokenResp);
+//  rpc deleteToken(UUIDsReq) returns (BaseResp);
+//  rpc getTokenList(TokenListReq) returns (TokenListResp);
+//  rpc getTokenById(UUIDReq) returns (TokenInfo);
+//  rpc blockUserAllToken(UUIDReq) returns (BaseResp);
+//  rpc updateToken(TokenInfo) returns (BaseResp);
+}message UserDetailReq {
   int64 UserId = 1;
 }
 
@@ -431,12 +460,14 @@ message UserInfoResp {
   int64 deptId = 9;
   int64 roleId = 10;
   string createTime = 11;
+  optional string password = 12;
+}
+
+message UsernameReq {
+  string username = 1;
 }
 
 service UserService {
-  // 用户登录
-  rpc Login(LoginReq) returns(loginResp);
-
   // 登录获取用户个人信息
   rpc UserDetail(UserDetailReq) returns(UserDetailResp);
   // 添加user
@@ -449,5 +480,9 @@ service UserService {
   rpc UserInfo(UserInfoReq) returns (UserInfoResp);
   // user列表
   rpc UserList(UserListReq) returns (UserListResp);
+  // 根据用户名获取用户
+  rpc getUserByUsername(UsernameReq) returns (UserInfoResp);
+
+
 }
 

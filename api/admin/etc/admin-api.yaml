@@ -5,13 +5,18 @@ Timeout: 5000
 SysRpc:
   Etcd:
     Hosts:
-      - 10.166.66.14:2379
+      - 127.0.0.1:2379
     Key: sys.rpc
   NonBlock: true
   Timeout: 5000
 
 Mysql:
-  Datasource: root:QWERtyui1234@tcp(10.166.66.14:3306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  Datasource: root:QWERtyui1234@tcp(127.0.0.1:23306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+Redis:
+  Host: 127.0.0.1:26379
+  Type: node
+  Pass: QWERtyui1234
 
 Auth:
   AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d

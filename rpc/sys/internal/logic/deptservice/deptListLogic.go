@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/gen/query"
 
@@ -40,14 +40,14 @@ func (l *DeptListLogic) DeptList(in *sysclient.DeptListReq) (*sysclient.DeptList
 	for _, sysDept := range sysDepts {
 		result = append(result, &sysclient.DeptListData{
 			DeptId:       sysDept.DeptID,
-			ParentDeptId: sysDept.ParentDeptID,
+			ParentDeptId: sysDept.ParentID,
 			DeptName:     sysDept.DeptName,
 			Sort:         sysDept.Sort,
 			Leader:       sysDept.Leader,
 			Phone:        sysDept.Phone,
 			Email:        sysDept.Email,
 			Status:       sysDept.Status,
-			CreateTime:   common.TimeToString(&sysDept.CreatedAt),
+			CreateTime:   utils.TimeToString(&sysDept.CreatedAt),
 		})
 	}
 	return &sysclient.DeptListResp{

@@ -1,3 +1,5 @@
+CREATE DATABASE `ordering-platform` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
 CREATE TABLE `sys_menu`
 (
     `menu_id`           bigint                                       NOT NULL AUTO_INCREMENT  COMMENT '主键编码',

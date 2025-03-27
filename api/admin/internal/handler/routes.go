@@ -20,13 +20,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				// 初始化api
+				// api 初始化
 				Method:  http.MethodGet,
 				Path:    "/initapi",
 				Handler: sysapi.InitApiHandler(serverCtx),
 			},
 			{
-				// 查询 api 列表
+				// api 列表
 				Method:  http.MethodGet,
 				Path:    "/list",
 				Handler: sysapi.ApiListHandler(serverCtx),
@@ -70,7 +70,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: sysdept.DeptInfoHandler(serverCtx),
 				},
 				{
-					// 获取 Dept tree 结构
+					// dept tree 结构获取
 					Method:  http.MethodGet,
 					Path:    "/tree",
 					Handler: sysdept.DeptTreeHandler(serverCtx),
@@ -86,37 +86,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.AuthCheckRole, serverCtx.PermissionAction},
 			[]rest.Route{
 				{
-					// 添加menu
+					// menu 添加
 					Method:  http.MethodPost,
 					Path:    "/",
 					Handler: sysmenu.AddMenuHandler(serverCtx),
 				},
 				{
-					// menu列表
+					// menu 列表
 					Method:  http.MethodGet,
 					Path:    "/",
 					Handler: sysmenu.ListMenuHandler(serverCtx),
 				},
 				{
-					// 更新menu
+					// menu 更新
 					Method:  http.MethodPut,
 					Path:    "/:menuId",
 					Handler: sysmenu.UpdateMenuHandler(serverCtx),
 				},
 				{
-					// 删除menu
+					// menu 删除
 					Method:  http.MethodDelete,
 					Path:    "/:menuId",
 					Handler: sysmenu.DeleteMenuHandler(serverCtx),
 				},
 				{
-					// menu详情
+					// menu 详情
 					Method:  http.MethodGet,
 					Path:    "/:menuId",
 					Handler: sysmenu.MenuInfoHandler(serverCtx),
 				},
 				{
-					// 获取 menu tree 结构
+					// menu tree 结构获取
 					Method:  http.MethodGet,
 					Path:    "/tree",
 					Handler: sysmenu.TreeMenuHandler(serverCtx),
@@ -202,7 +202,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: sysuser.UserInfoHandler(serverCtx),
 				},
 				{
-					// 获取用户权限码
+					// 获取用户权限码,按钮级别的权限
 					Method:  http.MethodGet,
 					Path:    "/codes",
 					Handler: sysuser.UserCodesHandler(serverCtx),
@@ -214,7 +214,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: sysuser.UserDetailHandler(serverCtx),
 				},
 				{
-					// 获取用户菜单
+					// 获取用户菜单,主菜单和一级菜单
 					Method:  http.MethodGet,
 					Path:    "/menus",
 					Handler: sysuser.UserMenusHandler(serverCtx),

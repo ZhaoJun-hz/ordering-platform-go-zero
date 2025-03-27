@@ -97,7 +97,7 @@ func (l *UpdateMenuLogic) UpdateMenu(in *sysclient.UpdateMenuReq) (*sysclient.Up
 	// 添加 menu
 	newSysMenu := &model.SysMenu{
 		MenuID:          in.MenuId,
-		ParentMenuID:    in.ParentMenuId,
+		ParentID:        in.ParentMenuId,
 		Sort:            in.Sort,
 		MenuType:        in.MenuType,
 		Path:            in.Path,
@@ -121,7 +121,7 @@ func (l *UpdateMenuLogic) UpdateMenu(in *sysclient.UpdateMenuReq) (*sysclient.Up
 	}
 
 	// 删除 sys_menu_api_rule
-	_, err = tx.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.SysMenuID.Eq(in.MenuId)).Delete()
+	_, err = tx.SysMenuAPI.WithContext(l.ctx).Where(query.SysMenuAPI.MenuID.Eq(in.MenuId)).Delete()
 	if err != nil {
 		logc.Errorf(l.ctx, "删除 sys_menu_api_rule 失败,参数：%d,异常:%s", in.MenuId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "删除 sys_menu_api_rule 失败 %v, 参数 %d", err, in.MenuId)
@@ -130,8 +130,8 @@ func (l *UpdateMenuLogic) UpdateMenu(in *sysclient.UpdateMenuReq) (*sysclient.Up
 	list := []*model.SysMenuAPI{}
 	for _, item := range in.SelectApi {
 		list = append(list, &model.SysMenuAPI{
-			SysMenuID: sysMenu.MenuID,
-			SysAPIID:  item,
+			MenuID: sysMenu.MenuID,
+			APIID:  item,
 		})
 	}
 	err = tx.SysMenuAPI.WithContext(l.ctx).CreateInBatches(list, len(list))

@@ -44,13 +44,13 @@ func (l *DeptAddLogic) DeptAdd(in *sysclient.DeptAddReq) (*sysclient.DeptAddResp
 		}
 	}
 	dept := &model.SysDept{
-		ParentDeptID: in.ParentDeptId,
-		DeptName:     in.DeptName,
-		Sort:         in.Sort,
-		Leader:       in.Leader,
-		Phone:        in.Phone,
-		Email:        in.Email,
-		Status:       in.Status,
+		ParentID: in.ParentDeptId,
+		DeptName: in.DeptName,
+		Sort:     in.Sort,
+		Leader:   in.Leader,
+		Phone:    in.Phone,
+		Email:    in.Email,
+		Status:   in.Status,
 	}
 	err := query.SysDept.WithContext(l.ctx).Create(dept)
 	if err != nil {

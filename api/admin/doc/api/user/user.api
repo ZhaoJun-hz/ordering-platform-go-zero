@@ -155,16 +155,16 @@ service admin-api {
     get /detail returns (UserDetailResp)
 
     @doc(
-        summary: "获取用户权限码"
+        summary: "获取用户权限码,按钮级别的权限"
     )
     @handler UserCodes
     get /codes returns ([]string)
 
     @doc(
-        summary: "获取用户菜单"
+        summary: "获取用户菜单,主菜单和一级菜单"
     )
     @handler UserMenus
-    get /menus returns ([]Menu)
+    get /menus returns ([]*Menu)
 
     @doc(
         summary: "user添加"

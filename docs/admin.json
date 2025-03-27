@@ -549,7 +549,7 @@
         ]
       }
     },
-    "/api/sys/role/{deptId}": {
+    "/api/sys/role/{roleId}": {
       "get": {
         "summary": "role详情",
         "operationId": "RoleInfo",
@@ -563,7 +563,7 @@
         },
         "parameters": [
           {
-            "name": "deptId",
+            "name": "roleId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -591,7 +591,7 @@
         },
         "parameters": [
           {
-            "name": "deptId",
+            "name": "roleId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -627,7 +627,7 @@
         },
         "parameters": [
           {
-            "name": "deptId",
+            "name": "roleId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -643,6 +643,125 @@
         ],
         "tags": [
           "sys/role"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/user/": {
+      "get": {
+        "summary": "user列表",
+        "operationId": "UserList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "username",
+            "description": " 登录名",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "nickname",
+            "description": " 昵称",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mobile",
+            "description": " 手机号",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "description": " 邮箱",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "deptId",
+            "description": " 部门id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "roleId",
+            "description": " 角色id",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageNum",
+            "description": "  第几页",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "1"
+          },
+          {
+            "name": "pageSize",
+            "description": " 每页的数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "default": "10"
+          }
+        ],
+        "tags": [
+          "sys/user"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "user添加",
+        "operationId": "UserAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/user"
         ],
         "security": [
           {
@@ -676,15 +795,15 @@
         ]
       }
     },
-    "/api/sys/user/info": {
+    "/api/sys/user/detail": {
       "get": {
-        "summary": "获取用户信息",
-        "operationId": "UserInfo",
+        "summary": "登录获取用户信息",
+        "operationId": "UserDetail",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/UserInfoResp"
+              "$ref": "#/definitions/UserDetailResp"
             }
           }
         },
@@ -741,6 +860,108 @@
             }
           }
         },
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sys/user/{userId}": {
+      "get": {
+        "summary": "user详情",
+        "operationId": "UserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserInfoData"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "user删除",
+        "operationId": "UserDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDeleteReq"
+            }
+          }
+        ],
+        "tags": [
+          "sys/user"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "user更新",
+        "operationId": "UserUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpdateReq"
+            }
+          }
+        ],
         "tags": [
           "sys/user"
         ],
@@ -1561,6 +1782,12 @@
     },
     "RoleDeleteResp": {
       "type": "object",
+      "properties": {
+        "roleKey": {
+          "type": "string",
+          "description": "  权限字符"
+        }
+      },
       "title": "RoleDeleteResp"
     },
     "RoleInfoData": {
@@ -1775,7 +2002,7 @@
     "TreeMenuData": {
       "type": "object",
       "properties": {
-        "value": {
+        "menuId": {
           "type": "integer",
           "format": "int64",
           "description": " 对应menuId"
@@ -1825,7 +2052,7 @@
       },
       "title": "TreeMenuData",
       "required": [
-        "value",
+        "menuId",
         "menuType",
         "parentMenuId",
         "name",
@@ -1993,7 +2220,75 @@
       "type": "object",
       "title": "UpdateMenuResp"
     },
-    "UserInfoResp": {
+    "UserAddReq": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "username": {
+          "type": "string",
+          "description": " 登录名"
+        },
+        "password": {
+          "type": "string",
+          "description": " 密码"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "mobile": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "avatar": {
+          "type": "string",
+          "description": " 头像"
+        },
+        "deptId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 部门id"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 角色id"
+        }
+      },
+      "title": "UserAddReq",
+      "required": [
+        "status",
+        "username",
+        "password",
+        "deptId",
+        "roleId"
+      ]
+    },
+    "UserAddResp": {
+      "type": "object",
+      "title": "UserAddResp"
+    },
+    "UserDeleteReq": {
+      "type": "object",
+      "title": "UserDeleteReq"
+    },
+    "UserDeleteResp": {
+      "type": "object",
+      "title": "UserDeleteResp"
+    },
+    "UserDetailResp": {
       "type": "object",
       "properties": {
         "avater": {
@@ -2018,7 +2313,7 @@
           "type": "string"
         }
       },
-      "title": "UserInfoResp",
+      "title": "UserDetailResp",
       "required": [
         "avater",
         "roles",
@@ -2027,6 +2322,273 @@
         "desc",
         "homePath"
       ]
+    },
+    "UserInfoData": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "username": {
+          "type": "string",
+          "description": " 登录名"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "mobile": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "avatar": {
+          "type": "string",
+          "description": " 头像"
+        },
+        "deptId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 部门id"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 角色id"
+        },
+        "createTime": {
+          "type": "string"
+        }
+      },
+      "title": "UserInfoData",
+      "required": [
+        "userId",
+        "status",
+        "username",
+        "nickname",
+        "description",
+        "mobile",
+        "email",
+        "avatar",
+        "deptId",
+        "roleId",
+        "createTime"
+      ]
+    },
+    "UserInfoReq": {
+      "type": "object",
+      "title": "UserInfoReq"
+    },
+    "UserListData": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "username": {
+          "type": "string",
+          "description": " 登录名"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "mobile": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "avatar": {
+          "type": "string",
+          "description": " 头像"
+        },
+        "deptId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 部门id"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 角色id"
+        },
+        "createTime": {
+          "type": "string"
+        }
+      },
+      "title": "UserListData",
+      "required": [
+        "userId",
+        "status",
+        "username",
+        "nickname",
+        "description",
+        "mobile",
+        "email",
+        "avatar",
+        "deptId",
+        "roleId",
+        "createTime"
+      ]
+    },
+    "UserListReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": " 登录名"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "mobile": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "deptId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 部门id"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 角色id"
+        },
+        "pageNum": {
+          "type": "integer",
+          "format": "int64",
+          "default": "1",
+          "description": "  第几页"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int64",
+          "default": "10",
+          "description": " 每页的数量"
+        }
+      },
+      "title": "UserListReq",
+      "required": [
+        "pageNum",
+        "pageSize"
+      ]
+    },
+    "UserListResp": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserListData"
+          }
+        }
+      },
+      "title": "UserListResp",
+      "required": [
+        "total",
+        "data"
+      ]
+    },
+    "UserUpdateReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态 1 停用 2 启用"
+        },
+        "username": {
+          "type": "string",
+          "description": " 登录名"
+        },
+        "password": {
+          "type": "string",
+          "description": " 密码"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "mobile": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "avatar": {
+          "type": "string",
+          "description": " 头像"
+        },
+        "deptId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 部门id"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 角色id"
+        }
+      },
+      "title": "UserUpdateReq",
+      "required": [
+        "userId",
+        "status",
+        "username",
+        "password",
+        "deptId",
+        "roleId"
+      ]
+    },
+    "UserUpdateResp": {
+      "type": "object",
+      "title": "UserUpdateResp"
     }
   },
   "securityDefinitions": {

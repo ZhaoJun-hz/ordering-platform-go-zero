@@ -15,11 +15,10 @@ func main() {
 		FieldNullable: true,
 	})
 
-	//var dsn = "root:123456@tcp(127.0.0.1:3306)/gozero?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"
-	var dsn = "root:QWERtyui1234@tcp(10.166.66.14:3306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"
+	//var dsn = "root:123456@tcp(127.0.0.1:23306)/gozero?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"
+	var dsn = "root:QWERtyui1234@tcp(127.0.0.1:23306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"
 	// Initialize a *gorm.DB instance
 	db, _ := gorm.Open(mysql.Open(dsn))
-
 	// Use the above `*gorm.DB` instance to initialize the generator,
 	// which is required to generate structs from db when using `GenerateModel/GenerateModelAs`
 	g.UseDB(db)
@@ -33,6 +32,7 @@ func main() {
 		g.GenerateModel("sys_role"),
 		g.GenerateModel("sys_role_menu"),
 		g.GenerateModel("sys_user"),
+		g.GenerateModel("sys_token"),
 	)
 
 	// Execute the generator

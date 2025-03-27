@@ -15,9 +15,10 @@ const TableNameSysMenu = "sys_menu"
 // SysMenu mapped from table <sys_menu>
 type SysMenu struct {
 	MenuID          int64          `gorm:"column:menu_id;primaryKey;autoIncrement:true;comment:主键编码" json:"menu_id"`                     // 主键编码
-	ParentMenuID    int64          `gorm:"column:parent_menu_id;not null;comment:父菜单ID" json:"parent_menu_id"`                           // 父菜单ID
+	ParentID        int64          `gorm:"column:parent_id;not null;comment:父菜单ID" json:"parent_id"`                                     // 父菜单ID
 	Sort            int32          `gorm:"column:sort;not null;default:1;comment:排序编号" json:"sort"`                                      // 排序编号
 	MenuType        string         `gorm:"column:menu_type;not null;comment:菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮" json:"menu_type"`             // 菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮
+	Paths           string         `gorm:"column:paths;not null;comment:菜单完整路径 /分割" json:"paths"`                                        // 菜单完整路径 /分割
 	Path            string         `gorm:"column:path;not null;comment:菜单路由路径" json:"path"`                                              // 菜单路由路径
 	Component       string         `gorm:"column:component;not null;comment:组件路径" json:"component"`                                      // 组件路径
 	Permission      string         `gorm:"column:permission;not null;comment:权限标识" json:"permission"`                                    // 权限标识

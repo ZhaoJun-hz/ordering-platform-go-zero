@@ -3,11 +3,11 @@ ListenOn: 0.0.0.0:7770
 Timeout: 5000
 Etcd:
   Hosts:
-  - 10.166.66.14:2379
+  - 127.0.0.1:2379
   Key: sys.rpc
 
 Mysql:
-  Datasource: root:QWERtyui1234@tcp(10.166.66.14:3306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  Datasource: root:QWERtyui1234@tcp(127.0.0.1:23306)/ordering-platform?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 JWT:
   AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d

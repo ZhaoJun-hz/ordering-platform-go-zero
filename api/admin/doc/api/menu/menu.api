@@ -153,33 +153,33 @@ type(
 )
 service admin-api {
     @doc(
-        summary: "添加menu"
+        summary: "menu 添加"
     )
     @handler AddMenu
     post / (AddMenuReq) returns (AddMenuResp)
     @doc(
-        summary: "更新menu"
+        summary: "menu 更新"
     )
     @handler UpdateMenu
     put /:menuId (UpdateMenuReq) returns (UpdateMenuResp)
 
     @doc(
-        summary: "删除menu"
+        summary: "menu 删除"
     )
     @handler DeleteMenu
     delete /:menuId (DeleteMenuReq) returns (DeleteMenuResp)
     @doc(
-        summary: "menu详情"
+        summary: "menu 详情"
     )
     @handler MenuInfo
     get /:menuId (MenuInfoReq) returns (MenuInfoData)
     @doc(
-        summary: "menu列表"
+        summary: "menu 列表"
     )
     @handler ListMenu
     get / (ListMenuReq) returns (ListMenuResp)
     @doc(
-        summary: "获取 menu tree 结构"
+        summary: "menu tree 结构获取"
     )
     @handler  TreeMenu
     get /tree (TreeMenuReq) returns (TreeMenuResp)

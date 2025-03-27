@@ -31,7 +31,7 @@ func newSysRole(db *gorm.DB, opts ...gen.DOOption) sysRole {
 	_sysRole.RoleName = field.NewString(tableName, "role_name")
 	_sysRole.Status = field.NewInt32(tableName, "status")
 	_sysRole.RoleKey = field.NewString(tableName, "role_key")
-	_sysRole.Sort = field.NewInt32(tableName, "sort")
+	_sysRole.RoleSort = field.NewInt32(tableName, "role_sort")
 	_sysRole.Remark = field.NewString(tableName, "remark")
 	_sysRole.Admin = field.NewBool(tableName, "admin")
 	_sysRole.DataScope = field.NewString(tableName, "data_scope")
@@ -53,9 +53,9 @@ type sysRole struct {
 	ALL           field.Asterisk
 	RoleID        field.Int64
 	RoleName      field.String
-	Status        field.Int32  // 状态 1 停用 2 启用
+	Status        field.Int32  // 状态 1 启用 2 停用
 	RoleKey       field.String // 角色码
-	Sort          field.Int32  // 排序
+	RoleSort      field.Int32
 	Remark        field.String
 	Admin         field.Bool   // 是否是管理员 0 不是 1 是
 	DataScope     field.String // 数据范围
@@ -85,7 +85,7 @@ func (s *sysRole) updateTableName(table string) *sysRole {
 	s.RoleName = field.NewString(table, "role_name")
 	s.Status = field.NewInt32(table, "status")
 	s.RoleKey = field.NewString(table, "role_key")
-	s.Sort = field.NewInt32(table, "sort")
+	s.RoleSort = field.NewInt32(table, "role_sort")
 	s.Remark = field.NewString(table, "remark")
 	s.Admin = field.NewBool(table, "admin")
 	s.DataScope = field.NewString(table, "data_scope")
@@ -124,7 +124,7 @@ func (s *sysRole) fillFieldMap() {
 	s.fieldMap["role_name"] = s.RoleName
 	s.fieldMap["status"] = s.Status
 	s.fieldMap["role_key"] = s.RoleKey
-	s.fieldMap["sort"] = s.Sort
+	s.fieldMap["role_sort"] = s.RoleSort
 	s.fieldMap["remark"] = s.Remark
 	s.fieldMap["admin"] = s.Admin
 	s.fieldMap["data_scope"] = s.DataScope

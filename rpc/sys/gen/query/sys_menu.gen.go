@@ -28,9 +28,10 @@ func newSysMenu(db *gorm.DB, opts ...gen.DOOption) sysMenu {
 	tableName := _sysMenu.sysMenuDo.TableName()
 	_sysMenu.ALL = field.NewAsterisk(tableName)
 	_sysMenu.MenuID = field.NewInt64(tableName, "menu_id")
-	_sysMenu.ParentMenuID = field.NewInt64(tableName, "parent_menu_id")
+	_sysMenu.ParentID = field.NewInt64(tableName, "parent_id")
 	_sysMenu.Sort = field.NewInt32(tableName, "sort")
 	_sysMenu.MenuType = field.NewString(tableName, "menu_type")
+	_sysMenu.Paths = field.NewString(tableName, "paths")
 	_sysMenu.Path = field.NewString(tableName, "path")
 	_sysMenu.Component = field.NewString(tableName, "component")
 	_sysMenu.Permission = field.NewString(tableName, "permission")
@@ -58,9 +59,10 @@ type sysMenu struct {
 
 	ALL             field.Asterisk
 	MenuID          field.Int64  // 主键编码
-	ParentMenuID    field.Int64  // 父菜单ID
+	ParentID        field.Int64  // 父菜单ID
 	Sort            field.Int32  // 排序编号
 	MenuType        field.String // 菜单类型 （菜单、目录、按钮）M 目录 C 菜单 F 按钮
+	Paths           field.String // 菜单完整路径 /分割
 	Path            field.String // 菜单路由路径
 	Component       field.String // 组件路径
 	Permission      field.String // 权限标识
@@ -94,9 +96,10 @@ func (s sysMenu) As(alias string) *sysMenu {
 func (s *sysMenu) updateTableName(table string) *sysMenu {
 	s.ALL = field.NewAsterisk(table)
 	s.MenuID = field.NewInt64(table, "menu_id")
-	s.ParentMenuID = field.NewInt64(table, "parent_menu_id")
+	s.ParentID = field.NewInt64(table, "parent_id")
 	s.Sort = field.NewInt32(table, "sort")
 	s.MenuType = field.NewString(table, "menu_type")
+	s.Paths = field.NewString(table, "paths")
 	s.Path = field.NewString(table, "path")
 	s.Component = field.NewString(table, "component")
 	s.Permission = field.NewString(table, "permission")
@@ -137,11 +140,12 @@ func (s *sysMenu) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *sysMenu) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 20)
+	s.fieldMap = make(map[string]field.Expr, 21)
 	s.fieldMap["menu_id"] = s.MenuID
-	s.fieldMap["parent_menu_id"] = s.ParentMenuID
+	s.fieldMap["parent_id"] = s.ParentID
 	s.fieldMap["sort"] = s.Sort
 	s.fieldMap["menu_type"] = s.MenuType
+	s.fieldMap["paths"] = s.Paths
 	s.fieldMap["path"] = s.Path
 	s.fieldMap["component"] = s.Component
 	s.fieldMap["permission"] = s.Permission

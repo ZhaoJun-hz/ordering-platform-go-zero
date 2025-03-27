@@ -54,7 +54,7 @@ func (l *DeptDeleteLogic) DeptDelete(in *sysclient.DeptDeleteReq) (*sysclient.De
 		return nil, errors.WithStack(errcode.DeptNotEmptyError)
 	}
 	// 校验一下，部门下是否还有子部门
-	deptCount, err := query.SysDept.WithContext(l.ctx).Where(query.SysDept.ParentDeptID.Eq(in.DeptId)).Count()
+	deptCount, err := query.SysDept.WithContext(l.ctx).Where(query.SysDept.ParentID.Eq(in.DeptId)).Count()
 	if err != nil {
 		logc.Errorf(l.ctx, "查询 Dept 是否有子部门 失败,参数：%d,异常:%s", in.DeptId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Dept 是否有子部门 失败 %v, param %v", err, in.DeptId)

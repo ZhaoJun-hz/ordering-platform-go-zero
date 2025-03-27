@@ -28,7 +28,8 @@ func newSysDept(db *gorm.DB, opts ...gen.DOOption) sysDept {
 	tableName := _sysDept.sysDeptDo.TableName()
 	_sysDept.ALL = field.NewAsterisk(tableName)
 	_sysDept.DeptID = field.NewInt64(tableName, "dept_id")
-	_sysDept.ParentDeptID = field.NewInt64(tableName, "parent_dept_id")
+	_sysDept.ParentID = field.NewInt64(tableName, "parent_id")
+	_sysDept.DeptPath = field.NewString(tableName, "dept_path")
 	_sysDept.DeptName = field.NewString(tableName, "dept_name")
 	_sysDept.Sort = field.NewInt32(tableName, "sort")
 	_sysDept.Leader = field.NewString(tableName, "leader")
@@ -49,20 +50,21 @@ func newSysDept(db *gorm.DB, opts ...gen.DOOption) sysDept {
 type sysDept struct {
 	sysDeptDo sysDeptDo
 
-	ALL          field.Asterisk
-	DeptID       field.Int64  // 主键编码
-	ParentDeptID field.Int64  // 父级部门id
-	DeptName     field.String // 部门名字
-	Sort         field.Int32  // 排序
-	Leader       field.String // 负责人
-	Phone        field.String // 负责人手机号
-	Email        field.String // 负责人邮箱
-	Status       field.Int32  // 状态 1 停用 2 启用
-	CreatedAt    field.Time   // 创建时间
-	UpdatedAt    field.Time   // 最后更新时间
-	DeletedAt    field.Field  // 删除时间
-	CreateBy     field.Int64  // 创建者
-	UpdateBy     field.Int64  // 更新者
+	ALL       field.Asterisk
+	DeptID    field.Int64  // 主键编码
+	ParentID  field.Int64  // 父级部门id
+	DeptPath  field.String // 部门路径 / 分割
+	DeptName  field.String // 部门名字
+	Sort      field.Int32  // 排序
+	Leader    field.String // 负责人
+	Phone     field.String // 负责人手机号
+	Email     field.String // 负责人邮箱
+	Status    field.Int32  // 状态 1 启用  2 停用
+	CreatedAt field.Time   // 创建时间
+	UpdatedAt field.Time   // 最后更新时间
+	DeletedAt field.Field  // 删除时间
+	CreateBy  field.Int64  // 创建者
+	UpdateBy  field.Int64  // 更新者
 
 	fieldMap map[string]field.Expr
 }
@@ -80,7 +82,8 @@ func (s sysDept) As(alias string) *sysDept {
 func (s *sysDept) updateTableName(table string) *sysDept {
 	s.ALL = field.NewAsterisk(table)
 	s.DeptID = field.NewInt64(table, "dept_id")
-	s.ParentDeptID = field.NewInt64(table, "parent_dept_id")
+	s.ParentID = field.NewInt64(table, "parent_id")
+	s.DeptPath = field.NewString(table, "dept_path")
 	s.DeptName = field.NewString(table, "dept_name")
 	s.Sort = field.NewInt32(table, "sort")
 	s.Leader = field.NewString(table, "leader")
@@ -116,9 +119,10 @@ func (s *sysDept) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *sysDept) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 13)
+	s.fieldMap = make(map[string]field.Expr, 14)
 	s.fieldMap["dept_id"] = s.DeptID
-	s.fieldMap["parent_dept_id"] = s.ParentDeptID
+	s.fieldMap["parent_id"] = s.ParentID
+	s.fieldMap["dept_path"] = s.DeptPath
 	s.fieldMap["dept_name"] = s.DeptName
 	s.fieldMap["sort"] = s.Sort
 	s.fieldMap["leader"] = s.Leader

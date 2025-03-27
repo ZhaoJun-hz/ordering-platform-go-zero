@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logc"
-	"ordering-platform/pkg/common"
+	"ordering-platform/pkg/utils"
 	"ordering-platform/pkg/xerr"
 	"ordering-platform/rpc/sys/gen/query"
 
@@ -55,9 +55,9 @@ func (l *RoleListLogic) RoleList(in *sysclient.RoleListReq) (*sysclient.RoleList
 			RoleName:      sysRole.RoleName,
 			RoleKey:       sysRole.RoleKey,
 			Status:        sysRole.Status,
-			Sort:          sysRole.Sort,
+			Sort:          sysRole.RoleSort,
 			DefaultRouter: sysRole.DefaultRouter,
-			CreateTime:    common.TimeToString(&sysRole.CreatedAt),
+			CreateTime:    utils.TimeToString(&sysRole.CreatedAt),
 			Admin:         sysRole.Admin,
 		})
 	}

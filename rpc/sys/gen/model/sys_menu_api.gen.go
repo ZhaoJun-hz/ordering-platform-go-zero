@@ -8,9 +8,9 @@ const TableNameSysMenuAPI = "sys_menu_api"
 
 // SysMenuAPI mapped from table <sys_menu_api>
 type SysMenuAPI struct {
-	ID        int64 `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	SysMenuID int64 `gorm:"column:sys_menu_id;not null" json:"sys_menu_id"`
-	SysAPIID  int64 `gorm:"column:sys_api_id;not null;comment:主键编码" json:"sys_api_id"` // 主键编码
+	ID     int64 `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	MenuID int64 `gorm:"column:menu_id;not null" json:"menu_id"`
+	APIID  int64 `gorm:"column:api_id;not null;comment:主键编码" json:"api_id"` // 主键编码
 }
 
 // TableName SysMenuAPI's table name
