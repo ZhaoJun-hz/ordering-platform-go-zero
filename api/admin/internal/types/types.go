@@ -423,7 +423,7 @@ type UserUpdateReq struct {
 	UserId      int64  `json:"userId"`
 	Status      int32  `json:"status"`               // 状态 1 停用 2 启用
 	Username    string `json:"username"`             // 登录名
-	Password    string `json:"password"`             // 密码
+	Password    string `json:"password,optional"`    // 密码
 	Nickname    string `json:"nickname,optional"`    // 昵称
 	Description string `json:"description,optional"` // 描述
 	Mobile      string `json:"mobile,optional"`      // 手机号

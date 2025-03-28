@@ -63,14 +63,10 @@ func (l *UserUpdateLogic) UserUpdate(in *sysclient.UserUpdateReq) (*sysclient.Us
 		logc.Errorf(l.ctx, "查询 User失败,参数：%d,异常:%s", in.UserId, err.Error())
 		return nil, errors.Wrapf(xerr.NewDBErr(), "查询 Dept失败 %v, param %v", err, in.UserId)
 	}
-
-	// password 加密
-	passwordEncrypt := encrypt.BcryptEncrypt(in.Password)
 	user := &model.SysUser{
 		UserID:      in.UserId,
 		Status:      in.Status,
 		Username:    in.Username,
-		Password:    passwordEncrypt,
 		Nickname:    in.Nickname,
 		Description: in.Description,
 		Mobile:      in.Mobile,
@@ -79,6 +75,12 @@ func (l *UserUpdateLogic) UserUpdate(in *sysclient.UserUpdateReq) (*sysclient.Us
 		DeptID:      in.DeptId,
 		RoleID:      in.RoleId,
 	}
+	if in.Password != "" {
+		// password 加密
+		passwordEncrypt := encrypt.BcryptEncrypt(in.Password)
+		user.Password = passwordEncrypt
+	}
+
 	_, err = query.SysUser.WithContext(l.ctx).Updates(user)
 	if err != nil {
 		logc.Errorf(l.ctx, "更新 user 失败,参数：%+v,异常:%s", user, err.Error())
